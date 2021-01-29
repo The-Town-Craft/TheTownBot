@@ -1,14 +1,4 @@
 main: com.cadenkoehl.minecordbot.MinecordBot
-name: CadenBotMinecordLink
+name: MinecordBot
 version: 1.0
 author: CadenTheGamer107
-
-commands:
-  mutechat:
-    description: Mutes the entire Minecraft chat
-  mute:
-    description: Mutes a specific player
-  unmute:
-    description: Unmutes a specific player
-  unmutechat:
-    description: Unmutes the entire Minecraft chat

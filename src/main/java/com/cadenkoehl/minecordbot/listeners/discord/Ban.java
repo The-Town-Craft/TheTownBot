@@ -35,7 +35,6 @@ public class Ban extends ListenerAdapter {
 					if(!player.isBanned()) {
 						Bukkit.getBanList(BanList.Type.NAME).addBan(username, "Please contact " + event.getAuthor().getAsTag() + " if you believe this is a mistake.", null, event.getAuthor().getName());
 						event.getChannel().sendMessage("Banned " + username + ". Reason: Please contact " + event.getAuthor().getAsTag() + " if you believe this is a mistake.").queue();
-						
 				}
 			}
 				if(!mod.hasPermission(Permission.ADMINISTRATOR)) {

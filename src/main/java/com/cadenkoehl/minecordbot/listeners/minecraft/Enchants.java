@@ -20,7 +20,6 @@ public class Enchants implements Listener {
 		embed.setDescription("```css\n" + player + " has enchanted their " + item.replace("_", " ").toLowerCase() + "\n```");
 		embed.setColor(0x50bb5f);
 		
-		MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
 		MinecordBot.jda.getTextChannelById(Constants.logChannel).sendMessage(embed.build()).queue();
 		
 	}

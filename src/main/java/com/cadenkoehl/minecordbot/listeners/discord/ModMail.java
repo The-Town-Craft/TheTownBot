@@ -41,7 +41,7 @@ public class ModMail extends ListenerAdapter{
 						EmbedBuilder embed = new EmbedBuilder();
 						embed.setAuthor("ModMail from The Town!", null, event.getGuild().getIconUrl());
 						embed.setDescription("```css\n" + message + "\n```");
-						embed.setFooter(senderName, senderAvatar);
+						embed.setFooter("From " + senderName, senderAvatar);
 						
 						channel.sendMessage(embed.build()).queue();
 					}));
