@@ -25,7 +25,7 @@ public class Ban extends ListenerAdapter {
 		String username = Arrays.stream(args).skip(1).collect(Collectors.joining(" "));
 		
 		Member mod = event.getMember();
-			if(args[0].equalsIgnoreCase(MinecordBot.prefix + "mcban")) {
+			if(args[0].equalsIgnoreCase(MinecordBot.prefix + "mcban") || args[0].equalsIgnoreCase(MinecordBot.prefix + "ban")) {
 				if(mod.hasPermission(Permission.ADMINISTRATOR)) {
 					OfflinePlayer player = Bukkit.getOfflinePlayer(username);
 					onlinePlayer = Bukkit.getPlayer(username);

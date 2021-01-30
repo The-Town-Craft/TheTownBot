@@ -7,6 +7,7 @@ import com.cadenkoehl.minecordbot.accountlink.LinkCheck;
 import com.cadenkoehl.minecordbot.listeners.discord.*;
 import com.cadenkoehl.minecordbot.listeners.minecraft.*;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,7 +19,7 @@ import net.dv8tion.jda.api.entities.Activity;
 public class MinecordBot extends JavaPlugin {
 	
     public static JDA jda;
-    public static String prefix = "/";
+    public static String prefix = "$";
 
     @Override
     public void onEnable() {
@@ -32,7 +33,6 @@ public class MinecordBot extends JavaPlugin {
         builder.addEventListeners(new DiscordChatListener());
         builder.addEventListeners(new OnlinePlayers());
         builder.addEventListeners(new Whitelist());
-        builder.addEventListeners(new WhitelistRemove());
         builder.addEventListeners(new Ban());
         builder.addEventListeners(new Unban());
         builder.addEventListeners(new ModMail());
@@ -41,7 +41,8 @@ public class MinecordBot extends JavaPlugin {
         builder.addEventListeners(new Log());
         builder.addEventListeners(new LinkAccount());
         builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
-        
+        builder.setMemberCachePolicy(MemberCachePolicy.ALL);
+
         // Spigot Listeners
 
         getServer().getPluginManager().registerEvents(new Raid(), this);

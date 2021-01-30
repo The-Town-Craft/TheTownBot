@@ -30,5 +30,4 @@ public class Sleep implements Listener {
 			MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
 		}
 	}
-
 }

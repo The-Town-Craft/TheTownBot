@@ -1,7 +1,11 @@
 package com.cadenkoehl.minecordbot.listeners.minecraft;
 
+import com.cadenkoehl.minecordbot.accountlink.AccountManager;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -20,12 +24,20 @@ import net.md_5.bungee.api.ChatColor;
 
 
 public class MinecraftChatListener implements Listener {
+	AccountManager manager = new AccountManager();
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		
 		String message = event.getMessage();
 		String player = event.getPlayer().getName();
+
+		if(message.contains("@everyone") || message.contains("@here")) {
+			event.getPlayer().kickPlayer("Haha you thought that would work didn't you!");
+			Bukkit.getServer().broadcastMessage(ChatColor.RED + player + " was kicked because they tried to @everyone!");
+			event.setCancelled(true);
+			return;
+		}
 
 		MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(">>> <:minecraft_icon:790295561307684925> **<" + player + ">** " + message).queue();
 	}
@@ -54,22 +66,35 @@ public class MinecraftChatListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		
-		String player = event.getPlayer().getName();
+		Player player = event.getPlayer();
+
+		String playerName = event.getPlayer().getName();
 		EmbedBuilder embed = new EmbedBuilder();
-		embed.setTitle(player + " joined the game");
+		Member member = manager.getDiscordMember(player);
+		if(member == null) {
+			embed.setAuthor(playerName + " joined the game");
+		}
+		if(member != null) {
+			embed.setAuthor(playerName + " joined the game", null, member.getUser().getEffectiveAvatarUrl());
+		}
 		embed.setColor(0x50bb5f);
-		
+
 		MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
 		MinecordBot.jda.getTextChannelById(Constants.logChannel).sendMessage(embed.build()).queue();
 	}
 	
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		
-		String player = event.getPlayer().getName();
+		Player player = event.getPlayer();
+		String playerName = event.getPlayer().getName();
 		EmbedBuilder embed = new EmbedBuilder();
-		embed.setTitle(player + " left the game");
+		Member member = manager.getDiscordMember(player);
+		if(member == null) {
+			embed.setAuthor(playerName + " left the game");
+		}
+		if(member != null) {
+			embed.setAuthor(playerName + " left the game", null, member.getUser().getEffectiveAvatarUrl());
+		}
 		embed.setColor(0xb83838);
 		
 		MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();

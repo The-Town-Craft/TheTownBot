@@ -2,7 +2,6 @@
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/minecraft/WitherSpawn.java
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/minecraft/SuperVanishCompat.java
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/discord/JoinServer.java
-/Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/discord/WhitelistRemove.java
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/accountlink/LinkCheck.java
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/Constants.java
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/minecraft/Sleep.java

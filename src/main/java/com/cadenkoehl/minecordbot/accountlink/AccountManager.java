@@ -3,13 +3,17 @@ package com.cadenkoehl.minecordbot.accountlink;
 import com.cadenkoehl.minecordbot.Constants;
 import com.cadenkoehl.minecordbot.MinecordBot;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AccountManager {
@@ -43,6 +47,7 @@ public class AccountManager {
         }
         User user = MinecordBot.jda.getUserById(userId);
         AtomicBoolean memberIsNull = new AtomicBoolean(false);
+
         guild.retrieveMember(user).queue(member -> {
             if(member == null) {
                 memberIsNull.set(true);
@@ -74,6 +79,52 @@ public class AccountManager {
             e.printStackTrace();
         }
         return password;
+    }
+    public Member getDiscordMember(OfflinePlayer player) {
+        MinecordBot plugin = MinecordBot.getPlugin(MinecordBot.class);
+        String uuid = player.getUniqueId().toString();
+        File dir = new File(plugin.getDataFolder() + "/account");
+        if(dir.mkdirs()) {
+            System.out.println("Account directory was created.");
+        }
+        File file = new File(plugin.getDataFolder() + "/account/" + uuid + ".txt");
+        if(!file.exists()) {
+            System.out.println(file.getAbsolutePath() + ": No such file! Returning null for com.cadenkoehl.minecordbot.accountlink.AccountManager.getDiscordUser(org.bukkit.OfflinePlayer)");
+            return null;
+        }
+        String userId = null;
+        try {
+            Scanner scan = new Scanner(file);
+            userId = scan.nextLine();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return MinecordBot.jda.getGuildById(Constants.theTown).getMemberById(userId);
+    }
+    public OfflinePlayer getMinecraftPlayer(Member member) {
+        MinecordBot plugin = MinecordBot.getPlugin(MinecordBot.class);
+        String memberId = member.getId();
+        File dir = new File(plugin.getDataFolder() + "/account");
+        if(dir.mkdirs()) {
+            System.out.println("Account directory was created.");
+        }
+        String[] files = dir.list();
+        String uuidString = null;
+        for (String fileName : files) {
+            try {
+                File file = new File(plugin.getDataFolder() + "/account/" + fileName);
+                Scanner scan = new Scanner(file);
+                if (!scan.nextLine().equalsIgnoreCase(memberId)) {
+                    continue;
+                }
+                uuidString = file.getName().replace(".txt", "");
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }
+        UUID uuid = UUID.fromString(uuidString);
+        return Bukkit.getOfflinePlayer(uuid);
     }
 }
 
