@@ -1,4 +1,4 @@
-package com.cadenkoehl.minecordbot.listeners.discord;
+package com.cadenkoehl.minecordbot.listeners.discord.commands;
 
 import com.cadenkoehl.minecordbot.MinecordBot;
 import net.dv8tion.jda.api.Permission;

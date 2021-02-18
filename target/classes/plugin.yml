@@ -1,4 +1,12 @@
 main: com.cadenkoehl.minecordbot.MinecordBot
 name: MinecordBot
 version: 1.0
-author: CadenTheGamer107
+author: CadenKoehl
+commands:
+  mute:
+    description: Chat-mutes a player
+    usage: /unmute <player>
+
+  unmute:
+    description: Un-chat-mutes a player
+    usage: /unmute <player>

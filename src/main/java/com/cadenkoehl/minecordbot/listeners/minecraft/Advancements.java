@@ -1,5 +1,6 @@
 package com.cadenkoehl.minecordbot.listeners.minecraft;
 
+import com.cadenkoehl.minecordbot.listeners.util.SkinRender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
@@ -17,12 +18,12 @@ public class Advancements implements Listener {
 		String adv = event.getAdvancement().getKey().getKey();
 		
 		EmbedBuilder embed = new EmbedBuilder();
-		embed.setDescription("```css\n" + player + " has made the advancement [" + adv + "]\n```");
+		embed.setAuthor(player + " has made the advancement [" + adv + "]", null, SkinRender.renderHead(event.getPlayer()));
 		embed.setColor(0x50bb5f);
 		
 		if(!event.getAdvancement().getKey().getKey().contains("recipes/")) {
-			MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
-			MinecordBot.jda.getTextChannelById(Constants.logChannel).sendMessage(embed.build()).queue();
+			MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+			MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 		}
 	}
 }

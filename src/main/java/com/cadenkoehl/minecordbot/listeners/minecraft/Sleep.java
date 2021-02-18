@@ -2,6 +2,7 @@ package com.cadenkoehl.minecordbot.listeners.minecraft;
 
 import java.util.Random;
 
+import com.cadenkoehl.minecordbot.listeners.util.SkinRender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
@@ -22,12 +23,12 @@ public class Sleep implements Listener {
 			Random rand = new Random();
 			
 			int message = rand.nextInt(messages.length);
-			
+
 			EmbedBuilder embed = new EmbedBuilder();
-			embed.setTitle(messages[message]);
-			embed.setColor(0x50bb5f);
+			embed.setAuthor(messages[message], null, SkinRender.renderHead(event.getPlayer()));
+			embed.setColor(Constants.PURPLE);
 			
-			MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
+			MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
 		}
 	}
 }

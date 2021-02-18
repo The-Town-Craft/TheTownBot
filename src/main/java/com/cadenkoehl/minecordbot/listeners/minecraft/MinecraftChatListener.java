@@ -1,8 +1,8 @@
 package com.cadenkoehl.minecordbot.listeners.minecraft;
 
-import com.cadenkoehl.minecordbot.accountlink.AccountManager;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
+import com.cadenkoehl.minecordbot.listeners.accountlink.AccountManager;
+import com.cadenkoehl.minecordbot.listeners.chatmute.MuteManager;
+import com.cadenkoehl.minecordbot.listeners.util.SkinRender;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -22,26 +22,30 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.md_5.bungee.api.ChatColor;
 
 
-
 public class MinecraftChatListener implements Listener {
-	AccountManager manager = new AccountManager();
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
-		
+		MinecordBot plugin = MinecordBot.getPlugin(MinecordBot.class);
+
 		String message = event.getMessage();
-		String player = event.getPlayer().getName();
+		String name = event.getPlayer().getName();
+		Player player = event.getPlayer();
 
 		if(message.contains("@everyone") || message.contains("@here")) {
-			event.getPlayer().kickPlayer("Haha you thought that would work didn't you!");
-			Bukkit.getServer().broadcastMessage(ChatColor.RED + player + " was kicked because they tried to @everyone!");
 			event.setCancelled(true);
 			return;
 		}
+		MuteManager mute = new MuteManager();
+		if(mute.isMuted(player)) {
+			event.setCancelled(true);
+			player.sendMessage(ChatColor.RED + "You are muted and cannot send messages!");
+			return;
+		}
 
-		MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(">>> <:minecraft_icon:790295561307684925> **<" + player + ">** " + message).queue();
+		MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:minecraft_icon:790295561307684925> **<" + name + ">** " + message).queue();
 	}
-	
+
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event) {
 		double X = event.getEntity().getLocation().getX();
@@ -60,45 +64,41 @@ public class MinecraftChatListener implements Listener {
 		log.addField("Y: " + Y, "", false);
 		log.addField("Z: " + Z, "", false);
 		
-		MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
-		MinecordBot.jda.getTextChannelById(Constants.logChannel).sendMessage(log.build()).queue();
+		MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+		MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(log.build()).queue();
 	}
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		AccountManager manager = AccountManager.getInstance();
 		Player player = event.getPlayer();
-
+		if(!manager.isLinked(player)) {
+			return;
+		}
 		String playerName = event.getPlayer().getName();
 		EmbedBuilder embed = new EmbedBuilder();
-		Member member = manager.getDiscordMember(player);
-		if(member == null) {
-			embed.setAuthor(playerName + " joined the game");
-		}
-		if(member != null) {
-			embed.setAuthor(playerName + " joined the game", null, member.getUser().getEffectiveAvatarUrl());
-		}
+		embed.setAuthor(playerName + " joined the game", null, SkinRender.renderHead(event.getPlayer()));
 		embed.setColor(0x50bb5f);
 
-		MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
-		MinecordBot.jda.getTextChannelById(Constants.logChannel).sendMessage(embed.build()).queue();
+		MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+		MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 	}
 	
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
+		AccountManager manager = AccountManager.getInstance();
 		Player player = event.getPlayer();
+		if(!manager.isLinked(player)) {
+			return;
+		}
 		String playerName = event.getPlayer().getName();
 		EmbedBuilder embed = new EmbedBuilder();
-		Member member = manager.getDiscordMember(player);
-		if(member == null) {
-			embed.setAuthor(playerName + " left the game");
-		}
-		if(member != null) {
-			embed.setAuthor(playerName + " left the game", null, member.getUser().getEffectiveAvatarUrl());
-		}
+		String uuid = player.getUniqueId().toString();
+		embed.setAuthor(playerName + " left the game", null, SkinRender.renderHead(event.getPlayer()));
 		embed.setColor(0xb83838);
 		
-		MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
-		MinecordBot.jda.getTextChannelById(Constants.logChannel).sendMessage(embed.build()).queue();
+		MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+		MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 	}
 	
 	@EventHandler
@@ -109,32 +109,37 @@ public class MinecraftChatListener implements Listener {
 			embed.setTitle(player + " was banned");
 			embed.setColor(0xb83838);
 			
-			MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
-			MinecordBot.jda.getTextChannelById(Constants.logChannel).sendMessage(embed.build()).queue();
-			
+			MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+			MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 		}
 	}
 	
 	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
 		if(event.getEntityType() == EntityType.VILLAGER) {
-			String deathReason = event.getEntity().getLastDamageCause().getCause().name() + "\n";
+			String deathReason = event.getEntity().getLastDamageCause().getCause().name().toLowerCase().replace("_", " ") + "\n";
 			double posX = event.getEntity().getLocation().getX();
 			double posY = event.getEntity().getLocation().getY();
 			double posZ = event.getEntity().getLocation().getZ();
 			EmbedBuilder embed = new EmbedBuilder();
+			EmbedBuilder log = new EmbedBuilder();
 			embed.setDescription("```css\n[A Villager Has Died]\n```");
+			log.setDescription("```css\n[A Villager Has Died]\n```");
 			embed.addField("Reason: ", deathReason, false);
+			log.addField("Reason: ", deathReason, false);
 			if(event.getEntity().getKiller() != null) {
 				embed.addField("Killer: " + event.getEntity().getKiller().getName(), "", false);
+				log.addField("Killer: " + event.getEntity().getKiller().getName(), "", false);
 			}
-			embed.addField("X: " + posX, "", false);
-			embed.addField("Y: " + posY, "", false);
-			embed.addField("Z: " + posZ, "", false);
+
+			log.addField("X: " + posX, "", false);
+			log.addField("Y: " + posY, "", false);
+			log.addField("Z: " + posZ, "", false);
 			embed.setColor(0xb83838);
+			log.setColor(0xb83838);
 		
-			MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
-			MinecordBot.jda.getTextChannelById(Constants.logChannel).sendMessage(embed.build()).queue();
+			MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+			MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(log.build()).queue();
 		
 		}
 	}
@@ -172,8 +177,8 @@ public class MinecraftChatListener implements Listener {
 				}
 				log.addField("Reason: " +  cause, "", false);
 			
-				MinecordBot.jda.getTextChannelById(Constants.chatLink).sendMessage(embed.build()).queue();
-				MinecordBot.jda.getTextChannelById(Constants.logChannel).sendMessage(log.build()).queue();
+				MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+				MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(log.build()).queue();
 			}
 		}
 	}

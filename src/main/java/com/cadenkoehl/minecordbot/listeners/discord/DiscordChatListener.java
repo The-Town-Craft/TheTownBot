@@ -12,14 +12,14 @@ public class DiscordChatListener extends ListenerAdapter {
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 		if(!event.getAuthor().isBot()) {
-			if(event.getChannel().getId().equalsIgnoreCase(Constants.chatLink)) {
+			if(event.getChannel().getId().equalsIgnoreCase(Constants.MC_CHAT)) {
 				String message = event.getMessage().getContentDisplay();
 				String name = event.getMember().getEffectiveName();
 
 				Bukkit.getServer().broadcastMessage(ChatColor.BLUE + "" + ChatColor.BOLD + "[Discord]" + ChatColor.RESET + " <" + name + "> " + message);
 			}
 		}
-		if(event.getChannel().getId().equalsIgnoreCase(Constants.announcements)) {
+		if(event.getChannel().getId().equalsIgnoreCase(Constants.ANNOUNCEMENTS)) {
 			String message = event.getMessage().getContentDisplay();
 			Bukkit.getServer().broadcastMessage(ChatColor.BLUE + "" + ChatColor.BOLD + "[Discord] " + ChatColor.RESET + "" + ChatColor.GOLD + "" + ChatColor.BOLD + "[ANNOUNCEMENT] " + ChatColor.RESET + "" + ChatColor.AQUA + message);
 		}

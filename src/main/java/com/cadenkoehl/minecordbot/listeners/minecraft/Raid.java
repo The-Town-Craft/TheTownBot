@@ -23,23 +23,24 @@ public class Raid implements Listener {
         }
         Player player = event.getPlayer();
         String name = player.getName();
-        int level = event.getRaid().getBadOmenLevel();
-        TextChannel channel = MinecordBot.jda.getTextChannelById(Constants.chatLink);
-        TextChannel logChannel = MinecordBot.jda.getTextChannelById(Constants.logChannel);
+        TextChannel channel = MinecordBot.jda.getTextChannelById(Constants.MC_CHAT);
+        TextChannel logChannel = MinecordBot.jda.getTextChannelById(Constants.MC_LOGS);
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setDescription("```css\n[" + name + " has triggered a level " + level + " raid]\n```");
+        embed.setDescription("```css\n[" + name + " has triggered a raid]\n```");
         EmbedBuilder log = new EmbedBuilder();
         Location location = player.getLocation();
         double x = location.getX();
         double y = location.getY();
         double z = location.getZ();
-        log.setDescription("```css\n[" + name + " has triggered a level " + level + " raid]\n```");
+        embed.setColor(Constants.RED);
+        log.setDescription("```css\n[" + name + " has triggered a raid]\n```");
         log.addField("X: " + x, "", false);
         log.addField("Y: " + y, "", false);
+        log.setColor(Constants.RED);
         log.addField("Z: " + z, "", false);
         logChannel.sendMessage(log.build()).queue();
         channel.sendMessage(embed.build()).queue();
-        Bukkit.getServer().broadcastMessage(ChatColor.RED + name + " has triggered a level " + level + " raid!");
+        Bukkit.getServer().broadcastMessage(ChatColor.RED + name + " has triggered a raid!");
     }
 
     @EventHandler
@@ -53,16 +54,17 @@ public class Raid implements Listener {
             players.append(winners.get(0).getName()).append(" ");
         }
         if(winners.size() != 1) {
-            for(int i = 0; i < winners.size(); i++) {
-                players.append(winners.get(i).getName() + ", ");
+            for (Player winner : winners) {
+                players.append(winner.getName()).append(", ");
             }
         }
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setDescription("```css\n[" + players + "completed a raid!");
-        TextChannel logChannel = MinecordBot.jda.getTextChannelById(Constants.logChannel);
-        TextChannel channel = MinecordBot.jda.getTextChannelById(Constants.chatLink);
+        embed.setColor(Constants.GREEN);
+        embed.setDescription("```css\n" + players + "completed a raid\n```");
+        TextChannel logChannel = MinecordBot.jda.getTextChannelById(Constants.MC_LOGS);
+        TextChannel channel = MinecordBot.jda.getTextChannelById(Constants.MC_CHAT);
         logChannel.sendMessage(embed.build()).queue();
         channel.sendMessage(embed.build()).queue();
-        Bukkit.getServer().broadcastMessage(players + "completed a raid!");
+        Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "" + players + "completed a raid!");
     }
 }
