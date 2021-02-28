@@ -12,6 +12,7 @@ com/cadenkoehl/minecordbot/listeners/discord/commands/DiscordUnmute.class
 com/cadenkoehl/minecordbot/listeners/discord/commands/Log.class
 com/cadenkoehl/minecordbot/listeners/discord/commands/DiscordMute.class
 com/cadenkoehl/minecordbot/MinecordBot.class
+com/cadenkoehl/minecordbot/listeners/discord/MemberJoin.class
 com/cadenkoehl/minecordbot/listeners/minecraft/Advancements.class
 com/cadenkoehl/minecordbot/listeners/chatmute/MuteManager.class
 com/cadenkoehl/minecordbot/listeners/discord/fun/Skin.class

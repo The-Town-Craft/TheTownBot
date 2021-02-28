@@ -5,6 +5,7 @@ import com.cadenkoehl.minecordbot.MinecordBot;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.exceptions.HierarchyException;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
 import java.io.File;
@@ -52,8 +53,34 @@ public class AccountManager {
         catch (HierarchyException ex) {
             System.out.println("I was unable to modify " + member.getEffectiveName() + "'s nickname because I lack permission!");
         }
-        Role role = member.getJDA().getRoleById("730982990959869982");
-        member.getGuild().addRoleToMember(member, role).queue();
+        member.getGuild().removeRoleFromMember(member, Constants.UNLINKED_ROLE).queue();
+        member.getGuild().addRoleToMember(member, Constants.TOWN_MEMBER_ROLE).queue();
+
+        if(member.getRoles().contains(Constants.MAYOR_ROLE)) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &5 [mayor]");
+            return true;
+        }
+
+        if(member.getRoles().contains(Constants.VICE_MAYOR_ROLE)) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &6 [vice mayor]");
+            return true;
+        }
+
+        if(member.getRoles().contains(Constants.LAWYER_ROLE)) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &e [lawyer]");
+            return true;
+        }
+
+        if(member.getRoles().contains(Constants.PUBLIC_WORKS_ROLE)) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &b [public works manager]");
+            return true;
+        }
+
+        if(member.getRoles().contains(Constants.TOWN_MEMBER_ROLE)) {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &2 [town member]");
+            return true;
+        }
+
         return true;
     }
     public String generatePassword(OfflinePlayer player) {

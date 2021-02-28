@@ -4,6 +4,7 @@
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/minecraft/commands/McUnmute.java
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/discord/commands/DiscordMute.java
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/minecraft/Sleep.java
+/Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/discord/MemberJoin.java
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/discord/commands/ModMail.java
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/discord/ServerStart.java
 /Users/cadenkoehl/IntelliJ/MinecordBot/src/main/java/com/cadenkoehl/minecordbot/listeners/minecraft/MinecraftChatListener.java

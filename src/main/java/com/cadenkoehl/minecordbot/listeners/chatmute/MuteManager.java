@@ -17,7 +17,6 @@ public class MuteManager {
         }
         File file = new File(dir, player.getUniqueId().toString());
         if(file.exists()) {
-            System.out.println("Returning false because player is already muted!");
             return false;
         }
         try {
@@ -39,7 +38,6 @@ public class MuteManager {
         }
         File file = new File(dir, player.getUniqueId().toString());
         if(!file.exists()) {
-            System.out.println("Returning false because player is not muted");
             return false;
         }
         if(file.delete()) {
@@ -54,10 +52,6 @@ public class MuteManager {
             System.out.println(dir.getPath() + " was successfully created!");
         }
         File file = new File(dir, player.getUniqueId().toString());
-        if(!file.exists()) {
-            System.out.println("Returning false because player is not muted");
-            return false;
-        }
-        return true;
+        return file.exists();
     }
 }

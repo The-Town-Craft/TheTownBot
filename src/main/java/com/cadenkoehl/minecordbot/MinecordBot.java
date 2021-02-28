@@ -39,6 +39,7 @@ public class MinecordBot extends JavaPlugin {
         builder.addEventListeners(new Whitelist());
         builder.addEventListeners(new Ban());
         builder.addEventListeners(new ModMail());
+        builder.addEventListeners(new MemberJoin());
         builder.addEventListeners(new LinkAccount());
         builder.addEventListeners(new Skin());
         builder.addEventListeners(new Log());
