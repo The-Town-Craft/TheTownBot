@@ -1,6 +1,7 @@
 package com.cadenkoehl.minecordbot.listeners.chatmute;
 
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.Bot;
+import com.cadenkoehl.minecordbot.Plugin;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +11,7 @@ import java.io.IOException;
 
 public class MuteManager {
     public boolean mutePlayer(@NotNull OfflinePlayer player) {
-        MinecordBot plugin = MinecordBot.getPlugin(MinecordBot.class);
+        Plugin plugin = Plugin.get();
         File dir = new File(plugin.getDataFolder() + "/muted-players/");
         if(dir.mkdirs()) {
             System.out.println(dir.getPath() + " was successfully created!");
@@ -31,7 +32,7 @@ public class MuteManager {
         return true;
     }
     public boolean unmutePlayer(@NotNull OfflinePlayer player) {
-        MinecordBot plugin = MinecordBot.getPlugin(MinecordBot.class);
+        Plugin plugin = Plugin.get();
         File dir = new File(plugin.getDataFolder() + "/muted-players/");
         if(dir.mkdirs()) {
             System.out.println(dir.getPath() + " was successfully created!");
@@ -46,7 +47,7 @@ public class MuteManager {
         return true;
     }
     public boolean isMuted(@NotNull Player player) {
-        MinecordBot plugin = MinecordBot.getPlugin(MinecordBot.class);
+        Plugin plugin = Plugin.get();
         File dir = new File(plugin.getDataFolder() + "/muted-players/");
         if(dir.mkdirs()) {
             System.out.println(dir.getPath() + " was successfully created!");

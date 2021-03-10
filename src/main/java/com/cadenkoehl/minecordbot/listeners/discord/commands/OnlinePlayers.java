@@ -2,8 +2,8 @@ package com.cadenkoehl.minecordbot.listeners.discord.commands;
 
 import org.bukkit.Bukkit;
 
-import com.cadenkoehl.minecordbot.Constants;
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.listeners.util.Constants;
+import com.cadenkoehl.minecordbot.Bot;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -16,7 +16,7 @@ public class OnlinePlayers extends ListenerAdapter {
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 		String[] args = event.getMessage().getContentRaw().split("\\s+");
-		if (args[0].equalsIgnoreCase(MinecordBot.prefix + "onlineplayers")) {
+		if (args[0].equalsIgnoreCase(Bot.prefix + "onlineplayers")) {
 
 			Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
 			int playerCount = players.size();
@@ -30,8 +30,8 @@ public class OnlinePlayers extends ListenerAdapter {
 				String name = player.getName();
 				embed.appendDescription("\n" + name);
 			}
-			MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-			MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+			event.getChannel().sendMessage(embed.build()).queue();
+			Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 		}
 	}
 }

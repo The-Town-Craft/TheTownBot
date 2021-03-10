@@ -1,14 +1,14 @@
-package com.cadenkoehl.minecordbot.listeners.minecraft;
+package com.cadenkoehl.minecordbot.listeners.minecraft.chat;
 
 import java.util.Random;
 
+import com.cadenkoehl.minecordbot.Bot;
 import com.cadenkoehl.minecordbot.listeners.util.SkinRender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 
-import com.cadenkoehl.minecordbot.Constants;
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.listeners.util.Constants;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -28,7 +28,7 @@ public class Sleep implements Listener {
 			embed.setAuthor(messages[message], null, SkinRender.renderHead(event.getPlayer()));
 			embed.setColor(Constants.PURPLE);
 			
-			MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+			Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
 		}
 	}
 }

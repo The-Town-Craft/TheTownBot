@@ -1,7 +1,7 @@
-package com.cadenkoehl.minecordbot.listeners.minecraft;
+package com.cadenkoehl.minecordbot.listeners.minecraft.chat;
 
-import com.cadenkoehl.minecordbot.Constants;
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.Bot;
+import com.cadenkoehl.minecordbot.listeners.util.Constants;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.Bukkit;
@@ -23,8 +23,8 @@ public class Raid implements Listener {
         }
         Player player = event.getPlayer();
         String name = player.getName();
-        TextChannel channel = MinecordBot.jda.getTextChannelById(Constants.MC_CHAT);
-        TextChannel logChannel = MinecordBot.jda.getTextChannelById(Constants.MC_LOGS);
+        TextChannel channel = Bot.jda.getTextChannelById(Constants.MC_CHAT);
+        TextChannel logChannel = Bot.jda.getTextChannelById(Constants.MC_LOGS);
         EmbedBuilder embed = new EmbedBuilder();
         embed.setDescription("```css\n[" + name + " has triggered a raid]\n```");
         EmbedBuilder log = new EmbedBuilder();
@@ -61,8 +61,8 @@ public class Raid implements Listener {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Constants.GREEN);
         embed.setDescription("```css\n" + players + "completed a raid\n```");
-        TextChannel logChannel = MinecordBot.jda.getTextChannelById(Constants.MC_LOGS);
-        TextChannel channel = MinecordBot.jda.getTextChannelById(Constants.MC_CHAT);
+        TextChannel logChannel = Bot.jda.getTextChannelById(Constants.MC_LOGS);
+        TextChannel channel = Bot.jda.getTextChannelById(Constants.MC_CHAT);
         logChannel.sendMessage(embed.build()).queue();
         channel.sendMessage(embed.build()).queue();
         Bukkit.getServer().broadcastMessage(ChatColor.GREEN + "" + players + "completed a raid!");

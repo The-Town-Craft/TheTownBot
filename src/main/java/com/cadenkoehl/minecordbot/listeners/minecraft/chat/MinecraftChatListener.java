@@ -1,5 +1,7 @@
-package com.cadenkoehl.minecordbot.listeners.minecraft;
+package com.cadenkoehl.minecordbot.listeners.minecraft.chat;
 
+import com.cadenkoehl.minecordbot.Bot;
+import com.cadenkoehl.minecordbot.Plugin;
 import com.cadenkoehl.minecordbot.listeners.accountlink.AccountManager;
 import com.cadenkoehl.minecordbot.listeners.chatmute.MuteManager;
 import com.cadenkoehl.minecordbot.listeners.util.SkinRender;
@@ -15,8 +17,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import com.cadenkoehl.minecordbot.Constants;
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.listeners.util.Constants;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.md_5.bungee.api.ChatColor;
@@ -26,7 +27,7 @@ public class MinecraftChatListener implements Listener {
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
-		MinecordBot plugin = MinecordBot.getPlugin(MinecordBot.class);
+		Plugin plugin = Plugin.get();
 
 		String message = event.getMessage();
 		String name = event.getPlayer().getName();
@@ -43,7 +44,7 @@ public class MinecraftChatListener implements Listener {
 			return;
 		}
 
-		MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:minecraft_icon:790295561307684925> **<" + name + ">** " + message).queue();
+		Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:minecraft_icon:790295561307684925> **<" + name + ">** " + message).queue();
 	}
 
 	@EventHandler
@@ -64,8 +65,8 @@ public class MinecraftChatListener implements Listener {
 		log.addField("Y: " + Y, "", false);
 		log.addField("Z: " + Z, "", false);
 		
-		MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-		MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(log.build()).queue();
+		Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(log.build()).queue();
 	}
 	
 	@EventHandler
@@ -80,8 +81,8 @@ public class MinecraftChatListener implements Listener {
 		embed.setAuthor(playerName + " joined the game", null, SkinRender.renderHead(event.getPlayer()));
 		embed.setColor(0x50bb5f);
 
-		MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-		MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+		Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 	}
 	
 	@EventHandler
@@ -93,12 +94,11 @@ public class MinecraftChatListener implements Listener {
 		}
 		String playerName = event.getPlayer().getName();
 		EmbedBuilder embed = new EmbedBuilder();
-		String uuid = player.getUniqueId().toString();
 		embed.setAuthor(playerName + " left the game", null, SkinRender.renderHead(event.getPlayer()));
 		embed.setColor(0xb83838);
 		
-		MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-		MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+		Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 	}
 	
 	@EventHandler
@@ -109,8 +109,8 @@ public class MinecraftChatListener implements Listener {
 			embed.setTitle(player + " was banned");
 			embed.setColor(0xb83838);
 			
-			MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-			MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+			Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+			Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 		}
 	}
 	
@@ -138,8 +138,8 @@ public class MinecraftChatListener implements Listener {
 			embed.setColor(0xb83838);
 			log.setColor(0xb83838);
 		
-			MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-			MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(log.build()).queue();
+			Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+			Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(log.build()).queue();
 		
 		}
 	}
@@ -177,8 +177,8 @@ public class MinecraftChatListener implements Listener {
 				}
 				log.addField("Reason: " +  cause, "", false);
 			
-				MinecordBot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-				MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(log.build()).queue();
+				Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+				Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(log.build()).queue();
 			}
 		}
 	}

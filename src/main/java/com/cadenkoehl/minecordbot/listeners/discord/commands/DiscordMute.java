@@ -1,7 +1,7 @@
 package com.cadenkoehl.minecordbot.listeners.discord.commands;
 
-import com.cadenkoehl.minecordbot.Constants;
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.listeners.util.Constants;
+import com.cadenkoehl.minecordbot.Bot;
 import com.cadenkoehl.minecordbot.listeners.chatmute.MuteManager;
 import com.cadenkoehl.minecordbot.listeners.util.SkinRender;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -17,7 +17,7 @@ public class DiscordMute extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if(args[0].equalsIgnoreCase(MinecordBot.prefix + "mute")) {
+        if(args[0].equalsIgnoreCase(Bot.prefix + "mute")) {
             if(event.isWebhookMessage()) {
                 return;
             }

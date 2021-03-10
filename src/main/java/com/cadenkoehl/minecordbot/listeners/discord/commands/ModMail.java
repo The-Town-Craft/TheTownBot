@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.cadenkoehl.minecordbot.Constants;
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.Bot;
+import com.cadenkoehl.minecordbot.listeners.util.Constants;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -18,11 +18,12 @@ public class ModMail extends ListenerAdapter {
 	public void onPrivateMessageReceived(PrivateMessageReceivedEvent event) {
 		if(!event.getAuthor().isBot()) {
 			String message = event.getMessage().getContentDisplay();
-			String member = event.getJDA().getGuildById(Constants.TOWN_DISCORD).getMember(event.getAuthor()).getEffectiveName();
+			String member = event.getJDA().getGuildById(Constants.TOWN_DISCORD_ID).getMember(event.getAuthor()).getEffectiveName();
 			
 			EmbedBuilder eb = new EmbedBuilder();
 			eb.setDescription(message);
 			eb.setAuthor("DM from " + member, null, event.getAuthor().getEffectiveAvatarUrl());
+			eb.setFooter("User ID: " + event.getAuthor().getId(), Constants.THE_TOWN.getIconUrl());
 			
 			event.getJDA().getTextChannelById("781421376086999040").sendMessage(eb.build()).queue();
 		}
@@ -30,7 +31,7 @@ public class ModMail extends ListenerAdapter {
 
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 		String[] args = event.getMessage().getContentRaw().split("\\s+");
-		if(args[0].equalsIgnoreCase(MinecordBot.prefix + "mm")) {
+		if(args[0].equalsIgnoreCase(Bot.prefix + "mm")) {
 
 			if(event.isWebhookMessage()) return;
 			if(event.getAuthor().isBot()) return;

@@ -1,6 +1,6 @@
 package com.cadenkoehl.minecordbot.listeners.discord.fun;
 
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.Bot;
 import com.cadenkoehl.minecordbot.listeners.accountlink.AccountManager;
 import com.cadenkoehl.minecordbot.listeners.util.SkinRender;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -18,7 +17,7 @@ public class Skin extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if(args[0].equalsIgnoreCase(MinecordBot.prefix + "skin")) {
+        if(args[0].equalsIgnoreCase(Bot.prefix + "skin")) {
             if(event.isWebhookMessage()) {
                 return;
             }

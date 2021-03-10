@@ -1,7 +1,8 @@
 package com.cadenkoehl.minecordbot.listeners.accountlink;
 
-import com.cadenkoehl.minecordbot.Constants;
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.Bot;
+import com.cadenkoehl.minecordbot.Plugin;
+import com.cadenkoehl.minecordbot.listeners.util.Constants;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class LinkAccount extends ListenerAdapter {
     @Override
     public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
-        MinecordBot plugin = MinecordBot.getPlugin(MinecordBot.class);
+        Plugin plugin = Plugin.get();
         String message = event.getMessage().getContentRaw();
         File passwordDir = new File(plugin.getDataFolder().getPath() + "/account/password");
         if(passwordDir.mkdirs()) {

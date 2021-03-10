@@ -1,6 +1,6 @@
 package com.cadenkoehl.minecordbot.listeners.discord;
 
-import com.cadenkoehl.minecordbot.Constants;
+import com.cadenkoehl.minecordbot.listeners.util.Constants;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

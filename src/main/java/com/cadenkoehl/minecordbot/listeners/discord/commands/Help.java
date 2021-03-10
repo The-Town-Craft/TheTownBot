@@ -1,6 +1,6 @@
 package com.cadenkoehl.minecordbot.listeners.discord.commands;
 
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.Bot;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -10,14 +10,15 @@ public class Help extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if(args[0].equalsIgnoreCase(MinecordBot.prefix + "help")) {
+        if(args[0].equalsIgnoreCase(Bot.prefix + "help")) {
             if(args.length == 1) {
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setTitle("The Town Discord Bot!");
                 embed.setDescription("I am a utility bot for The Town Discord server that links the Discord and Minecraft chat in #mc-chat, and much more! Here's a list of my commands: \n" +
                         "`/help` `staff` - View list of staff commands!\n" +
                         "`/onlineplayers` - find out who's online the Minecraft server!\n" +
-                        "`/skin` `[username]` - Render someone's Minecraft skin!\n");
+                        "`/skin` `[username]` - Render someone's Minecraft skin!\n" +
+                        "`/active` - See the most active players!");
                 event.getChannel().sendMessage(embed.build()).queue();
                 return;
             }

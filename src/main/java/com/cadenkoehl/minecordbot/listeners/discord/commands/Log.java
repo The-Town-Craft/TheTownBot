@@ -1,6 +1,6 @@
 package com.cadenkoehl.minecordbot.listeners.discord.commands;
 
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.Bot;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -13,7 +13,7 @@ public class Log extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if(args[0].equalsIgnoreCase(MinecordBot.prefix + "log")) {
+        if(args[0].equalsIgnoreCase(Bot.prefix + "log")) {
             if(event.isWebhookMessage()) {
                 return;
             }

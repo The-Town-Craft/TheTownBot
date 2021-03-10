@@ -1,4 +1,4 @@
-main: com.cadenkoehl.minecordbot.MinecordBot
+main: com.cadenkoehl.minecordbot.Plugin
 name: MinecordBot
 version: 1.0
 author: CadenKoehl
@@ -10,3 +10,6 @@ commands:
   unmute:
     description: Un-chat-mutes a player
     usage: /unmute <player>
+
+  active:
+    description: See the top 3 most active players!

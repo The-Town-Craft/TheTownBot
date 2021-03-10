@@ -1,5 +1,6 @@
-package com.cadenkoehl.minecordbot.listeners.minecraft;
+package com.cadenkoehl.minecordbot.listeners.minecraft.chat;
 
+import com.cadenkoehl.minecordbot.Bot;
 import com.cadenkoehl.minecordbot.listeners.chatmute.MuteManager;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -7,8 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 
-import com.cadenkoehl.minecordbot.Constants;
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.listeners.util.Constants;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -30,7 +30,7 @@ public class CommandLog implements Listener {
 		embed.setDescription(player + " ran command `" + command + "`");
 		embed.setColor(0xf4271);
 		
-		MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 	}
 	
 	@EventHandler
@@ -42,7 +42,7 @@ public class CommandLog implements Listener {
 		embed.setDescription(player + "'s gamemode was changed to " + gamemode.toLowerCase());
 		embed.setColor(0x50bb5f);
 		
-		MinecordBot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 		
 		
 	}

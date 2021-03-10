@@ -1,20 +1,20 @@
 package com.cadenkoehl.minecordbot.listeners.discord.commands;
 
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.Bot;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
+
 import java.util.Set;
 
 public class Whitelist extends ListenerAdapter {
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 		String[] args = event.getMessage().getContentRaw().split("\\s+");
-		if(args[0].equalsIgnoreCase(MinecordBot.prefix + "whitelist")) {
+		if(args[0].equalsIgnoreCase(Bot.prefix + "whitelist")) {
 			Member member = event.getMember();
 			if(!member.hasPermission(Permission.BAN_MEMBERS)) {
 				event.getChannel().sendMessage(":x: You can't use that!").queue();
@@ -65,7 +65,7 @@ public class Whitelist extends ListenerAdapter {
 				event.getChannel().sendMessage(message).queue();
 			}
 		}
-		if(args[0].equalsIgnoreCase(MinecordBot.prefix + "unwhitelist")) {
+		if(args[0].equalsIgnoreCase(Bot.prefix + "unwhitelist")) {
 			event.getChannel().sendMessage(
 					":x: This command is no longer supported, and has been replaced with the `/whitelist` command!" +
 					"\nCorrect usage:" +

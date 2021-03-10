@@ -1,7 +1,8 @@
 package com.cadenkoehl.minecordbot.listeners.discord.commands;
 
-import com.cadenkoehl.minecordbot.Constants;
-import com.cadenkoehl.minecordbot.MinecordBot;
+import com.cadenkoehl.minecordbot.Bot;
+import com.cadenkoehl.minecordbot.Plugin;
+import com.cadenkoehl.minecordbot.listeners.util.Constants;
 import com.cadenkoehl.minecordbot.listeners.util.SkinRender;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -22,8 +23,9 @@ public class Ban extends ListenerAdapter {
 	@Override
 	public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
 		String[] args = event.getMessage().getContentRaw().split("\\s+");
-		if(args[0].equalsIgnoreCase(MinecordBot.prefix + "ban") || args[0].equalsIgnoreCase(MinecordBot.prefix + "mcban")) {
-			MinecordBot plugin = MinecordBot.getPlugin(MinecordBot.class);
+		if(args[0].equalsIgnoreCase(Bot.prefix + "ban") || args[0].equalsIgnoreCase(Bot.prefix + "mcban")) {
+			Plugin plugin = Plugin.get();
+
 			if(event.isWebhookMessage()) {return;}
 			if(event.getAuthor().isBot()) {return;}
 			Member member = event.getMember();
@@ -59,7 +61,7 @@ public class Ban extends ListenerAdapter {
 				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> onlinePlayer.kickPlayer("You are banned from this server"));
 			}
 		}
-		if(args[0].equalsIgnoreCase(MinecordBot.prefix + "unban") || args[0].equalsIgnoreCase(MinecordBot.prefix + "mcunban") || args[0].equalsIgnoreCase(MinecordBot.prefix + "pardon")) {
+		if(args[0].equalsIgnoreCase(Bot.prefix + "unban") || args[0].equalsIgnoreCase(Bot.prefix + "mcunban") || args[0].equalsIgnoreCase(Bot.prefix + "pardon")) {
 			if(event.isWebhookMessage()) {return;}
 			if(event.getAuthor().isBot()) {return;}
 			Member member = event.getMember();
@@ -87,7 +89,7 @@ public class Ban extends ListenerAdapter {
 			embed.setColor(Constants.GREEN);
 			event.getChannel().sendMessage(embed.build()).queue();
 		}
-		if(args[0].equalsIgnoreCase(MinecordBot.prefix + "banlist") || args[0].equalsIgnoreCase(MinecordBot.prefix + "mcbanlist")) {
+		if(args[0].equalsIgnoreCase(Bot.prefix + "banlist") || args[0].equalsIgnoreCase(Bot.prefix + "mcbanlist")) {
 			if(event.isWebhookMessage()) {return;}
 			if(event.getAuthor().isBot()) {return;}
 			Member member = event.getMember();
