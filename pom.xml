@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.cadenkoehl.minecordbot</groupId>
-    <artifactId>MinecordBot</artifactId>
+    <groupId>net.thetowncraft.thetownbot</groupId>
+    <artifactId>TheTownBot</artifactId>
     <version>1.0</version>
 
-    <name>MinecordBot</name>
+    <name>TheTownBot</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -76,7 +76,7 @@
                             <shadedArtifactAttached>true</shadedArtifactAttached>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>path.to.main.class</mainClass><!-- Change this to the path to your main class so if your main class is com.cadenkoehl.minecodbot.Minecordbot then that is what you put here -->
+                                    <mainClass>net.thetowncraft.townbot.Plugin</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
