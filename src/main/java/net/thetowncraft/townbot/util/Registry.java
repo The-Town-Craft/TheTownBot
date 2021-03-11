@@ -1,6 +1,9 @@
 package net.thetowncraft.townbot.util;
 
 import net.thetowncraft.townbot.api.command_handler.CommandHandler;
+import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
+import net.thetowncraft.townbot.api.command_handler.discord.TestCommand;
+import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.listeners.accountlink.Application;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
@@ -19,7 +22,26 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * A class to help with the registry of commands and listeners
+ */
 public class Registry {
+
+    public static void registerDiscordCommands() {
+        DiscordCommand.registerCommands(
+
+                new TestCommand()
+
+        );
+    }
+
+    public static void registerMinecraftCommands() {
+        MinecraftCommand.registerCommands(
+
+
+        );
+    }
+
     public static void registerJDAListeners(JDABuilder builder) {
         builder.addEventListeners(new CommandHandler.Discord());
         builder.addEventListeners(new DiscordChatListener());

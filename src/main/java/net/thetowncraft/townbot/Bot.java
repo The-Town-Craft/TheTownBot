@@ -18,6 +18,9 @@ public class Bot {
     public static JDA jda;
     public static String prefix = "/";
 
+    /**
+     * Initializes the bot, and sets its activity, status, and intents.
+     */
     public static void start() {
         JDABuilder builder = JDABuilder.createDefault(Constants.TOKEN);
         builder.setStatus(OnlineStatus.ONLINE);
@@ -26,6 +29,7 @@ public class Bot {
         // JDA Listeners
 
         Registry.registerJDAListeners(builder);
+        Registry.registerDiscordCommands();
 
         builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
         builder.setChunkingFilter(ChunkingFilter.ALL);

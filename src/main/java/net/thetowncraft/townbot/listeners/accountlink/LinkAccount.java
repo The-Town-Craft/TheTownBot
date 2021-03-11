@@ -15,6 +15,9 @@ import java.util.Arrays;
 import java.util.Scanner;
 import java.util.UUID;
 
+/**
+ * Listens for members putting in their password
+ */
 public class LinkAccount extends ListenerAdapter {
     @Override
     public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {

@@ -4,6 +4,12 @@ import java.text.DateFormatSymbols;
 import java.util.*;
 
 public class Util {
+
+    /**
+     * This method sorts a string/long HashMap by it's value
+     * @param unsortedMap An unsorted map
+     * @return The sorted map
+     */
     public static HashMap<String, Long> sortByValue(Map<String, Long> unsortedMap) {
         List<Map.Entry<String, Long>> list =
                 new LinkedList<>(unsortedMap.entrySet());
@@ -17,6 +23,9 @@ public class Util {
         return sortedMap;
     }
 
+    /**
+     * @return The name of the current weekday in english.
+     */
     public static String getNameOfDay() {
         DateFormatSymbols dfs = new DateFormatSymbols(Locale.ENGLISH);
         String[] weekdays = dfs.getWeekdays();

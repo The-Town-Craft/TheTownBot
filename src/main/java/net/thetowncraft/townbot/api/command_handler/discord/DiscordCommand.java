@@ -1,7 +1,7 @@
 package net.thetowncraft.townbot.api.command_handler.discord;
 
 import net.dv8tion.jda.api.Permission;
-import net.thetowncraft.townbot.api.command_handler.Command;
+import net.thetowncraft.townbot.api.command_handler.CommandConfig;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 
 import java.lang.annotation.Annotation;
@@ -37,11 +37,11 @@ public abstract class DiscordCommand {
     public String getName() {
 
         for(Annotation annotation : this.getClass().getAnnotations()) {
-            if(annotation instanceof Command) {
-                Command cmd = (Command) annotation;
+            if(annotation instanceof CommandConfig) {
+                CommandConfig cmd = (CommandConfig) annotation;
                 return cmd.name();
             }
         }
-        throw new IllegalArgumentException(this.getClass().getName() + " must be annotated with @Command!");
+        throw new IllegalArgumentException(this.getClass().getName() + " must be annotated with @CommandConfig!");
     }
 }
