@@ -31,4 +31,5 @@ public class ExampleCommand extends DiscordCommand {
     public Permission getRequiredPermission() {
         return Permission.ADMINISTRATOR;
     }
+    //Once you are done, take a look in the Registry class's registerDiscordCommands() method
 }
