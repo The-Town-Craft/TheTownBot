@@ -2,7 +2,7 @@ package net.thetowncraft.townbot.util;
 
 import net.thetowncraft.townbot.api.command_handler.CommandHandler;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
-import net.thetowncraft.townbot.api.command_handler.discord.TestCommand;
+import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
@@ -29,7 +29,7 @@ public class Registry {
     public static void registerDiscordCommands() {
         DiscordCommand.registerCommands(
 
-                new TestCommand()
+                new ExampleCommand()
 
         );
     }

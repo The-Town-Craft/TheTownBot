@@ -1,9 +1,7 @@
 package net.thetowncraft.townbot.api.command_handler.minecraft;
 
-import net.thetowncraft.townbot.api.command_handler.CommandConfig;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,14 +25,5 @@ public abstract class MinecraftCommand {
      */
     public abstract boolean isAdminCommand();
 
-    public String getName() {
-
-        for(Annotation annotation : this.getClass().getAnnotations()) {
-            if(annotation instanceof CommandConfig) {
-                CommandConfig cmd = (CommandConfig) annotation;
-                return cmd.name().toLowerCase();
-            }
-        }
-        throw new IllegalArgumentException(this.getClass().getName() + " must be annotated with @CommandConfig!");
-    }
+    public abstract String getName();
 }

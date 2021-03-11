@@ -1,4 +1,4 @@
-main: com.cadenkoehl.minecordbot.Plugin
+main: net.thetowncraft.townbot.Plugin
 name: MinecordBot
 version: 1.0
 author: CadenKoehl

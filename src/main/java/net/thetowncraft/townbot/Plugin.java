@@ -9,11 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Plugin extends JavaPlugin {
 
     /**
-     * Initializing this class will throw a {@code java.lang.IllegalArgumentException}, so use {@code get()} instead
-     */
-    private Plugin() {}
-
-    /**
      * This method runs whenever the server starts or restarts
      */
     @Override
