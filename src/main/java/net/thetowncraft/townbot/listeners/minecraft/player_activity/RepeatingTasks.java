@@ -28,15 +28,6 @@ public class RepeatingTasks {
         saveActivityPoints();
     }
 
-    public static void doDailyTasks() {
-
-        Constants.MOD_CHAT.sendMessage("It's " + Util.getNameOfDay() + "!").queue();
-
-        if(Util.getNameOfDay().equalsIgnoreCase("Tuesday")) {
-            rewardActivePlayers();
-        }
-    }
-
     /**
      * Counts and updates the player activity points for every player on the server
      */
@@ -124,7 +115,7 @@ public class RepeatingTasks {
         resetActivity();
     }
 
-    private static void resetActivity() {
+    public static void resetActivity() {
         File dataFolder = Plugin.get().getDataFolder();
 
         File dir = new File(dataFolder, "activity/");
@@ -135,5 +126,6 @@ public class RepeatingTasks {
             if (file.delete()) System.out.println("Deleted file " + file.getPath());
             ActivityManager.PLAYER_ACTIVITY_MAP.clear();
         }
+        rewardActivePlayers();
     }
 }

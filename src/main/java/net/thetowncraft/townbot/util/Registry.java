@@ -29,7 +29,8 @@ public class Registry {
     public static void registerDiscordCommands() {
         DiscordCommand.registerCommands(
 
-                new ExampleCommand()
+                new ExampleCommand(),
+                new ResetActivity()
 
         );
     }
