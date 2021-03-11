@@ -4,7 +4,6 @@ import net.thetowncraft.townbot.api.command_handler.CommandHandler;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.discord.TestCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.listeners.accountlink.Application;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
 import net.thetowncraft.townbot.listeners.minecraft.chat.*;
@@ -56,7 +55,6 @@ public class Registry {
         builder.addEventListeners(new DiscordMute());
         builder.addEventListeners(new DiscordUnmute());
         builder.addEventListeners(new ServerStart());
-        builder.addEventListeners(new Application());
         builder.addEventListeners(new Help());
         builder.addEventListeners(new DiscordActiveCommand());
     }
