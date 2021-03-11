@@ -1,6 +1,6 @@
 package net.thetowncraft.townbot.api.command_handler;
 
-public @interface Command {
+public @interface CommandConfig {
 
     /**
      * @return The name of this command
