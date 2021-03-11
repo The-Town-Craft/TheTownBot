@@ -1,5 +1,6 @@
 package net.thetowncraft.townbot.util;
 
+import net.thetowncraft.townbot.api.command_handler.CommandHandler;
 import net.thetowncraft.townbot.listeners.accountlink.Application;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
@@ -9,9 +10,7 @@ import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerJoin;
 import net.thetowncraft.townbot.listeners.discord.DiscordChatListener;
 import net.thetowncraft.townbot.listeners.discord.MemberJoin;
 import net.thetowncraft.townbot.listeners.discord.ServerStart;
-import com.cadenkoehl.minecordbot.listeners.discord.commands.*;
 import net.thetowncraft.townbot.listeners.discord.fun.Skin;
-import com.cadenkoehl.minecordbot.listeners.minecraft.chat.*;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.AFKListener;
 import net.thetowncraft.townbot.listeners.minecraft.commands.McMute;
 import net.thetowncraft.townbot.listeners.minecraft.commands.McUnmute;
@@ -22,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Registry {
     public static void registerJDAListeners(JDABuilder builder) {
+        builder.addEventListeners(new CommandHandler.Discord());
         builder.addEventListeners(new DiscordChatListener());
         builder.addEventListeners(new OnlinePlayers());
         builder.addEventListeners(new Whitelist());
@@ -40,6 +40,7 @@ public class Registry {
     }
     public static void registerSpigotListeners(JavaPlugin plugin) {
         registerSpigotListeners(plugin,
+                new CommandHandler.Minecraft(),
                 new RuleReminders(),
                 new WitherSpawn(),
                 new PlayerCountStatus(),

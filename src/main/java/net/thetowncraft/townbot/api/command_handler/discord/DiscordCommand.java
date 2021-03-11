@@ -1,13 +1,26 @@
 package net.thetowncraft.townbot.api.command_handler.discord;
 
-import java.security.Permission;
+import net.dv8tion.jda.api.Permission;
+import net.thetowncraft.townbot.api.command_handler.Command;
+import net.thetowncraft.townbot.api.command_handler.CommandEvent;
+
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class DiscordCommand {
+
+    public static final List<DiscordCommand> COMMANDS = new ArrayList<>();
+
+    public static void registerCommands(DiscordCommand... commands) {
+        COMMANDS.addAll(Arrays.asList(commands));
+    }
 
     /**
      * This method is called whenever this command is run
      */
-    public abstract void execute();
+    public abstract void execute(CommandEvent.Discord event);
 
     /**
      * @return The description of this command, showed in /help
@@ -19,5 +32,16 @@ public abstract class DiscordCommand {
      */
     public Permission getRequiredPermission() {
         return null;
+    }
+
+    public String getName() {
+
+        for(Annotation annotation : this.getClass().getAnnotations()) {
+            if(annotation instanceof Command) {
+                Command cmd = (Command) annotation;
+                return cmd.name();
+            }
+        }
+        throw new IllegalArgumentException(this.getClass().getName() + " must be annotated with @Command!");
     }
 }
