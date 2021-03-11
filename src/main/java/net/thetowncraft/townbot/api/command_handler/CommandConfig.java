@@ -6,4 +6,5 @@ public @interface CommandConfig {
      * @return The name of this command
      */
     String name();
+    String[] aliases() default {};
 }
