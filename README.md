@@ -1,6 +1,6 @@
 # The Town Bot
 
-##A Discord Bot for The Town Discord/Minecraft server!
+###A Discord Bot for The Town Discord/Minecraft server!
 
 - Links the Discord & Minecraft Chat
 - Many Essential Minecraft Features
