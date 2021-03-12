@@ -22,7 +22,7 @@ public class Plugin extends JavaPlugin {
         ActivityManager.loadActivityPoints();
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::updatePlayerActivity, 0, RepeatingTasks.REPEATING_TICKS);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, 0, RepeatingTasks.TICKS_IN_A_DAY);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, 5000, RepeatingTasks.TICKS_IN_A_DAY);
     }
 
     /**

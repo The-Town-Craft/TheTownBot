@@ -40,8 +40,10 @@ net/thetowncraft/townbot/listeners/discord/commands/ModMail.class
 net/thetowncraft/townbot/listeners/minecraft/commands/McMute.class
 net/thetowncraft/townbot/listeners/discord/DiscordChatListener.class
 net/thetowncraft/townbot/listeners/minecraft/player_activity/afk/AFKManager.class
+net/thetowncraft/townbot/util/data/Data.class
 net/thetowncraft/townbot/api/command_handler/discord/DiscordCommand.class
 net/thetowncraft/townbot/listeners/discord/commands/Log.class
+net/thetowncraft/townbot/util/data/Config.class
 net/thetowncraft/townbot/listeners/minecraft/commands/ActiveCommand.class
 net/thetowncraft/townbot/api/command_handler/CommandHandler.class
 net/thetowncraft/townbot/listeners/discord/ServerStart.class
