@@ -7,7 +7,6 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 public class Constants {
 
-	public static final String TOKEN = "Nzk2NTk4MDI5ODIxNjczNTEy.X_aPug.ZtynRNJfnu0xZbG72w4aYvhY6pM";
 	public static final Role MOST_ACTIVE_ROLE = Bot.jda.getRoleById("817927959155179540");
 	public static final Role TOWN_MEMBER_ROLE = Bot.jda.getRoleById("730982990959869982");
 	public static final Role PUBLIC_WORKS_ROLE = Bot.jda.getRoleById("730987270626344971");
