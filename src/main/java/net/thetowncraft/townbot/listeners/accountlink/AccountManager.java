@@ -111,18 +111,22 @@ public class AccountManager {
 
         if(member.getRoles().contains(Constants.MAYOR_ROLE)) {
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &5 [mayor]");
+            return;
         }
 
         if(member.getRoles().contains(Constants.VICE_MAYOR_ROLE)) {
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &6 [vice mayor]");
+            return;
         }
 
         if(member.getRoles().contains(Constants.LAWYER_ROLE)) {
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &e [lawyer]");
+            return;
         }
 
         if(member.getRoles().contains(Constants.PUBLIC_WORKS_ROLE)) {
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &b [public works manager]");
+            return;
         }
 
         if(member.getRoles().contains(Constants.TOWN_MEMBER_ROLE)) {
