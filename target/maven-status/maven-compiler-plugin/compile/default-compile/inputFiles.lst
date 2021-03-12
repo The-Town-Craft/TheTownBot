@@ -1,5 +1,4 @@
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/accountlink/AccountManager.java
-/Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/api/command_handler/discord/TestCommand.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/accountlink/LinkAccount.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/Raid.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/Ban.java
@@ -10,6 +9,7 @@
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/CommandLog.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/WitherSpawn.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/WorldChange.java
+/Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/ResetActivity.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/util/Constants.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/Enchants.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/Sleep.java
@@ -41,6 +41,7 @@
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/ModMail.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/util/Registry.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/ServerStart.java
+/Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/api/command_handler/discord/ExampleCommand.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/anticheat/AntiCheatManager.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/api/command_handler/CommandEvent.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/DiscordChatListener.java
