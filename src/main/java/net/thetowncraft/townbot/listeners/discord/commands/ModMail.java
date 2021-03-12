@@ -89,13 +89,10 @@ public class ModMail extends ListenerAdapter {
 				}
 				Member member = mentionedMembers.get(0);
 				member.getUser().openPrivateChannel().queue((channel -> {
-					String senderName = event.getMember().getEffectiveName();
-					String senderAvatar = event.getAuthor().getEffectiveAvatarUrl();
 
 					EmbedBuilder embed = new EmbedBuilder();
 					embed.setAuthor("ModMail from The Town!", null, event.getGuild().getIconUrl());
 					embed.setDescription(message);
-					embed.setFooter("From " + senderName, senderAvatar);
 
 					channel.sendMessage(embed.build()).queue();
 				}));
