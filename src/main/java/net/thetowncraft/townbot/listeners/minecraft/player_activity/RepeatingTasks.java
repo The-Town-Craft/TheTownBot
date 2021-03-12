@@ -22,6 +22,16 @@ public class RepeatingTasks {
     public static final long REPEATING_TICKS = 500;
     public static final long TICKS_IN_A_DAY = 1728000;
 
+    public static void doDailyTasks() {
+        String day = Util.getNameOfDay();
+
+        Constants.DEV_CHAT.sendMessage("It's " + day + "!").queue();
+
+        if(day.equalsIgnoreCase("Tuesday")) {
+            rewardActivePlayers();
+        }
+    }
+
     public static void updatePlayerActivity() {
         countAFKTicks();
         countActivityPoints();
