@@ -3,7 +3,7 @@ package net.thetowncraft.townbot.util;
 import java.text.DateFormatSymbols;
 import java.util.*;
 
-public class Util {
+public class Utils {
 
     /**
      * This method sorts a string/long HashMap by it's value
@@ -34,5 +34,9 @@ public class Util {
         int day = cal.get(Calendar.DAY_OF_WEEK);
 
         return weekdays[day];
+    }
+
+    public static String capFirstLetter(String string) {
+        return string.substring(0,1).toUpperCase() + string.substring(1).toLowerCase();
     }
 }

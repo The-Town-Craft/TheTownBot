@@ -47,6 +47,8 @@ public class CommandEvent {
         }
     }
     public static class Discord {
+
+        private final String[] args;
         private final GuildMessageReceivedEvent event;
         private final Guild guild;
         private final Member member;
@@ -61,6 +63,7 @@ public class CommandEvent {
 
         public Discord(GuildMessageReceivedEvent event, DiscordCommand command) {
             this.event = event;
+            this.args = event.getMessage().getContentRaw().split("\\s+");
             this.guild = event.getGuild();
             this.message = event.getMessage();
             this.channel = event.getChannel();
@@ -71,6 +74,18 @@ public class CommandEvent {
             this.messageIdLong = event.getMessageIdLong();
             this.isWebhookMessage = event.isWebhookMessage();
             this.command = command;
+        }
+
+        public Member getSelfMember() {
+            return event.getGuild().getSelfMember();
+        }
+
+        public User getSelfUser() {
+            return event.getJDA().getSelfUser();
+        }
+
+        public String[] getArgs() {
+            return args;
         }
 
         public GuildMessageReceivedEvent getEvent() {

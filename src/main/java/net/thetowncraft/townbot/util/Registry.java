@@ -30,7 +30,7 @@ public class Registry {
         DiscordCommand.registerCommands(
 
                 new ExampleCommand(),
-                new ResetActivity()
+                new Help()
 
         );
     }
@@ -56,7 +56,6 @@ public class Registry {
         builder.addEventListeners(new DiscordMute());
         builder.addEventListeners(new DiscordUnmute());
         builder.addEventListeners(new ServerStart());
-        builder.addEventListeners(new Help());
         builder.addEventListeners(new DiscordActiveCommand());
     }
     public static void registerSpigotListeners(JavaPlugin plugin) {

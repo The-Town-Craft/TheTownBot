@@ -4,6 +4,7 @@
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/Bot.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/Advancements.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/DiscordActiveCommand.java
+/Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/util/Utils.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/WorldChange.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/player_activity/active/ActivityManager.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/DiscordMute.java
@@ -11,7 +12,6 @@
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/api/command_handler/discord/DiscordCommand.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/commands/McUnmute.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/player_activity/RepeatingTasks.java
-/Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/util/Util.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/player_activity/PlayerJoin.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/commands/ActiveCommand.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/MinecraftChatListener.java

@@ -6,7 +6,7 @@ import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.AFKManager;
 import net.thetowncraft.townbot.util.Constants;
-import net.thetowncraft.townbot.util.Util;
+import net.thetowncraft.townbot.util.Utils;
 import net.dv8tion.jda.api.entities.Member;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,7 +23,7 @@ public class RepeatingTasks {
     public static final long TICKS_IN_A_DAY = 1728000;
 
     public static void doDailyTasks() {
-        String day = Util.getNameOfDay();
+        String day = Utils.getNameOfDay();
 
         Constants.DEV_CHAT.sendMessage("It's " + day + "!").queue();
 

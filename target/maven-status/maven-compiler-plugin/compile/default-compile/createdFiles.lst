@@ -10,6 +10,7 @@ net/thetowncraft/townbot/listeners/discord/commands/Help.class
 net/thetowncraft/townbot/listeners/discord/commands/Ban.class
 net/thetowncraft/townbot/listeners/discord/commands/DiscordMute.class
 net/thetowncraft/townbot/util/Constants.class
+net/thetowncraft/townbot/util/Utils.class
 net/thetowncraft/townbot/listeners/minecraft/commands/McUnmute.class
 net/thetowncraft/townbot/Bot.class
 net/thetowncraft/townbot/listeners/accountlink/LinkAccount.class
@@ -29,7 +30,6 @@ net/thetowncraft/townbot/listeners/minecraft/chat/Sleep.class
 net/thetowncraft/townbot/listeners/discord/commands/Whitelist.class
 net/thetowncraft/townbot/listeners/minecraft/player_activity/RepeatingTasks.class
 net/thetowncraft/townbot/listeners/discord/fun/Skin.class
-net/thetowncraft/townbot/util/Util.class
 net/thetowncraft/townbot/api/command_handler/CommandEvent.class
 net/thetowncraft/townbot/api/command_handler/CommandHandler$Discord.class
 net/thetowncraft/townbot/api/command_handler/CommandEvent$Discord.class

@@ -27,7 +27,6 @@ public class Whitelist extends ListenerAdapter {
 			if(args[1].equalsIgnoreCase("add")) {
 				if(args.length == 2) {
 					event.getChannel().sendMessage(usage).queue();
-					System.out.println("Sent usage message at line 29");
 					return;
 				}
 				OfflinePlayer player = Bukkit.getOfflinePlayer(args[2]);
