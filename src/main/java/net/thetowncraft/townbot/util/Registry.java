@@ -29,8 +29,18 @@ public class Registry {
     public static void registerDiscordCommands() {
         DiscordCommand.registerCommands(
 
+                //General Commands
                 new ExampleCommand(),
-                new Help()
+                new Help(),
+                new OnlinePlayers(),
+
+                //Staff Commands
+                new ModMail(),
+                new Ban(),
+                new Unban(),
+                new BanList(),
+                new Log(),
+                new Whitelist()
 
         );
     }
@@ -45,14 +55,10 @@ public class Registry {
     public static void registerJDAListeners(JDABuilder builder) {
         builder.addEventListeners(new CommandHandler.Discord());
         builder.addEventListeners(new DiscordChatListener());
-        builder.addEventListeners(new OnlinePlayers());
-        builder.addEventListeners(new Whitelist());
-        builder.addEventListeners(new Ban());
-        builder.addEventListeners(new ModMail());
+        builder.addEventListeners(new ModMailListener());
         builder.addEventListeners(new MemberJoin());
         builder.addEventListeners(new LinkAccount());
         builder.addEventListeners(new Skin());
-        builder.addEventListeners(new Log());
         builder.addEventListeners(new DiscordMute());
         builder.addEventListeners(new DiscordUnmute());
         builder.addEventListeners(new ServerStart());
