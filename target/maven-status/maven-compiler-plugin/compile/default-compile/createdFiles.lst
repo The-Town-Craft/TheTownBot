@@ -1,5 +1,6 @@
 net/thetowncraft/townbot/listeners/minecraft/chat/WitherSpawn.class
 net/thetowncraft/townbot/api/command_handler/discord/ExampleCommand.class
+net/thetowncraft/townbot/listeners/discord/commands/ModMailListener.class
 net/thetowncraft/townbot/Plugin.class
 net/thetowncraft/townbot/util/Registry.class
 net/thetowncraft/townbot/api/command_handler/CommandEvent$Minecraft.class
@@ -9,6 +10,7 @@ net/thetowncraft/townbot/listeners/minecraft/chat/CommandLog.class
 net/thetowncraft/townbot/listeners/discord/commands/Help.class
 net/thetowncraft/townbot/listeners/discord/commands/Ban.class
 net/thetowncraft/townbot/listeners/discord/commands/DiscordMute.class
+net/thetowncraft/townbot/listeners/discord/commands/Unban.class
 net/thetowncraft/townbot/util/Constants.class
 net/thetowncraft/townbot/util/Utils.class
 net/thetowncraft/townbot/listeners/minecraft/commands/McUnmute.class
@@ -23,8 +25,8 @@ net/thetowncraft/townbot/listeners/discord/MemberJoin.class
 net/thetowncraft/townbot/listeners/minecraft/chat/Raid.class
 net/thetowncraft/townbot/listeners/minecraft/chat/WorldChange.class
 net/thetowncraft/townbot/listeners/discord/commands/OnlinePlayers.class
+net/thetowncraft/townbot/listeners/discord/commands/BanList.class
 net/thetowncraft/townbot/listeners/minecraft/chat/PlayerCountStatus.class
-net/thetowncraft/townbot/listeners/discord/commands/ResetActivity.class
 net/thetowncraft/townbot/listeners/minecraft/chat/Enchants.class
 net/thetowncraft/townbot/listeners/minecraft/chat/Sleep.class
 net/thetowncraft/townbot/listeners/discord/commands/Whitelist.class

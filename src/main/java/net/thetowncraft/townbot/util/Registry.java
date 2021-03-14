@@ -34,12 +34,15 @@ public class Registry {
                 new Help(),
                 new DiscordActiveCommand(),
                 new OnlinePlayers(),
+                new Skin(),
 
                 //Staff Commands
                 new ModMail(),
                 new Ban(),
                 new Unban(),
                 new BanList(),
+                new DiscordMute(),
+                new DiscordUnmute(),
                 new Log(),
                 new Whitelist()
 
@@ -59,9 +62,6 @@ public class Registry {
         builder.addEventListeners(new ModMailListener());
         builder.addEventListeners(new MemberJoin());
         builder.addEventListeners(new LinkAccount());
-        builder.addEventListeners(new Skin());
-        builder.addEventListeners(new DiscordMute());
-        builder.addEventListeners(new DiscordUnmute());
         builder.addEventListeners(new ServerStart());
     }
     public static void registerSpigotListeners(JavaPlugin plugin) {

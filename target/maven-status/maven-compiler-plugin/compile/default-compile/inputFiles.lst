@@ -6,6 +6,7 @@
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/DiscordActiveCommand.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/util/Utils.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/WorldChange.java
+/Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/BanList.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/player_activity/active/ActivityManager.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/DiscordMute.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/OnlinePlayers.java
@@ -26,7 +27,7 @@
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/Raid.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/CommandLog.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/WitherSpawn.java
-/Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/ResetActivity.java
+/Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/ModMailListener.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/util/data/Config.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/util/Constants.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/Enchants.java
@@ -44,6 +45,7 @@
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/RuleReminders.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/player_activity/afk/AFKManager.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/Log.java
+/Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/Unban.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/ModMail.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/util/Registry.java
 /Users/cadenkoehl/IntelliJ/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/anticheat/AntiCheatManager.java
