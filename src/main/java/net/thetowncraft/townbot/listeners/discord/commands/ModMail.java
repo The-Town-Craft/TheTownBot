@@ -3,6 +3,7 @@ package net.thetowncraft.townbot.listeners.discord.commands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 
@@ -14,6 +15,7 @@ public class ModMail extends DiscordCommand {
     @Override
     public void execute(CommandEvent.Discord event) {
         String[] args = event.getArgs();
+        List<Message.Attachment> attachments = event.getMessage().getAttachments();
 
         if(args.length == 1) {
             event.getChannel().sendMessage(":x: Please specify a member to ModMail!").queue();
@@ -43,6 +45,11 @@ public class ModMail extends DiscordCommand {
 
                         channel.sendMessage(embed.build()).queue();
 
+                        for(Message.Attachment attachment : attachments) {
+                            String url = attachment.getUrl();
+                            channel.sendMessage(url).queue();
+                        }
+
                         event.getChannel().sendMessage("**Success!** ModMail was sent to **" + member.getUser().getAsTag() + "**!").queue();
                     }));
                 }
@@ -69,6 +76,12 @@ public class ModMail extends DiscordCommand {
                 embed.setDescription(message);
 
                 channel.sendMessage(embed.build()).queue();
+
+                for(Message.Attachment attachment : attachments) {
+                    String url = attachment.getUrl();
+                    channel.sendMessage(url).queue();
+                }
+
             }));
             event.getChannel().sendMessage("**Success!** ModMail was sent to **" + member.getUser().getAsTag() + "**!\nMessage: \"*" + message + "*\"").queue();
         }
