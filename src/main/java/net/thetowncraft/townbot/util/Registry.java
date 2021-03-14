@@ -32,6 +32,7 @@ public class Registry {
                 //General Commands
                 new ExampleCommand(),
                 new Help(),
+                new DiscordActiveCommand(),
                 new OnlinePlayers(),
 
                 //Staff Commands
@@ -62,7 +63,6 @@ public class Registry {
         builder.addEventListeners(new DiscordMute());
         builder.addEventListeners(new DiscordUnmute());
         builder.addEventListeners(new ServerStart());
-        builder.addEventListeners(new DiscordActiveCommand());
     }
     public static void registerSpigotListeners(JavaPlugin plugin) {
         registerSpigotListeners(plugin,
