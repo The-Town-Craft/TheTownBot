@@ -1,5 +1,7 @@
 package net.thetowncraft.townbot.listeners.discord.commands;
 
+import net.thetowncraft.townbot.api.command_handler.CommandEvent;
+import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.listeners.chatmute.MuteManager;
@@ -13,38 +15,43 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
-public class DiscordMute extends ListenerAdapter {
-    @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if(args[0].equalsIgnoreCase(Bot.prefix + "mute")) {
-            if(event.isWebhookMessage()) {
-                return;
-            }
-            if(event.getAuthor().isBot()) {
-                return;
-            }
-            Member member = event.getMember();
-            if(!member.hasPermission(Permission.BAN_MEMBERS)) {
-                event.getChannel().sendMessage(":x: You can't use that!").queue();
-                return;
-            }
-            if(args.length == 1) {
-                event.getChannel().sendMessage(":x: Please specify a player to mute!").queue();
-                return;
-            }
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
-            MuteManager manager = new MuteManager();
+public class DiscordMute extends DiscordCommand {
 
-            if(manager.mutePlayer(offlinePlayer)) {
-                EmbedBuilder embed = new EmbedBuilder();
-                embed.setColor(Constants.RED);
-                embed.setAuthor(offlinePlayer.getName() + " was muted!", null, SkinRender.renderHead(offlinePlayer));
-                event.getChannel().sendMessage(embed.build()).queue();
-            }
-            else {
-                event.getChannel().sendMessage(":x: Player is already muted!").queue();
-            }
+
+    @Override
+    public void execute(CommandEvent.Discord event) {
+        String[] args = event.getArgs();
+
+        if(args.length == 1) {
+            event.getChannel().sendMessage(":x: Please specify a player to mute!").queue();
+            return;
         }
+        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
+        MuteManager manager = new MuteManager();
+
+        if(manager.mutePlayer(offlinePlayer)) {
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setColor(Constants.RED);
+            embed.setAuthor(offlinePlayer.getName() + " was muted!", null, SkinRender.renderHead(offlinePlayer));
+            event.getChannel().sendMessage(embed.build()).queue();
+        }
+        else {
+            event.getChannel().sendMessage(":x: Player is already muted!").queue();
+        }
+    }
+
+    @Override
+    public String getName() {
+        return "mute";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Mute a player on the Minecraft server!";
+    }
+
+    @Override
+    public Permission getRequiredPermission() {
+        return Permission.VOICE_MUTE_OTHERS;
     }
 }

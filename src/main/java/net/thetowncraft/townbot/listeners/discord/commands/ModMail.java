@@ -1,107 +1,95 @@
 package net.thetowncraft.townbot.listeners.discord.commands;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
+import net.thetowncraft.townbot.api.command_handler.CommandEvent;
+import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import net.thetowncraft.townbot.Bot;
-import net.thetowncraft.townbot.util.Constants;
+public class ModMail extends DiscordCommand {
+    @Override
+    public void execute(CommandEvent.Discord event) {
+        String[] args = event.getArgs();
 
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
+        if(args.length == 1) {
+            event.getChannel().sendMessage(":x: Please specify a member to ModMail!").queue();
+            return;
+        }
 
-public class ModMail extends ListenerAdapter {
-	public void onPrivateMessageReceived(PrivateMessageReceivedEvent event) {
-		if(!event.getAuthor().isBot()) {
-			String message = event.getMessage().getContentDisplay();
-			String member = event.getJDA().getGuildById(Constants.TOWN_DISCORD_ID).getMember(event.getAuthor()).getEffectiveName();
-			
-			EmbedBuilder eb = new EmbedBuilder();
-			eb.setDescription(message);
-			eb.setAuthor("DM from " + member, null, event.getAuthor().getEffectiveAvatarUrl());
-			eb.setFooter("User ID: " + event.getAuthor().getId(), Constants.THE_TOWN.getIconUrl());
-			
-			event.getJDA().getTextChannelById("781421376086999040").sendMessage(eb.build()).queue();
-		}
-	}
+        String message = Arrays.stream(args).skip(2).collect(Collectors.joining(" "));
+        if(message.isEmpty()) {
+            event.getChannel().sendMessage(":x: Please specify a message!").queue();
+            return;
+        }
 
-	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-		String[] args = event.getMessage().getContentRaw().split("\\s+");
-		if(args[0].equalsIgnoreCase(Bot.prefix + "mm")) {
+        if(args[1].equalsIgnoreCase("all") || args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("@everyone")) {
+            List<Member> members = event.getGuild().getMembers();
 
-			if(event.isWebhookMessage()) return;
-			if(event.getAuthor().isBot()) return;
+            event.getChannel().sendMessage("Preparing to ModMail" + event.getGuild().getMemberCount() + " members with message \"" + message + "\"").queue();
 
-			if(!event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
-				event.getChannel().sendMessage(":x: You can't use that!").queue();
-				return;
-			}
+            for(Member member : members) {
+                try {
+                    if(member.getUser().isBot()) continue;
+                    if(member.hasPermission(Permission.ADMINISTRATOR) && !member.isOwner()) continue;
+                    member.getUser().openPrivateChannel().queue((channel -> {
 
-			if(args.length == 1) {
-				event.getChannel().sendMessage(":x: Please specify a member to ModMail!").queue();
-				return;
-			}
+                        EmbedBuilder embed = new EmbedBuilder();
+                        embed.setAuthor("ModMail from The Town!", null, event.getGuild().getIconUrl());
+                        embed.setDescription(message);
 
-			String message = Arrays.stream(args).skip(2).collect(Collectors.joining(" "));
-			if(message.isEmpty()) {
-				event.getChannel().sendMessage(":x: Please specify a message!").queue();
-				return;
-			}
+                        channel.sendMessage(embed.build()).queue();
 
-			if(args[1].equalsIgnoreCase("all") || args[1].equalsIgnoreCase("everyone") || args[1].equalsIgnoreCase("@everyone")) {
-				List<Member> members = event.getGuild().getMembers();
+                        event.getChannel().sendMessage("**Success!** ModMail was sent to **" + member.getUser().getAsTag() + "**!").queue();
+                    }));
+                }
+                catch(Exception ex) {
+                    event.getChannel().sendMessage(":x: **Something went wrong while messaging " + member.getEffectiveName() + "!** " + ex.getMessage()).queue();
+                }
+            }
 
-				event.getChannel().sendMessage("Preparing to ModMail" + event.getGuild().getMemberCount() + " members with message \"" + message + "\"").queue();
+            event.getChannel().sendMessage(":white_check_mark: **Finished!**").queue();
+            return;
+        }
 
-				for(Member member : members) {
-					try {
-						if(member.getUser().isBot()) continue;
-						if(member.hasPermission(Permission.ADMINISTRATOR) && !member.isOwner()) continue;
-						member.getUser().openPrivateChannel().queue((channel -> {
+        try {
+            List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
+            if(mentionedMembers.size() == 0) {
+                event.getChannel().sendMessage(":x: Please specify a member to ModMail!").queue();
+                return;
+            }
+            Member member = mentionedMembers.get(0);
+            member.getUser().openPrivateChannel().queue((channel -> {
 
-							EmbedBuilder embed = new EmbedBuilder();
-							embed.setAuthor("ModMail from The Town!", null, event.getGuild().getIconUrl());
-							embed.setDescription(message);
+                EmbedBuilder embed = new EmbedBuilder();
+                embed.setAuthor("ModMail from The Town!", null, event.getGuild().getIconUrl());
+                embed.setDescription(message);
 
-							channel.sendMessage(embed.build()).queue();
+                channel.sendMessage(embed.build()).queue();
+            }));
+            event.getChannel().sendMessage("**Success!** ModMail was sent to **" + member.getUser().getAsTag() + "**!\nMessage: \"*" + message + "*\"").queue();
+        }
+        catch(Exception ex) {
+            event.getChannel().sendMessage(":x: **Something went wrong!** " + ex.getMessage()).queue();
+            ex.printStackTrace();
+        }
+    }
 
-							event.getChannel().sendMessage("**Success!** ModMail was sent to **" + member.getUser().getAsTag() + "**!").queue();
-						}));
-					}
-					catch(Exception ex) {
-						event.getChannel().sendMessage(":x: **Something went wrong while messaging " + member.getEffectiveName() + "!** " + ex.getMessage()).queue();
-					}
-				}
+    @Override
+    public String getName() {
+        return "mm";
+    }
 
-				event.getChannel().sendMessage(":white_check_mark: **Finished!**").queue();
-				return;
-			}
+    @Override
+    public String getDescription() {
+        return "ModMail a member!";
+    }
 
-			try {
-				List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
-				if(mentionedMembers.size() == 0) {
-					event.getChannel().sendMessage(":x: Please specify a member to ModMail!").queue();
-					return;
-				}
-				Member member = mentionedMembers.get(0);
-				member.getUser().openPrivateChannel().queue((channel -> {
-
-					EmbedBuilder embed = new EmbedBuilder();
-					embed.setAuthor("ModMail from The Town!", null, event.getGuild().getIconUrl());
-					embed.setDescription(message);
-
-					channel.sendMessage(embed.build()).queue();
-				}));
-				event.getChannel().sendMessage("**Success!** ModMail was sent to **" + member.getUser().getAsTag() + "**!\nMessage: \"*" + message + "*\"").queue();
-			}
-			catch(Exception ex) {
-				event.getChannel().sendMessage(":x: **Something went wrong!** " + ex.getMessage()).queue();
-				ex.printStackTrace();
-			}
-		}
-	}
+    @Override
+    public Permission getRequiredPermission() {
+        return Permission.BAN_MEMBERS;
+    }
 }
