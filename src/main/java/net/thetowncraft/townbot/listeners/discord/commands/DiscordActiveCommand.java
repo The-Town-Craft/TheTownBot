@@ -1,6 +1,9 @@
 package net.thetowncraft.townbot.listeners.discord.commands;
 
+import net.dv8tion.jda.api.Permission;
 import net.thetowncraft.townbot.Bot;
+import net.thetowncraft.townbot.api.command_handler.CommandEvent;
+import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -11,27 +14,38 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.UUID;
 
-public class DiscordActiveCommand extends ListenerAdapter {
+public class DiscordActiveCommand extends DiscordCommand {
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        String[] args = event.getMessage().getContentRaw().split("\\s+");
-        if(args[0].equalsIgnoreCase(Bot.prefix + "active")) {
+    public void execute(CommandEvent.Discord event) {
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setTitle("Most Active Players");
 
-            EmbedBuilder embed = new EmbedBuilder();
-            embed.setTitle("Most Active Players");
+        String activePlayers = "";
 
-            String activePlayers = "";
-
-            int i = 1;
-            for(Map.Entry<String, Long> entry : ActivityManager.sortedPlayerActivityMap().entrySet()) {
-                activePlayers += i + ". " + Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName() + " (" + entry.getValue() + " activity points)\n";
-                i++;
-            }
-            if(i == 1) return;
-
-            embed.setDescription(activePlayers);
-
-            event.getChannel().sendMessage(embed.build()).queue();
+        int i = 1;
+        for(Map.Entry<String, Long> entry : ActivityManager.sortedPlayerActivityMap().entrySet()) {
+            activePlayers += i + ". " + Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName() + " (" + entry.getValue() + " activity points)\n";
+            i++;
         }
+        if(i == 1) return;
+
+        embed.setDescription(activePlayers);
+
+        event.getChannel().sendMessage(embed.build()).queue();
+    }
+
+    @Override
+    public String getName() {
+        return "active";
+    }
+
+    @Override
+    public String getDescription() {
+        return "See a list of most active players!";
+    }
+
+    @Override
+    public Permission getRequiredPermission() {
+        return null;
     }
 }

@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.thetowncraft.townbot.util.data.Config;
 
 public class Bot {
 
@@ -22,7 +23,7 @@ public class Bot {
      * Initializes the bot, and sets its activity, status, and intents.
      */
     public static void start() {
-        JDABuilder builder = JDABuilder.createDefault(Constants.TOKEN);
+        JDABuilder builder = JDABuilder.createDefault(Config.get("token"));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.playing("The Town SMP!"));
 

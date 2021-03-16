@@ -30,4 +30,12 @@ public abstract class DiscordCommand {
      * @return The Permission a member needs to be able to use this command, null if this command can be used by anyone.
      */
     public abstract Permission getRequiredPermission();
+
+    public static DiscordCommand getByName(String name) {
+        for(DiscordCommand cmd : COMMANDS) {
+            if (cmd.getName().equalsIgnoreCase(name)) return cmd;
+
+        }
+        return null;
+    }
 }

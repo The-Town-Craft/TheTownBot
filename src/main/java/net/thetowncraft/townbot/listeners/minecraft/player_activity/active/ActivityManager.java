@@ -1,7 +1,7 @@
 package net.thetowncraft.townbot.listeners.minecraft.player_activity.active;
 
 import net.thetowncraft.townbot.Plugin;
-import net.thetowncraft.townbot.util.Util;
+import net.thetowncraft.townbot.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
@@ -42,7 +42,7 @@ public class ActivityManager {
     }
 
     public static Map<String, Long> sortedPlayerActivityMap() {
-        return Util.sortByValue(PLAYER_ACTIVITY_MAP);
+        return Utils.sortByValue(PLAYER_ACTIVITY_MAP);
     }
 
     public static Map<String, Long> get3MostActivePlayers() {

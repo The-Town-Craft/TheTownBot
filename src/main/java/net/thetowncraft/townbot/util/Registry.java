@@ -29,8 +29,22 @@ public class Registry {
     public static void registerDiscordCommands() {
         DiscordCommand.registerCommands(
 
+                //General Commands
                 new ExampleCommand(),
-                new ResetActivity()
+                new Help(),
+                new DiscordActiveCommand(),
+                new OnlinePlayers(),
+                new Skin(),
+
+                //Staff Commands
+                new ModMail(),
+                new Ban(),
+                new Unban(),
+                new BanList(),
+                new DiscordMute(),
+                new DiscordUnmute(),
+                new Log(),
+                new Whitelist()
 
         );
     }
@@ -45,19 +59,10 @@ public class Registry {
     public static void registerJDAListeners(JDABuilder builder) {
         builder.addEventListeners(new CommandHandler.Discord());
         builder.addEventListeners(new DiscordChatListener());
-        builder.addEventListeners(new OnlinePlayers());
-        builder.addEventListeners(new Whitelist());
-        builder.addEventListeners(new Ban());
-        builder.addEventListeners(new ModMail());
+        builder.addEventListeners(new ModMailListener());
         builder.addEventListeners(new MemberJoin());
         builder.addEventListeners(new LinkAccount());
-        builder.addEventListeners(new Skin());
-        builder.addEventListeners(new Log());
-        builder.addEventListeners(new DiscordMute());
-        builder.addEventListeners(new DiscordUnmute());
         builder.addEventListeners(new ServerStart());
-        builder.addEventListeners(new Help());
-        builder.addEventListeners(new DiscordActiveCommand());
     }
     public static void registerSpigotListeners(JavaPlugin plugin) {
         registerSpigotListeners(plugin,

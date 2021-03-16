@@ -3,12 +3,17 @@ package net.thetowncraft.townbot.api.command_handler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
 
 public class CommandEvent {
 
@@ -47,6 +52,8 @@ public class CommandEvent {
         }
     }
     public static class Discord {
+
+        private final String[] args;
         private final GuildMessageReceivedEvent event;
         private final Guild guild;
         private final Member member;
@@ -61,6 +68,7 @@ public class CommandEvent {
 
         public Discord(GuildMessageReceivedEvent event, DiscordCommand command) {
             this.event = event;
+            this.args = event.getMessage().getContentRaw().split("\\s+");
             this.guild = event.getGuild();
             this.message = event.getMessage();
             this.channel = event.getChannel();
@@ -71,6 +79,22 @@ public class CommandEvent {
             this.messageIdLong = event.getMessageIdLong();
             this.isWebhookMessage = event.isWebhookMessage();
             this.command = command;
+        }
+
+        public Member getSelfMember() {
+            return event.getGuild().getSelfMember();
+        }
+
+        public User getSelfUser() {
+            return event.getJDA().getSelfUser();
+        }
+
+        public String[] getArgs() {
+            return args;
+        }
+
+        public JavaPlugin getPlugin() {
+            return Plugin.get();
         }
 
         public GuildMessageReceivedEvent getEvent() {
@@ -97,7 +121,7 @@ public class CommandEvent {
             return author;
         }
 
-        public JDA getJda() {
+        public JDA getJDA() {
             return jda;
         }
 
