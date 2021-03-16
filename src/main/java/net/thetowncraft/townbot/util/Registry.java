@@ -44,7 +44,8 @@ public class Registry {
                 new DiscordMute(),
                 new DiscordUnmute(),
                 new Log(),
-                new Whitelist()
+                new Whitelist(),
+                new RunMCCommand()
 
         );
     }
