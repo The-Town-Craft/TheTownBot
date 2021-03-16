@@ -6,6 +6,7 @@ import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
+import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
 import net.thetowncraft.townbot.listeners.minecraft.chat.*;
 import net.thetowncraft.townbot.listeners.minecraft.commands.ActiveCommand;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerJoin;
@@ -70,7 +71,6 @@ public class Registry {
                 new CommandHandler.Minecraft(),
                 new RuleReminders(),
                 new WitherSpawn(),
-                new PlayerCountStatus(),
                 new PlayerJoin(),
                 new McUnmute(),
                 new McMute(),
