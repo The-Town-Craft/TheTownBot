@@ -136,6 +136,5 @@ public class RepeatingTasks {
             if (file.delete()) System.out.println("Deleted file " + file.getPath());
             ActivityManager.PLAYER_ACTIVITY_MAP.clear();
         }
-        rewardActivePlayers();
     }
 }
