@@ -22,7 +22,7 @@ public class Constants {
 	public static final TextChannel ACTIVE_PLAYER_CHAT = Bot.jda.getTextChannelById("817928132652433468");
 	public static final String MC_CHAT = "790082482363957278";
 	public static final String MC_LOGS = "789927053985972265";
-	public static final String ANNOUNCEMENTS = "730976451725099034";
+	public static final String ANNOUNCEMENTS = "821378395139997757";
 	public static final String MODMAIL = "781421376086999040";
 	public static final String TOWN_DISCORD_ID = "730975912320827452";
 	public static final Guild THE_TOWN = Bot.jda.getGuildById("730975912320827452");
