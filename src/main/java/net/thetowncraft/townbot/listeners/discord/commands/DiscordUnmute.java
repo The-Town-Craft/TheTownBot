@@ -46,7 +46,7 @@ public class DiscordUnmute extends DiscordCommand {
 
     @Override
     public String getName() {
-        return "mute";
+        return "unmute";
     }
 
     @Override
