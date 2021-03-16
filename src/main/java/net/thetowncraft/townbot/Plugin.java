@@ -1,5 +1,6 @@
 package net.thetowncraft.townbot;
 
+import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.RepeatingTasks;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.util.Registry;
@@ -23,6 +24,7 @@ public class Plugin extends JavaPlugin {
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::updatePlayerActivity, 0, RepeatingTasks.REPEATING_TICKS);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, 5000, RepeatingTasks.TICKS_IN_A_DAY);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, PlayerCountStatus::update, 5000, RepeatingTasks.REPEATING_TICKS);
     }
 
     /**
