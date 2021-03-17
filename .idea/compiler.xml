@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="MinecordBot" />
+        <module name="TheTownBot" />
       </profile>
     </annotationProcessing>
   </component>

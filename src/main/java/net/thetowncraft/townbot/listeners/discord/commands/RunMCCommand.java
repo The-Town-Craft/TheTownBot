@@ -1,6 +1,8 @@
 package net.thetowncraft.townbot.listeners.discord.commands;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
@@ -25,7 +27,12 @@ public class RunMCCommand extends DiscordCommand {
             boolean success = Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
 
             if(success) {
-                event.getChannel().sendMessage(":white_check_mark: **Successfully executed command**!").queue();
+                event.getChannel().sendMessage(":white_check_mrk: **Successfully executed command**!").queue();
+                EmbedBuilder embed = new EmbedBuilder();
+                embed.setDescription(event.getMember().getAsMention()+" ran discord command `/" + command + "`");
+                embed.setColor(Constants.GREEN);
+                Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+
             }
             else {
                 event.getChannel().sendMessage(":x: **Unknown or incomplete command!**").queue();
