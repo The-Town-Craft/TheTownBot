@@ -27,7 +27,7 @@ public class RunMCCommand extends DiscordCommand {
             boolean success = Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), command);
 
             if(success) {
-                event.getChannel().sendMessage(":white_check_mrk: **Successfully executed command**!").queue();
+                event.getChannel().sendMessage(":white_check_mark: **Successfully executed command**!").queue();
                 EmbedBuilder embed = new EmbedBuilder();
                 embed.setDescription(event.getMember().getAsMention()+" ran minecraft command `/" + command + "`");
                 embed.setColor(Constants.GREEN);
