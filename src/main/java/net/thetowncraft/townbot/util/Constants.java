@@ -1,3 +1,4 @@
+
 package net.thetowncraft.townbot.util;
 
 import net.thetowncraft.townbot.Bot;

@@ -26,12 +26,13 @@ net/thetowncraft/townbot/listeners/minecraft/chat/Raid.class
 net/thetowncraft/townbot/listeners/minecraft/chat/WorldChange.class
 net/thetowncraft/townbot/listeners/discord/commands/OnlinePlayers.class
 net/thetowncraft/townbot/listeners/discord/commands/BanList.class
-net/thetowncraft/townbot/listeners/minecraft/chat/PlayerCountStatus.class
 net/thetowncraft/townbot/listeners/minecraft/chat/Enchants.class
 net/thetowncraft/townbot/listeners/minecraft/chat/Sleep.class
 net/thetowncraft/townbot/listeners/discord/commands/Whitelist.class
+net/thetowncraft/townbot/listeners/discord/commands/RunMCCommand.class
 net/thetowncraft/townbot/listeners/minecraft/player_activity/RepeatingTasks.class
 net/thetowncraft/townbot/listeners/discord/fun/Skin.class
+net/thetowncraft/townbot/listeners/minecraft/player_activity/PlayerCountStatus.class
 net/thetowncraft/townbot/api/command_handler/CommandEvent.class
 net/thetowncraft/townbot/api/command_handler/CommandHandler$Discord.class
 net/thetowncraft/townbot/api/command_handler/CommandEvent$Discord.class

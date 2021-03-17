@@ -29,7 +29,7 @@ public class RunMCCommand extends DiscordCommand {
             if(success) {
                 event.getChannel().sendMessage(":white_check_mrk: **Successfully executed command**!").queue();
                 EmbedBuilder embed = new EmbedBuilder();
-                embed.setDescription(event.getMember().getAsMention()+" ran discord command `/" + command + "`");
+                embed.setDescription(event.getMember().getAsMention()+" ran minecraft command `/" + command + "`");
                 embed.setColor(Constants.GREEN);
                 Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 

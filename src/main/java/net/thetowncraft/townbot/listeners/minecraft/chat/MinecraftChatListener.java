@@ -16,6 +16,7 @@ import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -99,7 +100,7 @@ public class MinecraftChatListener implements Listener {
 		Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
 		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 	}
-	
+
 	@EventHandler
 	public void onBan(PlayerQuitEvent event) {
 		if(event.getPlayer().isBanned()) {
