@@ -25,6 +25,8 @@ import net.md_5.bungee.api.ChatColor;
 
 public class MinecraftChatListener implements Listener {
 
+	AccountManager manager = AccountManager.getInstance();
+
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		Plugin plugin = Plugin.get();
@@ -87,7 +89,6 @@ public class MinecraftChatListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		AccountManager manager = AccountManager.getInstance();
 		Player player = event.getPlayer();
 		if(!manager.isLinked(player)) {
 			return;
@@ -102,11 +103,27 @@ public class MinecraftChatListener implements Listener {
 	}
 
 	@EventHandler
+	public void onPlayerKick(PlayerKickEvent event) {
+		Player player = event.getPlayer();
+		if(!manager.isLinked(player)) {
+			return;
+		}
+		String playerName = event.getPlayer().getName();
+		EmbedBuilder embed = new EmbedBuilder();
+		embed.setAuthor(playerName + " was kicked", null, SkinRender.renderHead(event.getPlayer()));
+		embed.setDescription("Reason: " + event.getReason());
+		embed.setColor(0xb83838);
+
+		Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+	}
+
+	@EventHandler
 	public void onBan(PlayerQuitEvent event) {
 		if(event.getPlayer().isBanned()) {
 			String player = event.getPlayer().getName();
 			EmbedBuilder embed = new EmbedBuilder();
-			embed.setTitle(player + " was banned");
+			embed.setAuthor(player + " was banned", null, SkinRender.renderHead(event.getPlayer()));
 			embed.setColor(0xb83838);
 			
 			Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
