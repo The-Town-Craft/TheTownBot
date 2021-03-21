@@ -51,6 +51,11 @@ public class ActivityManager {
         int i = 1;
         for (Map.Entry<String, Long> entry : sortedPlayerActivityMap().entrySet()) {
             if(i > 3) break;
+
+            Member member = AccountManager.getDiscordMember(entry.getKey());
+            if(member.getRoles().contains(Constants.ADMIN_ROLE){
+                continue;
+            }
             players.put(entry.getKey(), entry.getValue());
             i++;
         }

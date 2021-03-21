@@ -18,8 +18,11 @@ public class PlayerCountStatus {
         if(players < 2) {
             presence.setActivity(Activity.playing("The Town SMP"));
         }
+        else if(players == 1){
+            presence.setActivity(Activity.playing("With 1 Player Online!"))
+        }
         else {
-            presence.setActivity(Activity.playing(players + " Players Online!"));
+            presence.setActivity(Activity.playing("With " + players + " Players Online!"));
         }
     }
 }
