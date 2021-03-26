@@ -25,8 +25,6 @@ public class RepeatingTasks {
     public static void doDailyTasks() {
         String day = Utils.getNameOfDay();
 
-        Constants.DEV_CHAT.sendMessage("It's " + day + "!").queue();
-
         if(day.equalsIgnoreCase("Tuesday")) {
             rewardActivePlayers();
         }
