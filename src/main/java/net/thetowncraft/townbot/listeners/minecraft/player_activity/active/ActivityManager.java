@@ -1,6 +1,9 @@
 package net.thetowncraft.townbot.listeners.minecraft.player_activity.active;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Plugin;
+import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -52,8 +55,9 @@ public class ActivityManager {
         for (Map.Entry<String, Long> entry : sortedPlayerActivityMap().entrySet()) {
             if(i > 3) break;
 
-            Member member = AccountManager.getDiscordMember(entry.getKey());
-            if(member.getRoles().contains(Constants.ADMIN_ROLE){
+            Member member = AccountManager.getInstance().getDiscordMember(Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())));
+
+            if(member.getRoles().contains(Constants.ADMIN_ROLE)) {
                 continue;
             }
             players.put(entry.getKey(), entry.getValue());
