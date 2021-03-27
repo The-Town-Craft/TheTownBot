@@ -15,7 +15,7 @@ public class Plugin extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        Bot.start();
+        Bot.enable();
 
         Registry.registerSpigotListeners(this);
         Registry.registerMinecraftCommands();
@@ -32,7 +32,7 @@ public class Plugin extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        Bot.jda.shutdownNow();
+        Bot.disable();
     }
 
     /**

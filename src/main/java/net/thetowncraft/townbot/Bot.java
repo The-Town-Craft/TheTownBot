@@ -2,6 +2,8 @@ package net.thetowncraft.townbot;
 
 import javax.security.auth.login.LoginException;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.Registry;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -22,7 +24,7 @@ public class Bot {
     /**
      * Initializes the bot, and sets its activity, status, and intents.
      */
-    public static void start() {
+    public static void enable() {
         JDABuilder builder = JDABuilder.createDefault(Config.get("token"));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.playing("The Town SMP!"));
@@ -42,5 +44,19 @@ public class Bot {
         catch (LoginException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Stops & disconnects the bot. This method is invoked when the server stops.
+     */
+    public static void disable() {
+
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setAuthor("Server stopping!", null, "https://images-ext-2.discordapp.net/external/Q2AE1BtpdBXC7B0W4-Jb4R-GhCQ48RzBeaW_DHZs1YQ/https/cdn.discordapp.com/icons/730975912320827452/a_1440022f530b68ab784fa8bc1d536650.gif");
+        embed.setColor(Constants.RED);
+        Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+        Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).complete();
+
+        Bot.jda.shutdownNow();
     }
 }
