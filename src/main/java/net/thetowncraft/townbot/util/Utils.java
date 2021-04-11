@@ -1,5 +1,8 @@
 package net.thetowncraft.townbot.util;
 
+import net.thetowncraft.townbot.Plugin;
+
+import java.io.File;
 import java.text.DateFormatSymbols;
 import java.util.*;
 
@@ -34,6 +37,15 @@ public class Utils {
         int day = cal.get(Calendar.DAY_OF_WEEK);
 
         return weekdays[day];
+    }
+
+    /**
+     * @return A simple & easy to read representation of the current date
+     */
+    public static String getSimpleDate() {
+        String dateRaw = new Date().toString();
+        String[] dateSplit = dateRaw.split("\\s+");
+        return dateSplit[1] + "-" + dateSplit[2] + "-" + dateSplit[5];
     }
 
     public static String capFirstLetter(String string) {

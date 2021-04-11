@@ -1,7 +1,7 @@
 package net.thetowncraft.townbot;
 
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
-import net.thetowncraft.townbot.listeners.minecraft.player_activity.RepeatingTasks;
+import net.thetowncraft.townbot.util.RepeatingTasks;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.util.Registry;
 import org.bukkit.Bukkit;

@@ -1,14 +1,9 @@
 package net.thetowncraft.townbot.listeners.discord.commands;
 
-import net.thetowncraft.townbot.Bot;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
-import org.bukkit.command.Command;
-import org.jetbrains.annotations.NotNull;
+import net.thetowncraft.townbot.util.data.Data;
 
 import java.io.File;
 
@@ -19,10 +14,7 @@ public class Log extends DiscordCommand {
 
         if(args.length == 1) {
             try {
-                File dir = new File("plugins/DetailedLogs/compiled-log");
-                String[] paths = dir.list();
-                String path = dir + "/" + paths[(paths.length - 1)];
-                File file = new File(path);
+                File file = Data.getLogFile();
                 event.getChannel().sendMessage("Here is the compiled log file from " + file.getName().replace(".txt", "")).addFile(file).queue();
             }
             catch (Exception ex) {
@@ -32,13 +24,13 @@ public class Log extends DiscordCommand {
             return;
         }
         try {
-            File dir = new File("plugins/DetailedLogs/compiled-log");
-            File file = new File(dir,args[1] + ".txt");
+            String fileName = args[1].replace(".txt", "");
+            File file = Data.getLogFile(fileName);
             if(!file.exists()) {
                 event.getChannel().sendMessage(":x: Log file was not found!").queue();
                 return;
             }
-            event.getChannel().sendMessage("Here is the compiled log file from " + args[1]).addFile(file).queue();
+            event.getChannel().sendMessage("Here is the compiled log file from " + fileName).addFile(file).queue();
         }
         catch (Exception ex) {
             ex.printStackTrace();

@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.listeners.minecraft.player_activity;
+package net.thetowncraft.townbot.util;
 
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
