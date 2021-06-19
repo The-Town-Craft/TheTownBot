@@ -24,6 +24,7 @@ public class ActiveCommand implements Listener {
                 i++;
             }
             if(i != 1) player.sendMessage(activePlayers);
+            else player.sendMessage(ChatColor.RED + "There are currently no active players this week!");
         }
     }
 }

@@ -29,6 +29,9 @@ public class Constants {
 	public static final String TOWN_DISCORD_ID = "730975912320827452";
 	public static final Guild THE_TOWN = Bot.jda.getGuildById("730975912320827452");
 	public static final String WHITELIST_APP_CHANNEL = "815691992129601537";
+	public static final TextChannel SHOP_CHANNEL = Bot.jda.getTextChannelById("854843843387064341");
+	public static final String CHECK_MARK = "✅";
+	public static final String X = "❌";
 	public static final int GREEN = 0x50bb5f;
 	public static final int RED = 0xb83838;
 	public static final int PURPLE = 0x01d1fa;

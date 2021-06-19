@@ -13,3 +13,14 @@ commands:
 
   active:
     description: See the top 3 most active players!
+
+  pay:
+    description: Pay a player a certain amount of coins!
+    usage: /pay <player> <amount>
+
+  bal:
+    description: See your coin balance!
+    usage: /balance <player>
+
+  baltop:
+    description: View the economy leaderboard!

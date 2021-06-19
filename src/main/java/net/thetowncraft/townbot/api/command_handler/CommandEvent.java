@@ -11,36 +11,27 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
 
 public class CommandEvent {
 
     public static class Minecraft {
 
-        private final String message;
+        private final String[] args;
         private final Player player;
-        private final HandlerList handlers;
         private final MinecraftCommand command;
 
-        public Minecraft(PlayerCommandPreprocessEvent event, MinecraftCommand command) {
-            this.message = event.getMessage();
-            this.player = event.getPlayer();
-            this.handlers = event.getHandlers();
+        public Minecraft(Player player, String[] args, MinecraftCommand command) {
+            this.args = args;
+            this.player = player;
             this.command = command;
         }
 
-        public String getMessage() {
-            return message;
+        public String[] getArgs() {
+            return args;
         }
 
         public Player getPlayer() {
             return player;
-        }
-
-        public HandlerList getHandlers() {
-            return handlers;
         }
 
         public Member getDiscordMember() {

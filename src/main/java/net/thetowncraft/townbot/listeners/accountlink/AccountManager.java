@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Manages Discord & Minecraft Account linking!
@@ -23,6 +23,28 @@ import java.util.Scanner;
 public class AccountManager {
 
     private AccountManager() {}
+
+    private static final Map<String, String> ACCOUNTS = new HashMap<>();
+
+    public static void loadAccounts() {
+        File dir = new File(Plugin.get().getDataFolder(), "account");
+        dir.mkdirs();
+
+        for(String fileName : Objects.requireNonNull(dir.list())) {
+            if(!fileName.contains(".txt")) continue;
+            File file = new File(dir, fileName);
+            fileName = fileName.replace(".txt", "");
+            String discordID;
+            try {
+                Scanner scan = new Scanner(file);
+                discordID = scan.nextLine();
+            } catch (FileNotFoundException e) {
+                continue;
+            }
+            ACCOUNTS.put(discordID, fileName);
+        }
+        System.out.println("LOADED ACCOUNTS: " + ACCOUNTS.size());
+    }
 
     /**
      * @param member A member
@@ -93,6 +115,9 @@ public class AccountManager {
     }
 
     public void linkPlayer(OfflinePlayer player, Member member) {
+
+        ACCOUNTS.put(member.getId(), player.getUniqueId().toString());
+
         try {
             member.modifyNickname(player.getName()).queue();
             System.out.println("Successfully modified " + player.getName() + "'s nickname!");
@@ -107,31 +132,34 @@ public class AccountManager {
         char color = getMinecraftChatColor(member).getChar();
 
         //Assigns the player their correct tab ranks
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),  "tab player " + player.getName() + " tagprefix &" + color);
 
-        if(member.getRoles().contains(Constants.MAYOR_ROLE)) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &5 [mayor]");
-            return;
-        }
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),  "tab player " + player.getName() + " tagprefix &" + color);
 
-        if(member.getRoles().contains(Constants.VICE_MAYOR_ROLE)) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &6 [vice mayor]");
-            return;
-        }
+            if(member.getRoles().contains(Constants.MAYOR_ROLE)) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &5 [mayor]");
+                return;
+            }
 
-        if(member.getRoles().contains(Constants.LAWYER_ROLE)) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &e [lawyer]");
-            return;
-        }
+            if(member.getRoles().contains(Constants.VICE_MAYOR_ROLE)) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &6 [vice mayor]");
+                return;
+            }
 
-        if(member.getRoles().contains(Constants.PUBLIC_WORKS_ROLE)) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &b [public works manager]");
-            return;
-        }
+            if(member.getRoles().contains(Constants.LAWYER_ROLE)) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &e [lawyer]");
+                return;
+            }
 
-        if(member.getRoles().contains(Constants.TOWN_MEMBER_ROLE)) {
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &2 [town member]");
-        }
+            if(member.getRoles().contains(Constants.PUBLIC_WORKS_ROLE)) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &b [public works manager]");
+                return;
+            }
+
+            if(member.getRoles().contains(Constants.TOWN_MEMBER_ROLE)) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &2 [town member]");
+            }
+        });
     }
     public String generatePassword(OfflinePlayer player) {
         Plugin plugin = Plugin.get();
@@ -170,6 +198,11 @@ public class AccountManager {
             return null;
         }
         return Bot.jda.getGuildById(Constants.TOWN_DISCORD_ID).getMemberById(userId);
+    }
+    public OfflinePlayer getMinecraftPlayer(Member member) {
+        String uuid = ACCOUNTS.get(member.getId());
+        if(uuid == null) return null;
+        return Bukkit.getOfflinePlayer(UUID.fromString(uuid));
     }
 
     public static AccountManager getInstance() {

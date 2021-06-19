@@ -19,6 +19,13 @@ public class ActivityManager {
 
     public static final Map<String, Long> PLAYER_ACTIVITY_MAP = new HashMap<>();
 
+    public static int getActivityPoints(OfflinePlayer player) {
+        Long activityLong = PLAYER_ACTIVITY_MAP.get(player.getUniqueId().toString());
+        if(activityLong == null) return 0;
+
+        return activityLong.intValue();
+    }
+
     /**
      * Loads the activity points of a player, from their file
      */
@@ -45,7 +52,7 @@ public class ActivityManager {
     }
 
     public static Map<String, Long> sortedPlayerActivityMap() {
-        return Utils.sortByValue(PLAYER_ACTIVITY_MAP);
+        return Utils.sortByLongValue(PLAYER_ACTIVITY_MAP);
     }
 
     public static Map<String, Long> get3MostActivePlayers() {

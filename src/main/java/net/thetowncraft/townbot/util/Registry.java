@@ -4,19 +4,18 @@ import net.thetowncraft.townbot.api.command_handler.CommandHandler;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
+import net.thetowncraft.townbot.economy.commands.*;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
+import net.thetowncraft.townbot.listeners.discord.commands.AddActivityPointsCommand;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
-import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
+import net.thetowncraft.townbot.listeners.minecraft.commands.*;
 import net.thetowncraft.townbot.listeners.minecraft.chat.*;
-import net.thetowncraft.townbot.listeners.minecraft.commands.ActiveCommand;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerJoin;
 import net.thetowncraft.townbot.listeners.discord.DiscordChatListener;
 import net.thetowncraft.townbot.listeners.discord.MemberJoin;
 import net.thetowncraft.townbot.listeners.discord.ServerStart;
 import net.thetowncraft.townbot.listeners.discord.fun.Skin;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.AFKListener;
-import net.thetowncraft.townbot.listeners.minecraft.commands.McMute;
-import net.thetowncraft.townbot.listeners.minecraft.commands.McUnmute;
 import net.dv8tion.jda.api.JDABuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -46,16 +45,33 @@ public class Registry {
                 new DiscordUnmute(),
                 new Log(),
                 new Whitelist(),
-                new RunMCCommand()
+                new RunMCCommand(),
+
+                //Activity Points
+                new AddActivityPointsCommand(),
+                new SubtractActivityPointsCommand(),
+
+                //Economy
+                new AddCoins(),
+                new Bal(),
+                new BalTop(),
+                new SetCoins(),
+                new SubtractCoins(),
+                new Pay.Discord()
 
         );
     }
 
     public static void registerMinecraftCommands() {
         MinecraftCommand.registerCommands(
-
-
+                new Pay.Minecraft(),
+                new Bal.MC(),
+                new BalTop.MC()
         );
+    }
+
+    public static void registerCosmetics() {
+
     }
 
     public static void registerJDAListeners(JDABuilder builder) {
@@ -68,7 +84,6 @@ public class Registry {
     }
     public static void registerSpigotListeners(JavaPlugin plugin) {
         registerSpigotListeners(plugin,
-                new CommandHandler.Minecraft(),
                 new RuleReminders(),
                 new WitherSpawn(),
                 new PlayerJoin(),

@@ -16,26 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class CommandHandler {
 
-    public static class Minecraft implements Listener {
-        @EventHandler
-        public void onCommand(PlayerCommandPreprocessEvent event) {
-            try {
-                for(MinecraftCommand cmd : MinecraftCommand.COMMANDS) {
-                    if(event.getMessage().equals(cmd.getName())) {
-                        if(!event.getPlayer().isOp() && cmd.isAdminCommand()) {
-                            event.getPlayer().sendMessage(ChatColor.RED + "You do not have permission to use this command!");
-                            return;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex) {
-                Bukkit.getServer().broadcastMessage("[ERROR]: " + ChatColor.RED + ex);
-                Constants.DEV_CHAT.sendMessage(":x: [**" + Constants.DEV_ROLE.getAsMention() + "**] **An exception has occurred with a Minecraft command!** `" + ex + "`").queue();
-            }
-        }
-    }
-
     public static class Discord extends ListenerAdapter {
         @Override
         public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
@@ -60,7 +40,8 @@ public class CommandHandler {
                 }
             }
             catch (Exception ex) {
-                Constants.DEV_CHAT.sendMessage(":x: [**" + Constants.DEV_ROLE.getAsMention() + "**] **An exception has occurred with a Minecraft command!** `" + ex + "`").queue();
+                Constants.DEV_CHAT.sendMessage(":x: [**" + Constants.DEV_ROLE.getAsMention() + "**] **An exception has occurred with a Discord command!** `" + ex + "`").queue();
+                ex.printStackTrace();
             }
         }
     }

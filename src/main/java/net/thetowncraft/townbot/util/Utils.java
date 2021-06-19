@@ -13,7 +13,7 @@ public class Utils {
      * @param unsortedMap An unsorted map
      * @return The sorted map
      */
-    public static HashMap<String, Long> sortByValue(Map<String, Long> unsortedMap) {
+    public static HashMap<String, Long> sortByLongValue(Map<String, Long> unsortedMap) {
         List<Map.Entry<String, Long>> list =
                 new LinkedList<>(unsortedMap.entrySet());
 
@@ -21,7 +21,20 @@ public class Utils {
 
         HashMap<String, Long> sortedMap = new LinkedHashMap<>();
         for (Map.Entry<String, Long> entry : list) {
-            sortedMap.put(entry.getKey(), entry.getValue());
+            if(entry.getValue() != 0) sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedMap;
+    }
+
+    public static HashMap<String, Integer> sortByIntValue(Map<String, Integer> unsortedMap) {
+        List<Map.Entry<String, Integer>> list =
+                new LinkedList<>(unsortedMap.entrySet());
+
+        list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+
+        HashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : list) {
+            if(entry.getValue() != 0) sortedMap.put(entry.getKey(), entry.getValue());
         }
         return sortedMap;
     }

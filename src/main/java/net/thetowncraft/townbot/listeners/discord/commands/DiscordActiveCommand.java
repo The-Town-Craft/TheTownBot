@@ -24,10 +24,16 @@ public class DiscordActiveCommand extends DiscordCommand {
 
         int i = 1;
         for(Map.Entry<String, Long> entry : ActivityManager.sortedPlayerActivityMap().entrySet()) {
-            activePlayers += i + ". " + Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName() + " (" + entry.getValue() + " activity points)\n";
+            String name = Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())).getName();
+            if(name == null) continue;
+            
+            activePlayers += i + ". " + name + " (" + entry.getValue() + " activity points)\n";
             i++;
         }
-        if(i == 1) return;
+        if(i == 1) {
+            event.getChannel().sendMessage(":x: There are currently no active players this week!").queue();
+            return;
+        }
 
         embed.setDescription(activePlayers);
 
