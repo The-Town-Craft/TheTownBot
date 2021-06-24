@@ -1,9 +1,11 @@
 net/thetowncraft/townbot/listeners/minecraft/chat/WitherSpawn.class
 net/thetowncraft/townbot/api/command_handler/discord/ExampleCommand.class
+net/thetowncraft/townbot/util/Rarity.class
 net/thetowncraft/townbot/listeners/discord/commands/ModMailListener.class
 net/thetowncraft/townbot/Plugin.class
 net/thetowncraft/townbot/util/Registry.class
 net/thetowncraft/townbot/api/command_handler/CommandEvent$Minecraft.class
+net/thetowncraft/townbot/economy/cosmetics/BuyCosmeticListener.class
 net/thetowncraft/townbot/util/SkinRender.class
 net/thetowncraft/townbot/listeners/minecraft/chat/RuleReminders.class
 net/thetowncraft/townbot/listeners/minecraft/chat/CommandLog.class
@@ -20,11 +22,16 @@ net/thetowncraft/townbot/listeners/minecraft/commands/McUnmute.class
 net/thetowncraft/townbot/listeners/discord/commands/SubtractActivityPointsCommand.class
 net/thetowncraft/townbot/economy/commands/Pay.class
 net/thetowncraft/townbot/Bot.class
+net/thetowncraft/townbot/economy/cosmetics/Cosmetic.class
+net/thetowncraft/townbot/listeners/patches/AnvilItemDupePatch.class
 net/thetowncraft/townbot/listeners/accountlink/LinkAccount.class
 net/thetowncraft/townbot/listeners/discord/commands/DiscordActiveCommand.class
 net/thetowncraft/townbot/listeners/discord/commands/DiscordUnmute.class
 net/thetowncraft/townbot/listeners/minecraft/player_activity/afk/AFKListener.class
+net/thetowncraft/townbot/economy/cosmetics/CosmeticsManager.class
+net/thetowncraft/townbot/economy/cosmetics/TestCosmetic.class
 net/thetowncraft/townbot/listeners/minecraft/chat/Advancements.class
+net/thetowncraft/townbot/economy/cosmetics/BuyCosmeticListener$2.class
 net/thetowncraft/townbot/listeners/discord/MemberJoin.class
 net/thetowncraft/townbot/listeners/minecraft/chat/Raid.class
 net/thetowncraft/townbot/listeners/minecraft/chat/WorldChange.class
@@ -38,6 +45,7 @@ net/thetowncraft/townbot/listeners/discord/commands/Whitelist.class
 net/thetowncraft/townbot/listeners/discord/commands/RunMCCommand.class
 net/thetowncraft/townbot/listeners/discord/fun/Skin.class
 net/thetowncraft/townbot/listeners/minecraft/player_activity/PlayerCountStatus.class
+net/thetowncraft/townbot/economy/cosmetics/CosmeticListCommand.class
 net/thetowncraft/townbot/economy/commands/UpdateCoinCommand.class
 net/thetowncraft/townbot/api/command_handler/CommandEvent.class
 net/thetowncraft/townbot/api/command_handler/CommandHandler$Discord.class
@@ -50,6 +58,7 @@ net/thetowncraft/townbot/listeners/discord/commands/ModMail.class
 net/thetowncraft/townbot/listeners/minecraft/commands/McMute.class
 net/thetowncraft/townbot/listeners/discord/DiscordChatListener.class
 net/thetowncraft/townbot/listeners/minecraft/player_activity/afk/AFKManager.class
+net/thetowncraft/townbot/economy/cosmetics/BuyCosmeticListener$1.class
 net/thetowncraft/townbot/util/data/Data.class
 net/thetowncraft/townbot/api/command_handler/discord/DiscordCommand.class
 net/thetowncraft/townbot/economy/commands/SetCoins.class

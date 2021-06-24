@@ -1,5 +1,6 @@
 package net.thetowncraft.townbot.util.data;
 
+import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.util.Utils;
 import org.json.JSONObject;
 
@@ -39,6 +40,6 @@ public class Data {
      * @return The log file from that date
      */
     public static File getLogFile(String name) {
-        return new File("DetailedLogs/compiled-log/" + name + ".txt");
+        return new File("plugins/DetailedLogs/compiled-log/" + name + ".txt");
     }
 }

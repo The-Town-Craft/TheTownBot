@@ -26,7 +26,7 @@ public class AFKManager {
 
         if(dir.mkdirs()) System.out.println(dir.getPath() + " was created!");
 
-        File file = new File(dir, player.getUniqueId().toString() + ".txt");
+        File file = new File(dir, player.getUniqueId() + ".txt");
 
         try {
             if (afk) {

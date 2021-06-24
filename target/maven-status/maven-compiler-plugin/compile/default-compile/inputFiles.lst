@@ -5,9 +5,11 @@
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/MemberJoin.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/player_activity/PlayerCountStatus.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/BanList.java
+/Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/cosmetics/TestCosmetic.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/commands/SubtractCoins.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/Raid.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/api/command_handler/minecraft/MinecraftCommand.java
+/Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/util/Rarity.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/CommandLog.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/WitherSpawn.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/DiscordUnmute.java
@@ -29,6 +31,8 @@
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/commands/AddCoins.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/OnlinePlayers.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/fun/Skin.java
+/Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/patches/AnvilItemDupePatch.java
+/Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/cosmetics/CosmeticsManager.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/accountlink/LinkAccount.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/Bot.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/anticheat/AntiCheatManager.java
@@ -41,10 +45,12 @@
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/player_activity/afk/AFKManager.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/Ban.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/commands/Pay.java
+/Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/cosmetics/CosmeticListCommand.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/commands/BalTop.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/RunMCCommand.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/util/RepeatingTasks.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/commands/McUnmute.java
+/Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/cosmetics/Cosmetic.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/chatmute/MuteManager.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/Enchants.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/util/data/Data.java
@@ -60,4 +66,5 @@
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/EconomyManager.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/MinecraftChatListener.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/WorldChange.java
+/Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/cosmetics/BuyCosmeticListener.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/Plugin.java

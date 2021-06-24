@@ -1,6 +1,8 @@
 package net.thetowncraft.townbot.economy.cosmetics;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.util.Constants;
@@ -44,11 +46,14 @@ public class CosmeticsManager {
 
         EmbedBuilder embed = cosmetic.getShopMessageEmbedBuilder();
 
-        Constants.SHOP_CHANNEL.sendMessage(embed.build()).queue(message -> {
-            File file = new File(dir, message.getId() + ".txt");
-            if(file.exists()) {
+        Bot.jda.getTextChannelById("854843843387064341").sendMessage(embed.build()).queue(message -> {
+
+            if(messageExists(cosmetic.id)) {
                 return;
             }
+
+            File file = new File(dir, message.getId() + ".txt");
+
             try {
                 FileWriter write = new FileWriter(file);
                 write.write(id);
@@ -59,6 +64,25 @@ public class CosmeticsManager {
             }
             message.addReaction("\uD83D\uDCB0").queue();
         });
+    }
+
+    private static boolean messageExists(String cosmeticId) {
+        File dir = new File(Plugin.get().getDataFolder(), "cosmetics/shop/message");
+        dir.mkdirs();
+
+        for(String fileName : Objects.requireNonNull(dir.list())) {
+            if(!fileName.contains(".txt")) continue;
+
+            try {
+                Scanner scan = new Scanner(new File(dir, fileName));
+                if(cosmeticId.equals(scan.nextLine())) {
+                    return Bot.jda.getTextChannelById(fileName.replace(".txt", "")) != null;
+                }
+            } catch (FileNotFoundException e) {
+                //
+            }
+        }
+        return false;
     }
 
     public static Cosmetic getCosmeticByShopMessage(String messageId) {

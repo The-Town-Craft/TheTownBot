@@ -5,6 +5,10 @@ import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.economy.commands.*;
+import net.thetowncraft.townbot.economy.cosmetics.BuyCosmeticListener;
+import net.thetowncraft.townbot.economy.cosmetics.CosmeticListCommand;
+import net.thetowncraft.townbot.economy.cosmetics.CosmeticsManager;
+import net.thetowncraft.townbot.economy.cosmetics.TestCosmetic;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.discord.commands.AddActivityPointsCommand;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
@@ -57,7 +61,8 @@ public class Registry {
                 new BalTop(),
                 new SetCoins(),
                 new SubtractCoins(),
-                new Pay.Discord()
+                new Pay.Discord(),
+                new CosmeticListCommand()
 
         );
     }
@@ -71,7 +76,8 @@ public class Registry {
     }
 
     public static void registerCosmetics() {
-
+        CosmeticsManager.register("test", new TestCosmetic());
+        System.out.println("Registered " + CosmeticsManager.getCosmetics().size() + " cosmetics!");
     }
 
     public static void registerJDAListeners(JDABuilder builder) {
@@ -81,6 +87,7 @@ public class Registry {
         builder.addEventListeners(new MemberJoin());
         builder.addEventListeners(new LinkAccount());
         builder.addEventListeners(new ServerStart());
+        builder.addEventListeners(new BuyCosmeticListener());
     }
     public static void registerSpigotListeners(JavaPlugin plugin) {
         registerSpigotListeners(plugin,

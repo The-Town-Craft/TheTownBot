@@ -25,6 +25,6 @@ public class SkinRender {
      * @return An image URL of the rendered face
      */
     public static String renderFace(OfflinePlayer player) {
-        return "https://visage.surgeplay.com/head/500/" + player.getUniqueId().toString() + ".png";
+        return "https://visage.surgeplay.com/face/500/" + player.getUniqueId().toString() + ".png";
     }
 }

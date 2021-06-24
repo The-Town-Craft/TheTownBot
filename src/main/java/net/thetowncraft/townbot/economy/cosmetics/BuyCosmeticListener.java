@@ -16,21 +16,25 @@ import java.util.concurrent.TimeUnit;
 
 public class BuyCosmeticListener extends ListenerAdapter {
 
-    private static List<String> buyCooldown = new ArrayList<>();
+    private static final List<String> buyCooldown = new ArrayList<>();
     private static Map<String, String> buyers = new HashMap<>();
 
     @Override
     public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
+        Member member = event.getMember();
+        if(member.getUser().isBot()) return;
+
         TextChannel channel = Constants.SHOP_CHANNEL;
         assert channel != null;
         if(event.getChannel().getId().equals(channel.getId())) {
-            Member member = event.getMember();
             MessageReaction.ReactionEmote emote = event.getReaction().getReactionEmote();
             if(emote.isEmoji() && emote.getEmoji().equals(CosmeticsManager.BUY_EMOJI)) {
 
                 event.getReaction().removeReaction(member.getUser()).queue();
                 if(buyers.containsKey(member.getId())) return;
-                if(buyCooldown.contains(member.getId())) return;
+                if(buyCooldown.contains(member.getId())) {
+                    return;
+                }
 
                 buyCooldown.add(member.getId());
 
@@ -91,14 +95,15 @@ public class BuyCosmeticListener extends ListenerAdapter {
                 Cosmetic cosmetic = CosmeticsManager.getCosmetic(cosmeticId);
 
                 CosmeticsManager.purchaseCosmetic(player, cosmetic);
-                Constants.SHOP_CHANNEL.sendMessage(":white_check_mark: " + member.getAsMention() + " you have successfully purchased the **" + cosmetic.getName() + "** cosmetic!").queue();
+                Constants.SHOP_CHANNEL.sendMessage(":white_check_mark: " + member.getAsMention() + " you have successfully purchased the **" + cosmetic.getName() + "** cosmetic!").queue(message -> {
+                    message.delete().queueAfter(6, TimeUnit.SECONDS);
+                });
             }
         }
     }
 
     private void error(String errMessage, GuildMessageReactionAddEvent event, int seconds) {
         Constants.SHOP_CHANNEL.sendMessage(errMessage).queue(message -> {
-            buyCooldown.add(event.getMember().getId());
             message.delete().queueAfter(8, TimeUnit.SECONDS);
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
