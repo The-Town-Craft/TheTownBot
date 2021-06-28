@@ -41,16 +41,16 @@ public class CosmeticsManager {
         cosmetic.id = id;
         COSMETIC_REGISTRIES.put(id, cosmetic);
 
+        if(messageExists(cosmetic.id)) {
+            return;
+        }
+
         File dir = new File(Plugin.get().getDataFolder(), "cosmetics/shop/message");
         dir.mkdirs();
 
         EmbedBuilder embed = cosmetic.getShopMessageEmbedBuilder();
 
         Bot.jda.getTextChannelById("854843843387064341").sendMessage(embed.build()).queue(message -> {
-
-            if(messageExists(cosmetic.id)) {
-                return;
-            }
 
             File file = new File(dir, message.getId() + ".txt");
 
@@ -75,11 +75,13 @@ public class CosmeticsManager {
 
             try {
                 Scanner scan = new Scanner(new File(dir, fileName));
+                System.out.println("test");
                 if(cosmeticId.equals(scan.nextLine())) {
+                    System.out.println("test1");
                     return Bot.jda.getTextChannelById(fileName.replace(".txt", "")) != null;
                 }
             } catch (FileNotFoundException e) {
-                //
+                e.printStackTrace();
             }
         }
         return false;

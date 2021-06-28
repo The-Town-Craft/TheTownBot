@@ -1,6 +1,5 @@
 package net.thetowncraft.townbot.util.data;
 
-import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.util.Utils;
 import org.json.JSONObject;
 

@@ -9,7 +9,6 @@ import net.dv8tion.jda.api.exceptions.HierarchyException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,7 +23,7 @@ public class AccountManager {
 
     private AccountManager() {}
 
-    private static final Map<String, String> ACCOUNTS = new HashMap<>();
+    private static final Map<String, String> DISCORD_ACCOUNTS = new HashMap<>();
 
     public static void loadAccounts() {
         File dir = new File(Plugin.get().getDataFolder(), "account");
@@ -41,9 +40,9 @@ public class AccountManager {
             } catch (FileNotFoundException e) {
                 continue;
             }
-            ACCOUNTS.put(discordID, fileName);
+            DISCORD_ACCOUNTS.put(discordID, fileName);
         }
-        System.out.println("LOADED ACCOUNTS: " + ACCOUNTS.size());
+        System.out.println("Successfully loaded " + DISCORD_ACCOUNTS.size() + " accounts");
     }
 
     /**
@@ -82,23 +81,18 @@ public class AccountManager {
      * @return True if the player's account is linked, false it it is not
      */
     public boolean isLinked(OfflinePlayer player) {
-        System.out.println("Checking if " + player.getName() + "'s account is linked...");
         Plugin plugin = Plugin.get();
         String uuid = player.getUniqueId().toString();
         File dir = new File(plugin.getDataFolder() + "/account");
-        if(dir.mkdirs()) {
-            System.out.println("Successfully created the account directory!");
-        }
+        dir.mkdirs();
         File file = new File(plugin.getDataFolder() + "/account/" + uuid + ".txt");
         if(!file.exists()) {
-            System.out.println("File does not exist, meaning " + player.getName() + "'s account is not linked");
             return false;
         }
         String userId;
         try {
             Scanner scan = new Scanner(file);
             userId = scan.nextLine();
-            System.out.println("Successfully scanned user id " + userId);
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -106,7 +100,6 @@ public class AccountManager {
         }
         Member member = Bot.jda.getGuildById(Constants.TOWN_DISCORD_ID).getMemberById(userId);
         if(member == null) {
-            System.out.println("Member is null, meaning it is either not cached or the member does not exist.");
             return false;
         }
 
@@ -116,11 +109,10 @@ public class AccountManager {
 
     public void linkPlayer(OfflinePlayer player, Member member) {
 
-        ACCOUNTS.put(member.getId(), player.getUniqueId().toString());
+        DISCORD_ACCOUNTS.put(member.getId(), player.getUniqueId().toString());
 
         try {
             member.modifyNickname(player.getName()).queue();
-            System.out.println("Successfully modified " + player.getName() + "'s nickname!");
         }
         catch (HierarchyException ex) {
             System.out.println("I was unable to modify " + member.getEffectiveName() + "'s nickname because I lack permission!");
@@ -165,26 +157,21 @@ public class AccountManager {
         Plugin plugin = Plugin.get();
         int password = (int) Math.round(Math.random() * 100000);
         File dir = new File(plugin.getDataFolder().getPath() + "/account/password");
-        if(dir.mkdirs()) {
-            System.out.println("Successfully created the account/password directory!");
-        }
+        dir.mkdirs();
         File file = new File(plugin.getDataFolder().getPath() + "/account/password/" + password + ".txt");
         try {
             FileWriter write = new FileWriter(file);
             write.write(player.getUniqueId().toString());
             write.close();
-            System.out.println("Successfully wrote password to file!");
         }
         catch (IOException ex) {
             ex.printStackTrace();
         }
-        System.out.println("All of the checks passed, returning a password string for the generatePassword() method!");
         return String.valueOf(password);
     }
     public Member getDiscordMember(OfflinePlayer player) {
         Plugin plugin = Plugin.get();
         if(!isLinked(player)) {
-            System.out.println(player.getName() + "'s account is not linked! Returning null!");
             return null;
         }
         String uuid = player.getUniqueId().toString();
@@ -194,13 +181,12 @@ public class AccountManager {
             Scanner scan = new Scanner(file);
             userId = scan.nextLine();
         } catch (FileNotFoundException e) {
-            System.err.println("Caught a FileNotFoundException: Returning null for getDiscordMember()");
             return null;
         }
         return Bot.jda.getGuildById(Constants.TOWN_DISCORD_ID).getMemberById(userId);
     }
     public OfflinePlayer getMinecraftPlayer(Member member) {
-        String uuid = ACCOUNTS.get(member.getId());
+        String uuid = DISCORD_ACCOUNTS.get(member.getId());
         if(uuid == null) return null;
         return Bukkit.getOfflinePlayer(UUID.fromString(uuid));
     }
