@@ -1,6 +1,6 @@
 package net.thetowncraft.townbot.economy.player_shops;
 
-import javafx.scene.paint.Material;
+import org.bukkit.Material;
 
 public class PlayerShop {
 

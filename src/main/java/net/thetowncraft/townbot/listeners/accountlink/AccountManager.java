@@ -12,8 +12,6 @@ import org.bukkit.OfflinePlayer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -24,6 +22,12 @@ public class AccountManager {
     private AccountManager() {}
 
     private static final Map<String, String> DISCORD_ACCOUNTS = new HashMap<>();
+    private static final Map<String, String> MINECRAFT_ACCOUNTS = new HashMap<>();
+    private static final Map<String, String> PASSWORDS = new HashMap<>();
+
+    public static Map<String, String> getPasswords() {
+        return PASSWORDS;
+    }
 
     public static void loadAccounts() {
         File dir = new File(Plugin.get().getDataFolder(), "account");
@@ -41,6 +45,7 @@ public class AccountManager {
                 continue;
             }
             DISCORD_ACCOUNTS.put(discordID, fileName);
+            MINECRAFT_ACCOUNTS.put(fileName, discordID);
         }
         System.out.println("Successfully loaded " + DISCORD_ACCOUNTS.size() + " accounts");
     }
@@ -81,33 +86,19 @@ public class AccountManager {
      * @return True if the player's account is linked, false it it is not
      */
     public boolean isLinked(OfflinePlayer player) {
-        Plugin plugin = Plugin.get();
-        String uuid = player.getUniqueId().toString();
-        File dir = new File(plugin.getDataFolder() + "/account");
-        dir.mkdirs();
-        File file = new File(plugin.getDataFolder() + "/account/" + uuid + ".txt");
-        if(!file.exists()) {
-            return false;
-        }
-        String userId;
-        try {
-            Scanner scan = new Scanner(file);
-            userId = scan.nextLine();
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
+        String userId = MINECRAFT_ACCOUNTS.get(player.getUniqueId().toString());
+        if(userId == null) return false;
+
         Member member = Bot.jda.getGuildById(Constants.TOWN_DISCORD_ID).getMemberById(userId);
         if(member == null) {
             return false;
         }
 
-        linkPlayer(player, member);
+        syncAccountData(player, member);
         return true;
     }
 
-    public void linkPlayer(OfflinePlayer player, Member member) {
+    public void syncAccountData(OfflinePlayer player, Member member) {
 
         DISCORD_ACCOUNTS.put(member.getId(), player.getUniqueId().toString());
 
@@ -154,35 +145,17 @@ public class AccountManager {
         });
     }
     public String generatePassword(OfflinePlayer player) {
-        Plugin plugin = Plugin.get();
         int password = (int) Math.round(Math.random() * 100000);
-        File dir = new File(plugin.getDataFolder().getPath() + "/account/password");
-        dir.mkdirs();
-        File file = new File(plugin.getDataFolder().getPath() + "/account/password/" + password + ".txt");
-        try {
-            FileWriter write = new FileWriter(file);
-            write.write(player.getUniqueId().toString());
-            write.close();
-        }
-        catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        PASSWORDS.put(String.valueOf(password), player.getUniqueId().toString());
         return String.valueOf(password);
     }
     public Member getDiscordMember(OfflinePlayer player) {
-        Plugin plugin = Plugin.get();
         if(!isLinked(player)) {
             return null;
         }
-        String uuid = player.getUniqueId().toString();
-        File file = new File(plugin.getDataFolder().getPath() + "/account/" + uuid + ".txt");
-        String userId;
-        try {
-            Scanner scan = new Scanner(file);
-            userId = scan.nextLine();
-        } catch (FileNotFoundException e) {
-            return null;
-        }
+
+        String userId = MINECRAFT_ACCOUNTS.get(player.getUniqueId().toString());
+        if (userId == null) return null;
         return Bot.jda.getGuildById(Constants.TOWN_DISCORD_ID).getMemberById(userId);
     }
     public OfflinePlayer getMinecraftPlayer(Member member) {

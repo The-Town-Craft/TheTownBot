@@ -1,4 +1,5 @@
 net/thetowncraft/townbot/listeners/minecraft/chat/WitherSpawn.class
+net/thetowncraft/townbot/economy/player_shops/PlayerShopManager.class
 net/thetowncraft/townbot/api/command_handler/discord/ExampleCommand.class
 net/thetowncraft/townbot/util/Rarity.class
 net/thetowncraft/townbot/listeners/discord/commands/ModMailListener.class
@@ -22,6 +23,7 @@ net/thetowncraft/townbot/listeners/minecraft/commands/McUnmute.class
 net/thetowncraft/townbot/listeners/discord/commands/SubtractActivityPointsCommand.class
 net/thetowncraft/townbot/economy/commands/Pay.class
 net/thetowncraft/townbot/Bot.class
+net/thetowncraft/townbot/economy/player_shops/PlayerShop.class
 net/thetowncraft/townbot/economy/cosmetics/Cosmetic.class
 net/thetowncraft/townbot/listeners/patches/AnvilItemDupePatch.class
 net/thetowncraft/townbot/listeners/accountlink/LinkAccount.class

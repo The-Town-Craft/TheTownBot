@@ -11,8 +11,10 @@
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/api/command_handler/minecraft/MinecraftCommand.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/util/Rarity.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/CommandLog.java
+/Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/player_shops/PlayerShop.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/chat/WitherSpawn.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/DiscordUnmute.java
+/Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/economy/player_shops/PlayerShopManager.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/DiscordMute.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/discord/commands/DiscordActiveCommand.java
 /Users/cadenkoehl/IntelliJ/Java/TheTownBot/src/main/java/net/thetowncraft/townbot/listeners/minecraft/commands/ActiveCommand.java

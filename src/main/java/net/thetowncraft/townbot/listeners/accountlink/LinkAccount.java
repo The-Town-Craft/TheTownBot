@@ -23,26 +23,7 @@ public class LinkAccount extends ListenerAdapter {
     public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
         Plugin plugin = Plugin.get();
         String message = event.getMessage().getContentRaw();
-        File passwordDir = new File(plugin.getDataFolder().getPath() + "/account/password");
-        if(passwordDir.mkdirs()) {
-            System.out.println("Successfully created the account/password directory!");
-        }
-        File passwordFile = new File(plugin.getDataFolder().getPath() + "/account/password/" + message + ".txt");
-        if(!passwordFile.exists()) {
-            System.out.println("File does not exist.");
-            return;
-        }
-        String uuidString;
-        try {
-            Scanner scan = new Scanner(passwordFile);
-            uuidString = scan.nextLine();
-            System.out.println("Successfully scanned uuid " + uuidString);
-        }
-        catch (IOException ex) {
-            event.getJDA().getTextChannelById(Constants.MODMAIL).sendMessage("<@585334397914316820> A fatal error has occurred! `" + ex + "`\n```java\n" + Arrays.toString(ex.getStackTrace()) + "\n```");
-            ex.printStackTrace();
-            return;
-        }
+        String uuidString = AccountManager.getPasswords().get(message);
         UUID uuid = UUID.fromString(uuidString);
         OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
         File dir = new File(plugin.getDataFolder().getPath() + "/account");
@@ -55,9 +36,7 @@ public class LinkAccount extends ListenerAdapter {
                 FileWriter write = new FileWriter(file);
                 write.write(event.getAuthor().getId());
                 write.close();
-                if(passwordFile.delete()) {
-                    System.out.println("Password file was successfully deleted!");
-                }
+                AccountManager.getPasswords().remove(message);
                 event.getJDA().getTextChannelById(Constants.MODMAIL).sendMessage(":white_check_mark: The Discord account **" + event.getAuthor().getAsTag() + "** was successfully linked to the Minecraft account **" + player.getName() + "**!").queue();
                 event.getChannel().sendMessage(":white_check_mark: **Success**! Your Discord account was linked to the Minecraft account **" + player.getName() + "**! Make sure not to build a house/base too close too spawn (300 blocks out should be fine), and the IP address is in the info channel! :)").queue();
                 return;
