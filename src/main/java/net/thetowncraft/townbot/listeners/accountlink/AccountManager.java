@@ -25,6 +25,14 @@ public class AccountManager {
     private static final Map<String, String> MINECRAFT_ACCOUNTS = new HashMap<>();
     private static final Map<String, String> PASSWORDS = new HashMap<>();
 
+    public static Map<String, String> getDiscordAccounts() {
+        return DISCORD_ACCOUNTS;
+    }
+
+    public static Map<String, String> getMinecraftAccounts() {
+        return MINECRAFT_ACCOUNTS;
+    }
+
     public static Map<String, String> getPasswords() {
         return PASSWORDS;
     }
@@ -101,6 +109,7 @@ public class AccountManager {
     public void syncAccountData(OfflinePlayer player, Member member) {
 
         DISCORD_ACCOUNTS.put(member.getId(), player.getUniqueId().toString());
+        MINECRAFT_ACCOUNTS.put(player.getUniqueId().toString(), member.getId());
 
         try {
             member.modifyNickname(player.getName()).queue();

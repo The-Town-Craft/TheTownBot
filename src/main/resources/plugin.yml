@@ -24,3 +24,7 @@ commands:
 
   baltop:
     description: View the economy leaderboard!
+
+  shopchest:
+    description: Create a safe and secure shop, that can't be stolen from! (you must be looking at the block that the shop will be placed on)
+    usage: /shopchest <price per item> <per stack?(true or false)>

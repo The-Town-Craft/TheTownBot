@@ -24,6 +24,8 @@ public class LinkAccount extends ListenerAdapter {
         Plugin plugin = Plugin.get();
         String message = event.getMessage().getContentRaw();
         String uuidString = AccountManager.getPasswords().get(message);
+        if(uuidString == null) return;
+
         UUID uuid = UUID.fromString(uuidString);
         OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
         File dir = new File(plugin.getDataFolder().getPath() + "/account");
@@ -37,6 +39,7 @@ public class LinkAccount extends ListenerAdapter {
                 write.write(event.getAuthor().getId());
                 write.close();
                 AccountManager.getPasswords().remove(message);
+                AccountManager.getMinecraftAccounts().put(player.getUniqueId().toString(), event.getAuthor().getId());
                 event.getJDA().getTextChannelById(Constants.MODMAIL).sendMessage(":white_check_mark: The Discord account **" + event.getAuthor().getAsTag() + "** was successfully linked to the Minecraft account **" + player.getName() + "**!").queue();
                 event.getChannel().sendMessage(":white_check_mark: **Success**! Your Discord account was linked to the Minecraft account **" + player.getName() + "**! Make sure not to build a house/base too close too spawn (300 blocks out should be fine), and the IP address is in the info channel! :)").queue();
                 return;

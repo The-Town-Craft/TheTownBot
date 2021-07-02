@@ -1,32 +1,39 @@
 package net.thetowncraft.townbot.economy.player_shops;
 
 import org.bukkit.Material;
+import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class PlayerShop {
 
     private final String playerUUID;
-    private final Material item;
-    private int pricePerItem;
+    private final Vector pos;
+    private final int price;
+    private final boolean perStack;
 
-    public PlayerShop(String playerUUID, Material item, int pricePerItem) {
+    public PlayerShop(String playerUUID, Vector pos, int price, boolean perStack) {
         this.playerUUID = playerUUID;
-        this.item = item;
-        this.pricePerItem = pricePerItem;
+        this.pos = pos;
+        this.price = price;
+        this.perStack = perStack;
     }
 
     public String getPlayerUUID() {
         return playerUUID;
     }
 
-    public Material getItem() {
-        return item;
+    public Vector getPos() {
+        return pos;
     }
 
-    public int getPricePerItem() {
-        return pricePerItem;
+    public int getPrice() {
+        return price;
     }
 
-    public void setPricePerItem(int pricePerItem) {
-        this.pricePerItem = pricePerItem;
+    public boolean isPerStack() {
+        return perStack;
     }
+
 }

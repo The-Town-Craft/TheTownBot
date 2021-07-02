@@ -7,6 +7,7 @@ import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.economy.EconomyManager;
+import net.thetowncraft.townbot.economy.player_shops.PlayerShopManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.util.SkinRender;
@@ -91,7 +92,8 @@ public class Bal extends DiscordCommand {
             event.getPlayer().sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + player.getName() + "'s Account" +
                     "\n--------" +
                     ChatColor.RESET + "\n" + ChatColor.YELLOW + "Coins: " + EconomyManager.getCoinBalance(player) +
-                    ChatColor.RESET + "" + ChatColor.AQUA + "\nActivity Points: " + ActivityManager.getActivityPoints(player)
+                    ChatColor.RESET + "" + ChatColor.AQUA + "\nDiamond Coins: " + PlayerShopManager.getDiamondCoins(player) +
+                    ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "\nActivity Points: " + ActivityManager.getActivityPoints(player)
             );
         }
 

@@ -9,6 +9,10 @@ import net.thetowncraft.townbot.economy.cosmetics.BuyCosmeticListener;
 import net.thetowncraft.townbot.economy.cosmetics.CosmeticListCommand;
 import net.thetowncraft.townbot.economy.cosmetics.CosmeticsManager;
 import net.thetowncraft.townbot.economy.cosmetics.TestCosmetic;
+import net.thetowncraft.townbot.economy.player_shops.PlayerShopListener;
+import net.thetowncraft.townbot.economy.player_shops.commands.DepositDiamonds;
+import net.thetowncraft.townbot.economy.player_shops.commands.ShopChestCommand;
+import net.thetowncraft.townbot.economy.player_shops.commands.WithdrawDiamonds;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.discord.commands.AddActivityPointsCommand;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
@@ -71,7 +75,10 @@ public class Registry {
         MinecraftCommand.registerCommands(
                 new Pay.Minecraft(),
                 new Bal.MC(),
-                new BalTop.MC()
+                new BalTop.MC(),
+                new ShopChestCommand(),
+                new DepositDiamonds(),
+                new WithdrawDiamonds()
         );
     }
 
@@ -104,7 +111,8 @@ public class Registry {
                 new Raid(),
                 new AFKListener(),
                 new ActiveCommand(),
-                new WorldChange()
+                new WorldChange(),
+                new PlayerShopListener()
         );
     }
     private static void registerSpigotListeners(JavaPlugin plugin, Listener... listeners) {
