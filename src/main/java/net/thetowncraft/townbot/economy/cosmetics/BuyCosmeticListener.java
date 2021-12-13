@@ -17,14 +17,14 @@ import java.util.concurrent.TimeUnit;
 public class BuyCosmeticListener extends ListenerAdapter {
 
     private static final List<String> buyCooldown = new ArrayList<>();
-    private static Map<String, String> buyers = new HashMap<>();
+    private static final Map<String, String> buyers = new HashMap<>();
 
     @Override
     public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
         Member member = event.getMember();
         if(member.getUser().isBot()) return;
 
-        TextChannel channel = Constants.SHOP_CHANNEL;
+        TextChannel channel = member.getGuild().getTextChannelById(CosmeticsManager.SHOP_CHANNEL_ID);
         assert channel != null;
         if(event.getChannel().getId().equals(channel.getId())) {
             MessageReaction.ReactionEmote emote = event.getReaction().getReactionEmote();
@@ -95,7 +95,7 @@ public class BuyCosmeticListener extends ListenerAdapter {
                 Cosmetic cosmetic = CosmeticsManager.getCosmetic(cosmeticId);
 
                 CosmeticsManager.purchaseCosmetic(player, cosmetic);
-                Constants.SHOP_CHANNEL.sendMessage(":white_check_mark: " + member.getAsMention() + " you have successfully purchased the **" + cosmetic.getName() + "** cosmetic!").queue(message -> {
+                channel.sendMessage(":white_check_mark: " + member.getAsMention() + " you have successfully purchased the **" + cosmetic.getName() + "** cosmetic!").queue(message -> {
                     message.delete().queueAfter(6, TimeUnit.SECONDS);
                 });
             }
@@ -103,7 +103,8 @@ public class BuyCosmeticListener extends ListenerAdapter {
     }
 
     private void error(String errMessage, GuildMessageReactionAddEvent event, int seconds) {
-        Constants.SHOP_CHANNEL.sendMessage(errMessage).queue(message -> {
+        TextChannel channel = event.getGuild().getTextChannelById(CosmeticsManager.SHOP_CHANNEL_ID);
+        channel.sendMessage(errMessage).queue(message -> {
             message.delete().queueAfter(8, TimeUnit.SECONDS);
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {

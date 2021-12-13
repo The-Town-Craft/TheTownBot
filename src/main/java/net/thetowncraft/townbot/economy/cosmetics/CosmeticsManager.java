@@ -1,7 +1,7 @@
 package net.thetowncraft.townbot.economy.cosmetics;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.economy.EconomyManager;
@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class CosmeticsManager {
+
+    public static String SHOP_CHANNEL_ID;
+    public static final Map<String, String> COSMETIC_MESSAGES = new HashMap<>();
 
     public static final String BUY_EMOJI = "\uD83D\uDCB0";
 
@@ -32,6 +35,17 @@ public class CosmeticsManager {
         return cosmetics;
     }
 
+    public static void resetShopChannel() {
+        List<TextChannel> channels = Constants.THE_TOWN.getTextChannelsByName(BUY_EMOJI + "-shop", false);
+        if(channels.size() == 0) throw new IllegalArgumentException("There is no shop channel, or it's name has been changed");
+        if(channels.size() > 1) throw new IllegalArgumentException("There is more than one shop channel!");
+
+        TextChannel shopChannel = channels.get(0);
+        TextChannel channel = shopChannel.createCopy().complete();
+        SHOP_CHANNEL_ID = channel.getId();
+        shopChannel.delete().queue();
+    }
+
     public static Cosmetic getCosmetic(String id) {
         return COSMETIC_REGISTRIES.get(id);
     }
@@ -41,66 +55,22 @@ public class CosmeticsManager {
         cosmetic.id = id;
         COSMETIC_REGISTRIES.put(id, cosmetic);
 
-        if(messageExists(cosmetic.id)) {
-            return;
-        }
-
         File dir = new File(Plugin.get().getDataFolder(), "cosmetics/shop/message");
         dir.mkdirs();
 
         EmbedBuilder embed = cosmetic.getShopMessageEmbedBuilder();
 
-        Bot.jda.getTextChannelById("854843843387064341").sendMessage(embed.build()).queue(message -> {
-
-            File file = new File(dir, message.getId() + ".txt");
-
-            try {
-                FileWriter write = new FileWriter(file);
-                write.write(id);
-                write.close();
-            }
-            catch(IOException e) {
-                return;
-            }
+        Bot.jda.getTextChannelById(SHOP_CHANNEL_ID).sendMessage(embed.build()).queue(message -> {
+            COSMETIC_MESSAGES.put(message.getId(), id);
             message.addReaction("\uD83D\uDCB0").queue();
         });
     }
 
-    private static boolean messageExists(String cosmeticId) {
-        File dir = new File(Plugin.get().getDataFolder(), "cosmetics/shop/message");
-        dir.mkdirs();
-
-        for(String fileName : Objects.requireNonNull(dir.list())) {
-            if(!fileName.contains(".txt")) continue;
-
-            try {
-                Scanner scan = new Scanner(new File(dir, fileName));
-                System.out.println("test");
-                if(cosmeticId.equals(scan.nextLine())) {
-                    System.out.println("test1");
-                    return Bot.jda.getTextChannelById(fileName.replace(".txt", "")) != null;
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }
-
     public static Cosmetic getCosmeticByShopMessage(String messageId) {
-        File dir = new File(Plugin.get().getDataFolder(), "cosmetics/shop/message");
-        dir.mkdirs();
+        String shopId = COSMETIC_MESSAGES.get(messageId);
+        if(shopId == null) return null;
 
-        File file = new File(dir, messageId + ".txt");
-        if(!file.exists()) return null;
-
-        try {
-            Scanner scan = new Scanner(file);
-            return getCosmetic(scan.nextLine());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return getCosmetic(shopId);
     }
 
     public static void addCosmetic(OfflinePlayer player, Cosmetic cosmetic) {

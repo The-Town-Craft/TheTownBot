@@ -5,10 +5,12 @@ import net.thetowncraft.townbot.Bot;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
+import org.bukkit.ChatColor;
 
 public class Constants {
 
-	public static final Role MOST_ACTIVE_ROLE = Bot.jda.getRoleById("817927959155179540");
+	public static final Role DONATOR_ROLE = Bot.jda.getRoleById("803502592297664533");
+	public static final Role ACTIVE_PLAYER_ROLE = Bot.jda.getRoleById("817927959155179540");
 	public static final Role TOWN_MEMBER_ROLE = Bot.jda.getRoleById("730982990959869982");
 	public static final Role PUBLIC_WORKS_ROLE = Bot.jda.getRoleById("730987270626344971");
 	public static final Role LAWYER_ROLE = Bot.jda.getRoleById("780950276597088288");
@@ -29,7 +31,6 @@ public class Constants {
 	public static final String TOWN_DISCORD_ID = "730975912320827452";
 	public static final Guild THE_TOWN = Bot.jda.getGuildById("730975912320827452");
 	public static final String WHITELIST_APP_CHANNEL = "815691992129601537";
-	public static final TextChannel SHOP_CHANNEL = Bot.jda.getTextChannelById("854843843387064341");
 	public static final String CHECK_MARK = "✅";
 	public static final String X = "❌";
 	public static final int GREEN = 0x50bb5f;

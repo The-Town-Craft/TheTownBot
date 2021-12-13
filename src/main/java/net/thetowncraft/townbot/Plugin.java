@@ -2,6 +2,7 @@ package net.thetowncraft.townbot;
 
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
+import net.thetowncraft.townbot.bosses.BossEventListener;
 import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
@@ -38,6 +39,8 @@ public class Plugin extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::updatePlayerActivity, 0, RepeatingTasks.REPEATING_TICKS);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, 5000, RepeatingTasks.TICKS_IN_A_DAY);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, PlayerCountStatus::update, 5000, RepeatingTasks.REPEATING_TICKS);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, BossEventListener::strikeTargetWithLightning, 200, 200);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, BossEventListener::summonWitherSkeletons, 600, 1200);
     }
 
     @Override

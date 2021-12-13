@@ -6,8 +6,6 @@ import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.AFKManager;
-import net.thetowncraft.townbot.util.Constants;
-import net.thetowncraft.townbot.util.Utils;
 import net.dv8tion.jda.api.entities.Member;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -109,8 +107,8 @@ public class RepeatingTasks {
 
     private static void rewardActivePlayers() {
 
-        for(Member member : Constants.THE_TOWN.getMembersWithRoles(Constants.MOST_ACTIVE_ROLE)) {
-            Constants.THE_TOWN.removeRoleFromMember(member, Constants.MOST_ACTIVE_ROLE).queue();
+        for(Member member : Constants.THE_TOWN.getMembersWithRoles(Constants.ACTIVE_PLAYER_ROLE)) {
+            Constants.THE_TOWN.removeRoleFromMember(member, Constants.ACTIVE_PLAYER_ROLE).queue();
         }
 
         Bot.jda.getTextChannelById(Constants.ANNOUNCEMENTS).sendMessage("**It's time to announce the most active players of the week!**").queue();
@@ -118,33 +116,11 @@ public class RepeatingTasks {
         Map<String, Long> mostActivePlayers = ActivityManager.get3MostActivePlayers();
         for(Map.Entry<String, Long> entry : mostActivePlayers.entrySet()) {
             Member discordMember = AccountManager.getInstance().getDiscordMember(Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())));
-            discordMember.getGuild().addRoleToMember(discordMember, Constants.MOST_ACTIVE_ROLE).queue();
+            discordMember.getGuild().addRoleToMember(discordMember, Constants.ACTIVE_PLAYER_ROLE).queue();
             Bot.jda.getTextChannelById(Constants.ANNOUNCEMENTS)
-                    .sendMessage(discordMember.getAsMention() + " has been awarded the **" + Constants.MOST_ACTIVE_ROLE.getName() + "** role! :partying_face:").queue();
+                    .sendMessage(discordMember.getAsMention() + " has been awarded the **" + Constants.ACTIVE_PLAYER_ROLE.getName() + "** role! :partying_face:").queue();
         }
 
-        for(Map.Entry<String, Long> entry : ActivityManager.PLAYER_ACTIVITY_MAP.entrySet()) {
-            Long bal = entry.getValue();
-            if(bal == null) continue;
-            if(bal >= 500) {
-                OfflinePlayer player  = Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey()));
-                if(player.getName() == null) continue;
-
-                Member member = AccountManager.getInstance().getDiscordMember(player);
-                if(member == null) continue;
-
-                int coins = bal.intValue() / 2;
-
-                EconomyManager.addCoins(entry.getKey(), coins);
-
-                try {
-                    member.getUser().openPrivateChannel().queue((channel) -> channel.sendMessage("Thanks for being active this week! You have been awarded " + coins + " coins!").queue());
-                }
-                catch(Exception ex) {
-                    //empty catch block
-                }
-            }
-        }
         resetActivity();
     }
 

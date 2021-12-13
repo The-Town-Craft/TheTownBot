@@ -1,12 +1,13 @@
 package net.thetowncraft.townbot.listeners.minecraft.chat;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Bot;
-import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.chatmute.MuteManager;
 import net.thetowncraft.townbot.util.SkinRender;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +21,6 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.md_5.bungee.api.ChatColor;
 
 
 public class MinecraftChatListener implements Listener {
@@ -29,7 +29,6 @@ public class MinecraftChatListener implements Listener {
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
-		Plugin plugin = Plugin.get();
 
 		String message = event.getMessage();
 		String name = event.getPlayer().getName();
@@ -43,6 +42,27 @@ public class MinecraftChatListener implements Listener {
 		if(mute.isMuted(player)) {
 			event.setCancelled(true);
 			player.sendMessage(ChatColor.RED + "You are muted and cannot send messages!");
+			return;
+		}
+
+		Member member = AccountManager.getInstance().getDiscordMember(player);
+
+		if(member.getRoles().contains(Constants.MAYOR_ROLE)) {
+			Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:amethyst:861508476471345152> **<" + name + ">** " + message).queue();
+			Bukkit.getServer().broadcastMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "[MAYOR] <" + ChatColor.AQUA + player.getName() + ChatColor.DARK_PURPLE + "> " + ChatColor.RESET + message);
+			event.setCancelled(true);
+			return;
+		}
+		if(member.getRoles().contains(Constants.DONATOR_ROLE)) {
+			Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:amethyst:861508476471345152> **<" + name + ">** " + message).queue();
+			Bukkit.getServer().broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "[DONATOR] <" + ChatColor.LIGHT_PURPLE + player.getName() + ChatColor.RED + "" + ChatColor.BOLD + "> " + ChatColor.RESET + message);
+			event.setCancelled(true);
+			return;
+		}
+		if(member.getRoles().contains(Constants.ACTIVE_PLAYER_ROLE)) {
+			Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:minecraft_icon:790295561307684925> **<" + name + ">** " + message).queue();
+			Bukkit.getServer().broadcastMessage("<" + ChatColor.AQUA + player.getName() + ChatColor.RESET + "> " + message);
+			event.setCancelled(true);
 			return;
 		}
 

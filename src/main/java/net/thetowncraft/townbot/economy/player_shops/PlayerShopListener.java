@@ -1,5 +1,6 @@
 package net.thetowncraft.townbot.economy.player_shops;
 
+import net.thetowncraft.townbot.economy.player_shops.commands.ShopChestCommand;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -135,7 +136,7 @@ public class PlayerShopListener implements Listener {
 
             HashMap<Material, Integer> itemAmounts = PlayerShopManager.getItemAmounts(chest);
 
-            Inventory inventory = Bukkit.getServer().createInventory(null, itemAmounts.size(), Objects.requireNonNull(chest.getCustomName()));
+            Inventory inventory = Bukkit.getServer().createInventory(null, 27, Objects.requireNonNull(chest.getCustomName()));
             for(Map.Entry<Material, Integer> entry : itemAmounts.entrySet()) {
                 inventory.addItem(new ItemStack(entry.getKey(), entry.getValue()));
             }
@@ -148,7 +149,41 @@ public class PlayerShopListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if(shoppingInventory.contains(event.getWhoClicked().getUniqueId().toString())) event.setCancelled(true);
+        HumanEntity player = event.getWhoClicked();
+        if(shoppingInventory.contains(player.getUniqueId().toString())) {
+            event.setCancelled(true);
+
+            Inventory chest = event.getClickedInventory();
+            if(chest == null) return;
+
+            Location pos = chest.getLocation();
+            if(pos == null) return;
+
+            PlayerShop shop = PlayerShopManager.getShop(pos.toVector());
+            if(shop == null) return;
+
+            ItemStack stack = chest.getItem(event.getSlot());
+            if(stack == null) return;
+
+            int diamondsInInventory = PlayerShopManager.getDiamondsInInventory(player);
+
+            if(shop.isPerStack()) {
+                if(diamondsInInventory < shop.getPrice()) {
+                    player.closeInventory();
+                    player.sendMessage(ChatColor.RED + "You need " + (shop.getPrice() - diamondsInInventory) + "more diamonds to purchase this stack of items!");
+                    return;
+                }
+                PlayerShopManager.subtractDiamonds(player, shop.getPrice());
+                PlayerShopManager.addDiamondCoins(shop.getOwner(), shop.getPrice());
+            }
+            else {
+                if(diamondsInInventory < shop.getPrice()) {
+                    player.closeInventory();
+                    player.sendMessage(ChatColor.RED + "This shop type is not supported yet!");
+                    return;
+                }
+            }
+        }
     }
 
     @EventHandler

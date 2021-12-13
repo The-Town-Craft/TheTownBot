@@ -4,6 +4,7 @@ import net.thetowncraft.townbot.api.command_handler.CommandHandler;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
+import net.thetowncraft.townbot.bosses.BossEventListener;
 import net.thetowncraft.townbot.economy.commands.*;
 import net.thetowncraft.townbot.economy.cosmetics.BuyCosmeticListener;
 import net.thetowncraft.townbot.economy.cosmetics.CosmeticListCommand;
@@ -18,6 +19,7 @@ import net.thetowncraft.townbot.listeners.discord.commands.AddActivityPointsComm
 import net.thetowncraft.townbot.listeners.discord.commands.*;
 import net.thetowncraft.townbot.listeners.minecraft.commands.*;
 import net.thetowncraft.townbot.listeners.minecraft.chat.*;
+import net.thetowncraft.townbot.items.CustomItemListener;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerJoin;
 import net.thetowncraft.townbot.listeners.discord.DiscordChatListener;
 import net.thetowncraft.townbot.listeners.discord.MemberJoin;
@@ -78,7 +80,8 @@ public class Registry {
                 new BalTop.MC(),
                 new ShopChestCommand(),
                 new DepositDiamonds(),
-                new WithdrawDiamonds()
+                new WithdrawDiamonds(),
+                new GiveCustomItem()
         );
     }
 
@@ -112,7 +115,9 @@ public class Registry {
                 new AFKListener(),
                 new ActiveCommand(),
                 new WorldChange(),
-                new PlayerShopListener()
+                new PlayerShopListener(),
+                new CustomItemListener(),
+                new BossEventListener()
         );
     }
     private static void registerSpigotListeners(JavaPlugin plugin, Listener... listeners) {

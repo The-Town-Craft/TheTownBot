@@ -69,6 +69,8 @@ public class AccountManager {
 
         if(member.getRoles().contains(Constants.LAWYER_ROLE)) return Constants.LAWYER_ROLE;
 
+        if(member.getRoles().contains(Constants.DONATOR_ROLE)) return Constants.DONATOR_ROLE;
+
         if(member.getRoles().contains(Constants.PUBLIC_WORKS_ROLE)) return Constants.PUBLIC_WORKS_ROLE;
 
         return Constants.TOWN_MEMBER_ROLE;
@@ -84,7 +86,9 @@ public class AccountManager {
         if(discordRank == Constants.MAYOR_ROLE) return ChatColor.DARK_PURPLE;
         if(discordRank == Constants.VICE_MAYOR_ROLE) return ChatColor.GOLD;
         if(discordRank == Constants.LAWYER_ROLE) return ChatColor.YELLOW;
-        if(discordRank == Constants.PUBLIC_WORKS_ROLE) return ChatColor.AQUA;
+        if(discordRank == Constants.PUBLIC_WORKS_ROLE) return ChatColor.DARK_AQUA;
+        if(discordRank == Constants.ACTIVE_PLAYER_ROLE) return ChatColor.AQUA;
+        if(discordRank == Constants.DONATOR_ROLE) return ChatColor.RED;
         return ChatColor.GREEN;
 
     }
@@ -101,8 +105,6 @@ public class AccountManager {
         if(member == null) {
             return false;
         }
-
-        syncAccountData(player, member);
         return true;
     }
 
@@ -159,10 +161,6 @@ public class AccountManager {
         return String.valueOf(password);
     }
     public Member getDiscordMember(OfflinePlayer player) {
-        if(!isLinked(player)) {
-            return null;
-        }
-
         String userId = MINECRAFT_ACCOUNTS.get(player.getUniqueId().toString());
         if (userId == null) return null;
         return Bot.jda.getGuildById(Constants.TOWN_DISCORD_ID).getMemberById(userId);

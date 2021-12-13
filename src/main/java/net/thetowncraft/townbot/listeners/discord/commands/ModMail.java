@@ -6,6 +6,8 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
+import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import org.bukkit.Bukkit;
 
 import java.util.Arrays;
 import java.util.List;
@@ -63,12 +65,21 @@ public class ModMail extends DiscordCommand {
         }
 
         try {
+
+            Member member;
+
             List<Member> mentionedMembers = event.getMessage().getMentionedMembers();
-            if(mentionedMembers.size() == 0) {
-                event.getChannel().sendMessage(":x: Please specify a member to ModMail!").queue();
-                return;
+            if(mentionedMembers.size() != 0) {
+                member = mentionedMembers.get(0);
             }
-            Member member = mentionedMembers.get(0);
+            else {
+                member = AccountManager.getInstance().getDiscordMember(Bukkit.getOfflinePlayer(args[1]));
+                if(member == null) {
+                    event.getChannel().sendMessage(":x: " + args[1] + "'s account is either not linked, or the player does not exist.").queue();
+                    return;
+                }
+            }
+
             member.getUser().openPrivateChannel().queue((channel -> {
 
                 EmbedBuilder embed = new EmbedBuilder();

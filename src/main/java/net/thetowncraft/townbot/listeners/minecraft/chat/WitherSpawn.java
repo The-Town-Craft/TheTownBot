@@ -16,6 +16,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 public class WitherSpawn implements Listener {
     @EventHandler
     public void onWither(CreatureSpawnEvent event) {
+        if(event.getEntity().getWorld().getName().equals("world_1597802541_thetown_void")) return;
         if(event.getEntityType() == EntityType.WITHER) {
             Location pos = event.getLocation();
             int x = (int) pos.getX();

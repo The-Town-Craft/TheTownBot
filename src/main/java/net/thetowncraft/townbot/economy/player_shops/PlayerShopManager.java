@@ -6,10 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Chest;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -20,7 +17,7 @@ public class PlayerShopManager {
     private static final List<PlayerShop> SHOPS = new ArrayList<>();
     private static final Map<String, Integer> DIAMOND_COINS = new HashMap<>();
 
-    public static int getDiamondsInInventory(Player player) {
+    public static int getDiamondsInInventory(HumanEntity player) {
         int amount = 0;
 
         for(ItemStack stack : player.getInventory().getContents()) {
@@ -66,7 +63,7 @@ public class PlayerShopManager {
         player.sendMessage(ChatColor.GREEN + "Withdrew " + amount + " diamonds from your account!");
     }
 
-    public static void addDiamondCoins(Player player, int amount) {
+    public static void addDiamondCoins(OfflinePlayer player, int amount) {
 
         String uuid = player.getUniqueId().toString();
 
@@ -83,7 +80,7 @@ public class PlayerShopManager {
         item.setItemStack(new ItemStack(Material.DIAMOND, amount));
     }
 
-    public static void subtractDiamonds(Player player, int amount) {
+    public static void subtractDiamonds(HumanEntity player, int amount) {
         for(ItemStack stack : player.getInventory().getContents()) {
             if(stack.getType() == Material.DIAMOND) {
                 int newAmount = stack.getAmount() - amount;

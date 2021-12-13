@@ -1,10 +1,14 @@
 package net.thetowncraft.townbot.economy.player_shops;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class PlayerShop {
 
@@ -36,4 +40,7 @@ public class PlayerShop {
         return perStack;
     }
 
+    public OfflinePlayer getOwner() {
+        return Bukkit.getOfflinePlayer(UUID.fromString(playerUUID));
+    }
 }

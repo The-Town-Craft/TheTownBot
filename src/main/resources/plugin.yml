@@ -2,6 +2,7 @@ main: net.thetowncraft.townbot.Plugin
 name: MinecordBot
 version: 1.0
 author: CadenKoehl
+api-version: 1.13
 commands:
   mute:
     description: Chat-mutes a player
@@ -28,3 +29,7 @@ commands:
   shopchest:
     description: Create a safe and secure shop, that can't be stolen from! (you must be looking at the block that the shop will be placed on)
     usage: /shopchest <price per item> <per stack?(true or false)>
+
+  gci:
+    description: Give yourself a custom item
+    usage: /gci <item_name> <amount>

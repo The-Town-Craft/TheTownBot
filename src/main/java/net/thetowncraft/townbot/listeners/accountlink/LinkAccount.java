@@ -24,7 +24,10 @@ public class LinkAccount extends ListenerAdapter {
         Plugin plugin = Plugin.get();
         String message = event.getMessage().getContentRaw();
         String uuidString = AccountManager.getPasswords().get(message);
-        if(uuidString == null) return;
+        if(uuidString == null) {
+            System.out.println(message);
+            return;
+        }
 
         UUID uuid = UUID.fromString(uuidString);
         OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
@@ -33,21 +36,20 @@ public class LinkAccount extends ListenerAdapter {
             System.out.println("Successfully created the account directory!");
         }
         File file = new File(plugin.getDataFolder().getPath() + "/account/" + uuidString + ".txt");
-        if(!file.exists()) {
-            try {
-                FileWriter write = new FileWriter(file);
-                write.write(event.getAuthor().getId());
-                write.close();
-                AccountManager.getPasswords().remove(message);
-                AccountManager.getMinecraftAccounts().put(player.getUniqueId().toString(), event.getAuthor().getId());
-                event.getJDA().getTextChannelById(Constants.MODMAIL).sendMessage(":white_check_mark: The Discord account **" + event.getAuthor().getAsTag() + "** was successfully linked to the Minecraft account **" + player.getName() + "**!").queue();
-                event.getChannel().sendMessage(":white_check_mark: **Success**! Your Discord account was linked to the Minecraft account **" + player.getName() + "**! Make sure not to build a house/base too close too spawn (300 blocks out should be fine), and the IP address is in the info channel! :)").queue();
-                return;
-            } catch (IOException ex) {
-                event.getJDA().getTextChannelById(Constants.MODMAIL).sendMessage("<@585334397914316820> A fatal error has occurred! `" + ex + "`\n```java\n" + Arrays.toString(ex.getStackTrace()) + "\n```");
-                ex.printStackTrace();
-            }
-            event.getChannel().sendMessage(":x: Your account is already linked to the Minecraft account **" + player.getName() + "**!").queue();
+        try {
+            FileWriter write = new FileWriter(file);
+            write.write(event.getAuthor().getId());
+            write.close();
+            AccountManager.getPasswords().remove(message);
+            AccountManager.getMinecraftAccounts().put(player.getUniqueId().toString(), event.getAuthor().getId());
+            AccountManager.getInstance().syncAccountData(player, Constants.THE_TOWN.getMember(event.getAuthor()));
+            event.getJDA().getTextChannelById(Constants.MODMAIL).sendMessage(":white_check_mark: The Discord account **" + event.getAuthor().getAsTag() + "** was successfully linked to the Minecraft account **" + player.getName() + "**!").queue();
+            event.getChannel().sendMessage(":white_check_mark: **Success**! Your Discord account was linked to the Minecraft account **" + player.getName() + "**! Make sure not to build a house/base too close too spawn (300 blocks out should be fine), and the IP address is in the info channel! :)").queue();
+            return;
+        } catch (IOException ex) {
+            event.getJDA().getTextChannelById(Constants.MODMAIL).sendMessage("<@585334397914316820> A fatal error has occurred! `" + ex + "`\n```java\n" + Arrays.toString(ex.getStackTrace()) + "\n```");
+            ex.printStackTrace();
         }
+        event.getChannel().sendMessage(":x: Your account is already linked to the Minecraft account **" + player.getName() + "**!").queue();
     }
 }
