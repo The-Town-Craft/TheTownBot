@@ -14,9 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.entity.*;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -27,7 +25,7 @@ public class BossEventListener implements Listener {
     private static boolean bossBeingChallenged = false;
     public static Wither wither = null;
     private static final long lightningInaccuracy = 30;
-    private static final String bossWorldName = "world_1597802541_thetown_void";
+    public static final String bossWorldName = "world_1597802541_thetown_void";
 
     //enter void world
     @EventHandler
@@ -36,8 +34,8 @@ public class BossEventListener implements Listener {
         Material centerBlock = Material.CRYING_OBSIDIAN;
         Material surroundingBlock = Material.NETHERRACK;
         World bossWorld = Bukkit.getWorld(bossWorldName);
-        Location playerSpawn = new Location(bossWorld, 18, 121, 0, -90.0f, 0.0f);
-        Location bossSpawn = new Location(bossWorld, 55, 124, 0, 90.0f, 0.0f);
+        Location playerSpawn = new Location(bossWorld, 27, 122, 0, -90.0f, 0.0f);
+        Location bossSpawn = new Location(bossWorld, 54, 140, 0, 90.0f, 0.0f);
 
         Block block = event.getClickedBlock();
         Player player = event.getPlayer();
@@ -45,7 +43,6 @@ public class BossEventListener implements Listener {
         if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if(block == null || block.getType() != centerBlock) return;
         if(player.getInventory().getItemInMainHand().getType() != Material.FLINT_AND_STEEL) return;
-
 
         World world = block.getWorld();
         int x = block.getX();
@@ -65,17 +62,18 @@ public class BossEventListener implements Listener {
             return;
         }
 
-        player.setFireTicks(200);
         player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 5, false, false, false));
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1, false, false, false));
         player.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "The Blazing Wither", ChatColor.RED + "King of the NetherVoid", 10, 70, 20);
         player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 100, 1);
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () ->
-                player.setVelocity(new Vector(0, 10, 0)), 20);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            player.setVelocity(new Vector(0, 10, 0));
+        }, 20);
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
             player.teleport(playerSpawn);
+            player.playSound(new Location(world, 43, 168, 0), Sound.MUSIC_DISC_PIGSTEP, 100, 1);
             if(player.getGameMode() == GameMode.SURVIVAL) player.setGameMode(GameMode.ADVENTURE);
                 }, 50);
 
@@ -101,13 +99,20 @@ public class BossEventListener implements Listener {
     @EventHandler
     public void onEntitySpawn(EntitySpawnEvent event) {
         Entity entity = event.getEntity();
-        if(!entity.getWorld().getName().equals(bossWorldName)) return;
-        if(!(entity.getType() == EntityType.WITHER_SKELETON ||
-                entity.getType() == EntityType.WITHER ||
-                entity.getType() == EntityType.DROPPED_ITEM ||
-                entity.getType() == EntityType.WITHER_SKULL ||
-                entity.getType() == EntityType.ARROW ||
-                entity.getType() == EntityType.ENDER_PEARL)) event.setCancelled(true);
+        World world = entity.getWorld();
+        EntityType type = entity.getType();
+        if(!world.getName().equals(bossWorldName)) return;
+        if(!(type == EntityType.WITHER_SKELETON ||
+                type == EntityType.WITHER ||
+                type == EntityType.DROPPED_ITEM ||
+                type == EntityType.WITHER_SKULL ||
+                type == EntityType.ARROW ||
+                type == EntityType.DRAGON_FIREBALL)) event.setCancelled(true);
+
+        if(type == EntityType.WITHER_SKULL) {
+            if(wither == null) return;
+            wither.launchProjectile(LargeFireball.class).setDisplayItem(new ItemStack(Material.NETHER_STAR));
+        }
     }
 
     @EventHandler
@@ -123,9 +128,20 @@ public class BossEventListener implements Listener {
         if(!player.getWorld().getName().equals(bossWorldName)) return;
         event.setKeepInventory(true);
         event.getDrops().clear();
-        if(player.getGameMode() == GameMode.ADVENTURE) player.setGameMode(GameMode.SURVIVAL);
+
+        player.setGameMode(GameMode.SURVIVAL);
+        Location bedLocation = player.getBedSpawnLocation();
+        if(bedLocation == null) {
+            player.teleport(new Location(Bukkit.getWorld("world_1597802541"),-161, 64, 230));
+            bossBeingChallenged = false;
+            wither = null;
+            return;
+        }
+
+        player.teleport(bedLocation);
         bossBeingChallenged = false;
         wither = null;
+        return;
     }
 
     @EventHandler
@@ -140,7 +156,7 @@ public class BossEventListener implements Listener {
         if(entity.getType() == EntityType.WITHER) {
             event.getDrops().clear();
             world.dropItem(new Location(world, 43, 121, 0), CustomItems.BLAZING_THUNDERSTAR.createItemStack(1));
-            bossBeingChallenged = false;
+            event.setDroppedExp(1200);
             wither = null;
         }
     }
@@ -158,44 +174,92 @@ public class BossEventListener implements Listener {
         if(event.getItem().getItemStack().getType() == Material.NETHER_STAR) {
             if(entity instanceof Player) {
                 Player player = (Player) entity;
-                player.setFireTicks(200);
-                player.addPotionEffect(PotionEffectType.CONFUSION.createEffect(100, 1));
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
-                    Location bedLocation = player.getBedSpawnLocation();
-                    if(bedLocation == null) {
-                        player.damage(1000);
-                        return;
-                    }
-                    player.teleport(bedLocation);
-                }, 50);
+
             }
+        }
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        if(!bossBeingChallenged) return;
+
+        Player player = event.getPlayer();
+
+        if(!bossWorldName.equals(player.getWorld().getName())) return;
+
+        if(player.getLocation().getX() >= 61) {
+            if(wither != null && player.getGameMode() == GameMode.ADVENTURE) {
+                return;
+            }
+            player.addPotionEffect(PotionEffectType.BLINDNESS.createEffect(30, 1));
+
+            Location bedLocation = player.getBedSpawnLocation();
+            if(bedLocation == null) {
+                player.teleport(new Location(Bukkit.getWorld("world_1597802541"),-161, 64, 230));
+                bossBeingChallenged = false;
+                return;
+            }
+            player.teleport(bedLocation);
+            bossBeingChallenged = false;
+        }
+    }
+
+    @EventHandler
+    public void onConsume(PlayerItemConsumeEvent event) {
+        Material item = event.getItem().getType();
+
+        if(item == Material.CHORUS_FRUIT) {
+            event.setCancelled(true);
+            return;
+        }
+        if(item == Material.MILK_BUCKET) {
+            event.setCancelled(true);
+            return;
+        }
+        if(item == Material.POTION) {
+            event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         if(Bukkit.getWorld(bossWorldName).getName().equals(event.getPlayer().getWorld().getName())) {
-            if(wither == null) {
-                event.getPlayer().damage(1000);
-                return;
-            }
+            if(event.getPlayer().getGameMode() != GameMode.ADVENTURE) return;
             event.getPlayer().damage(1000, wither);
         }
     }
 
     @EventHandler
-    public void onPlayerDamage(EntityDamageEvent event) {
+    public void onEntityDamage(EntityDamageEvent event) {
         Entity entity = event.getEntity();
+        if(!entity.getWorld().getName().equals(bossWorldName)) return;
+
         if(entity instanceof Player) {
-            if(!entity.getWorld().getName().equals(bossWorldName)) return;
 
             if(event.getCause() != EntityDamageEvent.DamageCause.FIRE_TICK) entity.setFireTicks(100);
 
             if(event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
                 ((Player) entity).setHealth(2);
                 entity.setVelocity(new Vector(entity.getVelocity().getX(), 1, entity.getVelocity().getZ()));
-                ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100,1, false, false, false));
+                ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200,1, false, false, false));
                 ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100,1));
+            }
+            if(event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+                ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100,1));
+            }
+        }
+    }
+
+    @EventHandler
+    public void targetChange(EntityTargetEvent event) {
+        Entity entity = event.getEntity();
+        Entity target = event.getTarget();
+        if(entity.getType() != EntityType.WITHER_SKELETON) return;
+        if(target == null) return;
+
+        if(entity.getWorld().getName().equals(bossWorldName)) {
+            if(target.getType() == EntityType.WITHER) {
+                event.setCancelled(true);
             }
         }
     }
@@ -203,7 +267,7 @@ public class BossEventListener implements Listener {
     public static void strikeTargetWithLightning() {
         if(wither == null) return;
 
-        wither.setFireTicks(1000);
+        World world = wither.getWorld();
 
         LivingEntity target = wither.getTarget();
         if(target == null) return;
@@ -211,7 +275,6 @@ public class BossEventListener implements Listener {
         Location targetPos = target.getLocation();
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
-            World world = Bukkit.getWorld(bossWorldName);
             world.spawnEntity(targetPos, EntityType.LIGHTNING);
         }, lightningInaccuracy);
     }
@@ -243,5 +306,8 @@ public class BossEventListener implements Listener {
         skeleton2.getEquipment().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
         skeleton2.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
         skeleton2.getEquipment().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
+
+        skeleton1.addPotionEffect(PotionEffectType.SPEED.createEffect(10000, 0));
+        skeleton2.addPotionEffect(PotionEffectType.SPEED.createEffect(10000, 0));
     }
 }

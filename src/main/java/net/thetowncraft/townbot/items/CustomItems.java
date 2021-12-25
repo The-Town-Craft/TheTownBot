@@ -1,7 +1,5 @@
 package net.thetowncraft.townbot.items;
 
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -17,7 +15,7 @@ public class CustomItems {
     private static final Map<String, CustomItem> ITEMS = new HashMap<>();
 
     public static final CustomItem SHAPED_GLASS = registerItem("shaped_glass", new ShapedGlass());
-    public static final CustomItem BLAZING_THUNDERSTAR = registerItem("thunderstar", new BlazingThunderstar());
+    public static final CustomItem BLAZING_THUNDERSTAR = registerItem("blazing_thunderstar", new BlazingThunderstar());
 
     static CustomItem registerItem(String id, CustomItem item) {
         ITEMS.put(id, item);

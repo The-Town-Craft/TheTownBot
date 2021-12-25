@@ -25,7 +25,7 @@ public class RepeatingTasks {
     public static void doDailyTasks() {
         String day = Utils.getNameOfDay();
 
-        if(day.equalsIgnoreCase("Monday")) {
+        if(day.equalsIgnoreCase("Sunday")) {
             rewardActivePlayers();
         }
     }

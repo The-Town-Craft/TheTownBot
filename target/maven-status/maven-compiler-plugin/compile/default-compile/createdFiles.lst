@@ -32,7 +32,6 @@ net\thetowncraft\townbot\items\BlazingThunderstar.class
 net\thetowncraft\townbot\listeners\discord\commands\BanList.class
 net\thetowncraft\townbot\util\Utils.class
 net\thetowncraft\townbot\listeners\discord\commands\AddActivityPointsCommand.class
-net\thetowncraft\townbot\listeners\minecraft\custom_items\CustomItemListener.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\PlayerJoin.class
 net\thetowncraft\townbot\listeners\discord\MemberJoin.class
 net\thetowncraft\townbot\listeners\minecraft\chat\Raid.class
@@ -68,6 +67,7 @@ net\thetowncraft\townbot\listeners\patches\AnvilItemDupePatch.class
 net\thetowncraft\townbot\economy\cosmetics\Cosmetic.class
 net\thetowncraft\townbot\items\CustomItem.class
 net\thetowncraft\townbot\economy\commands\BalTop$MC.class
+net\thetowncraft\townbot\items\CustomItemListener.class
 net\thetowncraft\townbot\listeners\discord\commands\ModMail.class
 net\thetowncraft\townbot\listeners\minecraft\chat\Sleep.class
 net\thetowncraft\townbot\economy\cosmetics\CosmeticsManager.class

@@ -17,7 +17,7 @@ public class ServerStart extends ListenerAdapter {
         embed.setColor(Constants.GREEN);
         event.getJDA().getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
         event.getJDA().getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-        CosmeticsManager.resetShopChannel();
+        //CosmeticsManager.resetShopChannel();
         Registry.registerCosmetics();
     }
 }

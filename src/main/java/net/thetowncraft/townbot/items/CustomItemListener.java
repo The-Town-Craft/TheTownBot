@@ -1,20 +1,20 @@
 package net.thetowncraft.townbot.items;
 
 import net.thetowncraft.townbot.Plugin;
-import net.thetowncraft.townbot.items.CustomItems;
+import net.thetowncraft.townbot.bosses.BossEventListener;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.projectiles.ProjectileSource;
+
+import java.util.List;
+import java.util.Random;
 
 public class CustomItemListener implements Listener {
 
@@ -54,6 +54,14 @@ public class CustomItemListener implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
+        Entity nonLiving = event.getEntity();
+
+        if(!(nonLiving instanceof LivingEntity)) {
+            return;
+        }
+
+        LivingEntity entity = (LivingEntity) nonLiving;
+
         if(damager instanceof Player) {
             Player player = (Player) damager;
             int damageMultiplier = CustomItems.getItemAmountOf(player, CustomItems.SHAPED_GLASS) + 1;
@@ -65,9 +73,25 @@ public class CustomItemListener implements Listener {
 
             event.setDamage(finalDamage);
         }
-    }
 
-    @EventHandler
-    public void onBlockPlace(BlockPlaceEvent event) {
+        if(damager instanceof Projectile) {
+            Projectile projectile = (Projectile) damager;
+            ProjectileSource shooter = projectile.getShooter();
+            if(shooter instanceof Player) {
+                Player player = (Player) shooter;
+                if(BossEventListener.bossWorldName.equals(player.getWorld().getName())) return;
+                Random random = new Random();
+                int thunderstars = CustomItems.getItemAmountOf(player, CustomItems.BLAZING_THUNDERSTAR);
+                if(thunderstars == 0) return;
+                int procChance = thunderstars * 25;
+                int num = random.nextInt(100);
+
+                boolean proc = num < procChance;
+
+                if(proc) {
+                    CustomItems.BLAZING_THUNDERSTAR.procOnHit(player, thunderstars, entity, entity.getWorld());
+                }
+            }
+        }
     }
 }

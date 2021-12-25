@@ -2,9 +2,9 @@ package net.thetowncraft.townbot.items;
 
 import net.thetowncraft.townbot.util.Rarity;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityPickupItemEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -22,6 +22,10 @@ public abstract class CustomItem {
         itemMeta.setDisplayName(this.getRarity().getColor() + this.getName());
         stack.setItemMeta(itemMeta);
         return stack;
+    }
+
+    public void procOnHit(Player player, int itemAmount, LivingEntity target, World world) {
+
     }
 
     public void updateStats(Player player, int itemAmount) {}
