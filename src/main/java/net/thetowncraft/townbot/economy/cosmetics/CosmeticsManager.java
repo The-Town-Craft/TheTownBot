@@ -61,8 +61,10 @@ public class CosmeticsManager {
         EmbedBuilder embed = cosmetic.getShopMessageEmbedBuilder();
 
         Bot.jda.getTextChannelById(SHOP_CHANNEL_ID).sendMessage(embed.build()).queue(message -> {
-            COSMETIC_MESSAGES.put(message.getId(), id);
-            message.addReaction("\uD83D\uDCB0").queue();
+            if(id != null) {
+                COSMETIC_MESSAGES.put(message.getId(), id);
+                message.addReaction("\uD83D\uDCB0").queue();
+            }
         });
     }
 

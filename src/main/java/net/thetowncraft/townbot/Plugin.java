@@ -2,7 +2,8 @@ package net.thetowncraft.townbot;
 
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.bosses.BossEventListener;
+import net.thetowncraft.townbot.bosses.BlazingWitherEventListener;
+import net.thetowncraft.townbot.bosses.ChickenBossEventListener;
 import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
@@ -19,6 +20,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class Plugin extends JavaPlugin {
+
+    public static final String VOID_DIMENSION_NAME = "world_1597802541_thetown_the_void";
 
     /**
      * This method runs whenever the server starts or restarts
@@ -37,10 +40,13 @@ public class Plugin extends JavaPlugin {
         EconomyManager.loadEconomy();
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::updatePlayerActivity, 0, RepeatingTasks.REPEATING_TICKS);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, 5000, RepeatingTasks.TICKS_IN_A_DAY);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, RepeatingTasks.TICKS_IN_A_DAY, RepeatingTasks.TICKS_IN_A_DAY);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, PlayerCountStatus::update, 5000, RepeatingTasks.REPEATING_TICKS);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, BossEventListener::strikeTargetWithLightning, 200, 200);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, BossEventListener::summonWitherSkeletons, 600, 1200);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, BlazingWitherEventListener::strikeTargetWithLightning, 200, 200);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, BlazingWitherEventListener::summonWitherSkeletons, 600, 1200);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ChickenBossEventListener::launchTNT, 600, 600);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ChickenBossEventListener::summonWolves, 300, 1200);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ChickenBossEventListener::useFangs, 0, 250);
     }
 
     @Override

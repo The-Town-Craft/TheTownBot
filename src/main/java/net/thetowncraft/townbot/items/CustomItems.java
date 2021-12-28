@@ -1,6 +1,7 @@
 package net.thetowncraft.townbot.items;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -16,6 +17,7 @@ public class CustomItems {
 
     public static final CustomItem SHAPED_GLASS = registerItem("shaped_glass", new ShapedGlass());
     public static final CustomItem BLAZING_THUNDERSTAR = registerItem("blazing_thunderstar", new BlazingThunderstar());
+    public static final CustomItem NOXIOUS_FEATHER = registerItem("noxious_feather", new NoxiousFeather());
 
     static CustomItem registerItem(String id, CustomItem item) {
         ITEMS.put(id, item);
@@ -47,6 +49,12 @@ public class CustomItems {
     }
 
     public static int getItemAmountOf(Player player, CustomItem item) {
+        ItemStack stack = getItemStackOf(player, item);
+        if(stack == null) return 0;
+        return stack.getAmount();
+    }
+
+    public static ItemStack getItemStackOf(Player player, CustomItem item) {
         PlayerInventory inventory = player.getInventory();
         for(ItemStack stack : inventory) {
             if(stack == null) continue;
@@ -55,9 +63,33 @@ public class CustomItems {
 
             List<String> lore = meta.getLore();
             if(lore == null || lore.size() == 0) continue;
-
-            if(lore.get(0).equals(item.getDescription())) return stack.getAmount();
+            if(lore.get(0).equals(item.getDescription())) return stack;
         }
+        return null;
+    }
+
+    public static int playerHoldingItemAmount(Player player, CustomItem item) {
+        ItemStack stack = player.getInventory().getItemInMainHand();
+
+        ItemMeta meta = stack.getItemMeta();
+        if(meta == null) return 0;
+        System.out.println("test1");
+
+        List<String> lore = meta.getLore();
+        if(lore == null || lore.size() == 0) return 0;
+        System.out.println("test2");
+        if(lore.get(0).equals(item.getDescription())) return stack.getAmount();;
+        System.out.println("test3");
         return 0;
+    }
+
+    static void onItemInteract(PlayerInteractEvent event) {
+        for(CustomItem item : ITEMS.values()) {
+            int amount = playerHoldingItemAmount(event.getPlayer(), item);
+            System.out.println(amount);
+            if(amount == 0) return;
+
+            item.onInteract(event, amount);
+        }
     }
 }

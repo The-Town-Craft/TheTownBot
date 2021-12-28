@@ -1,19 +1,21 @@
 package net.thetowncraft.townbot.items;
 
 import net.thetowncraft.townbot.Plugin;
-import net.thetowncraft.townbot.bosses.BossEventListener;
+import net.thetowncraft.townbot.bosses.BlazingWitherEventListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
-import java.util.List;
 import java.util.Random;
 
 public class CustomItemListener implements Listener {
@@ -79,7 +81,7 @@ public class CustomItemListener implements Listener {
             ProjectileSource shooter = projectile.getShooter();
             if(shooter instanceof Player) {
                 Player player = (Player) shooter;
-                if(BossEventListener.bossWorldName.equals(player.getWorld().getName())) return;
+                if(BlazingWitherEventListener.bossWorldName.equals(player.getWorld().getName())) return;
                 Random random = new Random();
                 int thunderstars = CustomItems.getItemAmountOf(player, CustomItems.BLAZING_THUNDERSTAR);
                 if(thunderstars == 0) return;
@@ -93,5 +95,10 @@ public class CustomItemListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        CustomItems.onItemInteract(event);
     }
 }

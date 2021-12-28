@@ -30,6 +30,7 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\li
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\chat\WorldChange.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\util\Utils.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\patches\AnvilItemDupePatch.java
+C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\bosses\ChickenBossEventListener.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\chat\Enchants.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\accountlink\LinkAccount.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\player_shops\PlayerShop.java
@@ -51,6 +52,7 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\li
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\SubtractActivityPointsCommand.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\player_shops\PlayerShopManager.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\Help.java
+C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\bosses\BlazingWitherEventListener.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\commands\Pay.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\bosses\BossEventListener.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\DiscordMute.java
@@ -78,6 +80,7 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\ec
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\chatmute\MuteManager.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\items\CustomItemListener.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\cosmetics\CosmeticsManager.java
+C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\items\NoxiousFeather.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\ModMail.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\api\command_handler\CommandHandler.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\Whitelist.java

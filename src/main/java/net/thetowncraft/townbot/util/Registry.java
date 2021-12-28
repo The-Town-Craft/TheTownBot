@@ -4,7 +4,8 @@ import net.thetowncraft.townbot.api.command_handler.CommandHandler;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.bosses.BossEventListener;
+import net.thetowncraft.townbot.bosses.BlazingWitherEventListener;
+import net.thetowncraft.townbot.bosses.ChickenBossEventListener;
 import net.thetowncraft.townbot.economy.commands.*;
 import net.thetowncraft.townbot.economy.cosmetics.BuyCosmeticListener;
 import net.thetowncraft.townbot.economy.cosmetics.CosmeticListCommand;
@@ -14,6 +15,7 @@ import net.thetowncraft.townbot.economy.player_shops.PlayerShopListener;
 import net.thetowncraft.townbot.economy.player_shops.commands.DepositDiamonds;
 import net.thetowncraft.townbot.economy.player_shops.commands.ShopChestCommand;
 import net.thetowncraft.townbot.economy.player_shops.commands.WithdrawDiamonds;
+import net.thetowncraft.townbot.items.ItemDropListener;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.discord.commands.AddActivityPointsCommand;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
@@ -117,7 +119,9 @@ public class Registry {
                 new WorldChange(),
                 new PlayerShopListener(),
                 new CustomItemListener(),
-                new BossEventListener()
+                new BlazingWitherEventListener(),
+                new ChickenBossEventListener(),
+                new ItemDropListener()
         );
     }
     private static void registerSpigotListeners(JavaPlugin plugin, Listener... listeners) {
