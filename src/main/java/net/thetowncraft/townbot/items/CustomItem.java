@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ public abstract class CustomItem {
         List<String> lore = new ArrayList<>();
         lore.add(this.getDescription());
         itemMeta.setLore(lore);
+        itemMeta.setCustomModelData(1);
         itemMeta.setDisplayName(this.getRarity().getColor() + this.getName());
         stack.setItemMeta(itemMeta);
         return stack;
@@ -28,6 +30,8 @@ public abstract class CustomItem {
     public void procOnHit(Player player, int itemAmount, LivingEntity target, World world) {
 
     }
+
+    public void onPlayerJump(Player player, int amount) {}
 
     public void updateStats(Player player, int itemAmount) {}
 

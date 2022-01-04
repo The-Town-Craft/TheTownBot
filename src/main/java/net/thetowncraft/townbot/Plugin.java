@@ -43,7 +43,8 @@ public class Plugin extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, RepeatingTasks.TICKS_IN_A_DAY, RepeatingTasks.TICKS_IN_A_DAY);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, PlayerCountStatus::update, 5000, RepeatingTasks.REPEATING_TICKS);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, BlazingWitherEventListener::strikeTargetWithLightning, 200, 200);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, BlazingWitherEventListener::summonWitherSkeletons, 600, 1200);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, BlazingWitherEventListener::dodge, 80, 80);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, BlazingWitherEventListener::shootTNT, 40, 160);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ChickenBossEventListener::launchTNT, 600, 600);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ChickenBossEventListener::summonWolves, 300, 1200);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ChickenBossEventListener::useFangs, 0, 250);

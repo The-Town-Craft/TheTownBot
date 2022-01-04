@@ -60,10 +60,6 @@ public class ChickenBossEventListener implements Listener {
             }, 30);
 
             Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
-                player.setVelocity(new Vector(0, 10, 0));
-            }, 50);
-
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
                 player.teleport(playerStartPos);
                 player.playSound(new Location(world, 43, 168, 0), Sound.MUSIC_DISC_PIGSTEP, 100, 1);
                 if(player.getGameMode() == GameMode.SURVIVAL) player.setGameMode(GameMode.ADVENTURE);

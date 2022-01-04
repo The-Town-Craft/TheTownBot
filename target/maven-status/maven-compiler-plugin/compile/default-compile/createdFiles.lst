@@ -2,6 +2,7 @@ net\thetowncraft\townbot\economy\commands\Pay$Minecraft.class
 net\thetowncraft\townbot\economy\player_shops\commands\ShopChestCommand.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\PlayerCountStatus.class
 net\thetowncraft\townbot\Bot.class
+net\thetowncraft\townbot\bosses\portal\CustomPortal.class
 net\thetowncraft\townbot\listeners\minecraft\chat\Enchants.class
 net\thetowncraft\townbot\util\Rarity.class
 net\thetowncraft\townbot\api\command_handler\CommandHandler.class
@@ -76,6 +77,7 @@ net\thetowncraft\townbot\economy\cosmetics\BuyCosmeticListener$1.class
 net\thetowncraft\townbot\items\NoxiousFeather.class
 net\thetowncraft\townbot\economy\cosmetics\CosmeticListCommand.class
 net\thetowncraft\townbot\api\command_handler\minecraft\MinecraftCommand.class
+net\thetowncraft\townbot\items\ItemDropListener.class
 net\thetowncraft\townbot\listeners\accountlink\LinkAccount.class
 net\thetowncraft\townbot\listeners\discord\commands\RunMCCommand.class
 net\thetowncraft\townbot\economy\commands\Pay.class

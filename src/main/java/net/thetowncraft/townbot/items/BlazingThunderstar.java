@@ -36,7 +36,7 @@ public class BlazingThunderstar extends CustomItem {
 
     @Override
     public String getDescription() {
-        return ChatColor.RED + "Arrows now unleash the anger of the Blazing Wither";
+        return ChatColor.RED + "Unleash the anger of The Blazing Wither";
     }
 
     @Override

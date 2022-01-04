@@ -73,20 +73,16 @@ public class CustomItems {
 
         ItemMeta meta = stack.getItemMeta();
         if(meta == null) return 0;
-        System.out.println("test1");
 
         List<String> lore = meta.getLore();
         if(lore == null || lore.size() == 0) return 0;
-        System.out.println("test2");
         if(lore.get(0).equals(item.getDescription())) return stack.getAmount();;
-        System.out.println("test3");
         return 0;
     }
 
     static void onItemInteract(PlayerInteractEvent event) {
         for(CustomItem item : ITEMS.values()) {
             int amount = playerHoldingItemAmount(event.getPlayer(), item);
-            System.out.println(amount);
             if(amount == 0) return;
 
             item.onInteract(event, amount);

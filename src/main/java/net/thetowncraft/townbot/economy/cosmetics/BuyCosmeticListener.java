@@ -25,7 +25,7 @@ public class BuyCosmeticListener extends ListenerAdapter {
         if(member.getUser().isBot()) return;
 
         TextChannel channel = member.getGuild().getTextChannelById(CosmeticsManager.SHOP_CHANNEL_ID);
-        assert channel != null;
+        if(channel == null) return;
         if(event.getChannel().getId().equals(channel.getId())) {
             MessageReaction.ReactionEmote emote = event.getReaction().getReactionEmote();
             if(emote.isEmoji() && emote.getEmoji().equals(CosmeticsManager.BUY_EMOJI)) {

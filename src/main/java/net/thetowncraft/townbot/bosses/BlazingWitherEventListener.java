@@ -3,20 +3,24 @@ package net.thetowncraft.townbot.bosses;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.items.CustomItems;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.boss.BarColor;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBurnEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+
+import java.util.Random;
 
 public class BlazingWitherEventListener implements Listener {
 
@@ -105,11 +109,32 @@ public class BlazingWitherEventListener implements Listener {
                 type == EntityType.DROPPED_ITEM ||
                 type == EntityType.WITHER_SKULL ||
                 type == EntityType.ARROW ||
+                type == EntityType.PRIMED_TNT ||
+                type == EntityType.FIREBALL ||
+                type == EntityType.SMALL_FIREBALL ||
                 type == EntityType.DRAGON_FIREBALL)) event.setCancelled(true);
+    }
 
-        if(type == EntityType.WITHER_SKULL) {
+    @EventHandler
+    public void onEntityExplode(EntityExplodeEvent event) {
+        if(event.getEntity().getWorld().getName().equals(bossWorldName)) {
+            event.blockList().clear();
             if(wither == null) return;
-            wither.launchProjectile(LargeFireball.class).setDisplayItem(new ItemStack(Material.NETHER_STAR));
+            wither.getWorld().spawnEntity(event.getLocation(), EntityType.LIGHTNING);
+        }
+    }
+
+    @EventHandler
+    public void onBlockIgnite(BlockIgniteEvent event) {
+        if(event.getBlock().getWorld().getName().equals(bossWorldName)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onBlockExplode(BlockExplodeEvent event) {
+        if(event.getBlock().getWorld().getName().equals(bossWorldName)) {
+            event.blockList().clear();
         }
     }
 
@@ -151,6 +176,9 @@ public class BlazingWitherEventListener implements Listener {
         if(entity.getType() == EntityType.WITHER_SKELETON) {
             event.getDrops().clear();
         }
+
+        if(entity.getType() == EntityType.DROPPED_ITEM) return;
+
         if(entity.getType() == EntityType.WITHER) {
             event.getDrops().clear();
             world.dropItem(new Location(world, 43, 121, 0), CustomItems.BLAZING_THUNDERSTAR.createItemStack(1));
@@ -211,7 +239,7 @@ public class BlazingWitherEventListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         if(Bukkit.getWorld(bossWorldName).getName().equals(event.getPlayer().getWorld().getName())) {
             if(event.getPlayer().getGameMode() != GameMode.ADVENTURE) return;
-            event.getPlayer().damage(1000, wither);
+            event.getPlayer().setHealth(0);
         }
     }
 
@@ -263,37 +291,56 @@ public class BlazingWitherEventListener implements Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
             world.spawnEntity(targetPos, EntityType.LIGHTNING);
         }, lightningInaccuracy);
+        if(wither.getHealth() < wither.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() / 2) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), BlazingWitherEventListener::strikeTargetWithLightning, 100);
+        }
     }
 
-    public static void summonWitherSkeletons() {
+    public static void dodge() {
         if(wither == null) return;
+        if(wither.getTarget() == null) return;
 
+        Random random = new Random();
+        int dir = random.nextInt(4);
+        if(dir == 0) {
+            wither.setVelocity(new Vector(5, 0, 0));
+        }
+        else if(dir == 1) {
+            wither.setVelocity(new Vector(-5, 0, 0));
+        }
+        else if(dir == 2) {
+            wither.setVelocity(new Vector(0, 0, 5));
+        }
+        else {
+            wither.setVelocity(new Vector(0, 0, -5));
+        }
+
+        wither.getWorld().playSound(wither.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
+    }
+
+    public static void shootTNT() {
+        if(wither == null) return;
         World world = wither.getWorld();
-        WitherSkeleton skeleton1 = ((WitherSkeleton) world.spawnEntity(new Location(world, 43, 121, -0), EntityType.WITHER_SKELETON));
-        WitherSkeleton skeleton2 = ((WitherSkeleton) world.spawnEntity(new Location(world, 43, 121, 1), EntityType.WITHER_SKELETON));
+        world.playSound(wither.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 10, 1);
+        summonTNT(new Vector(0,0,0), 30);
+        if(wither.getHealth() > wither.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() / 2) return;
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            summonTNT(new Vector(0.5, 0, 0));
+            summonTNT(new Vector(-0.5, 0, 0));
+            summonTNT(new Vector(0, 0, 0.5));
+            summonTNT(new Vector(0, 0, -0.5));
+        }, 20);
+    }
 
-        ItemStack sword = new ItemStack(Material.NETHERITE_SWORD);
-        sword.addEnchantment(Enchantment.KNOCKBACK, 2);
-        sword.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+    private static void summonTNT(Vector velocity) {
+        summonTNT(velocity, 100);
+    }
 
-        ItemStack axe = new ItemStack(Material.NETHERITE_AXE);
-        sword.addEnchantment(Enchantment.DAMAGE_ALL, 5);
-
-        skeleton1.getEquipment().setItemInMainHand(sword);
-
-        skeleton1.getEquipment().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
-        skeleton1.getEquipment().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
-        skeleton1.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
-        skeleton1.getEquipment().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
-
-        skeleton2.getEquipment().setItemInMainHand(axe);
-
-        skeleton2.getEquipment().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
-        skeleton2.getEquipment().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
-        skeleton2.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
-        skeleton2.getEquipment().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
-
-        skeleton1.addPotionEffect(PotionEffectType.SPEED.createEffect(10000, 0));
-        skeleton2.addPotionEffect(PotionEffectType.SPEED.createEffect(10000, 0));
+    private static void summonTNT(Vector velocity, int fuse) {
+        TNTPrimed tnt = (TNTPrimed) wither.getWorld().spawnEntity(wither.getLocation(), EntityType.PRIMED_TNT);
+        tnt.setFuseTicks(fuse);
+        tnt.setVelocity(velocity);
+        tnt.setSource(wither);
+        tnt.setCustomName("Magma");
     }
 }
