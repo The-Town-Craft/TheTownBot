@@ -6,6 +6,7 @@ import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.bosses.BlazingWitherEventListener;
 import net.thetowncraft.townbot.bosses.ChickenBossEventListener;
+import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.economy.commands.*;
 import net.thetowncraft.townbot.economy.cosmetics.BuyCosmeticListener;
 import net.thetowncraft.townbot.economy.cosmetics.CosmeticListCommand;
@@ -121,7 +122,8 @@ public class Registry {
                 new CustomItemListener(),
                 new BlazingWitherEventListener(),
                 new ChickenBossEventListener(),
-                new ItemDropListener()
+                new ItemDropListener(),
+                new DimensionEventListener()
         );
     }
     private static void registerSpigotListeners(JavaPlugin plugin, Listener... listeners) {

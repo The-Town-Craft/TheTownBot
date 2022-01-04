@@ -1,8 +1,11 @@
 package net.thetowncraft.townbot.bosses;
 
 import net.thetowncraft.townbot.Plugin;
+import net.thetowncraft.townbot.dimension.DimensionEventListener;
+import net.thetowncraft.townbot.items.CustomItems;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Biome;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -39,11 +42,12 @@ public class ChickenBossEventListener implements Listener {
     public void onChickenDeath(EntityDeathEvent event) {
         LivingEntity entity = event.getEntity();
         if(entity.getType() == EntityType.CHICKEN) {
+
+            if(!entity.getWorld().getName().equals(DimensionEventListener.MYSTIC_REALM)) return;
+
             Chicken chicken = (Chicken) entity;
             Player player = chicken.getKiller();
             if(player == null) return;
-            if(!player.isOp()) return;
-            if(!player.getWorld().getName().equals("world_1597802541")) return;
 
             if(bossBeingChallenged) {
                 player.sendMessage("<" + ChatColor.YELLOW + "" + ChatColor.BOLD + "The Noxious Chicken" + ChatColor.RESET+  "> " + ChatColor.RED + "You will later regret this...");
@@ -79,7 +83,6 @@ public class ChickenBossEventListener implements Listener {
             chickenBoss.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(BOSS_HEALTH);
             chickenBoss.setHealth(BOSS_HEALTH);
             chickenBoss.setCustomName("The Noxious Chicken");
-            chickenBoss.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 99999, 0));
             chicken.setCustomNameVisible(false);
             bossBeingChallenged = true;
             canMirage = true;
@@ -96,7 +99,7 @@ public class ChickenBossEventListener implements Listener {
 
         if(entity.getType() == EntityType.CHICKEN && entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() == BOSS_HEALTH) {
             event.getDrops().clear();
-            //world.dropItem(new Location(world, 43, 121, 0), CustomItems.BLAZING_THUNDERSTAR.createItemStack(1));
+            event.getDrops().add(CustomItems.NOXIOUS_FEATHER.createItemStack(1));
             event.setDroppedExp(1200);
             chicken = null;
             bossBar.removeAll();
@@ -301,20 +304,14 @@ public class ChickenBossEventListener implements Listener {
         wolf1.setAngry(true);
         wolf2.setAngry(true);
 
-        int health = 40;
         int damage = 40;
-
-        wolf1.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
-        wolf2.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
-
-        wolf1.setHealth(health);
-        wolf2.setHealth(health);
 
         wolf1.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(damage);
         wolf2.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(damage);
     }
 
     public static void mirageAttack() {
+        if(!canMirage) return;
         canMirage = false;
         LivingEntity target = chicken.getTarget();
         if(target != null) {
