@@ -2,8 +2,9 @@ package net.thetowncraft.townbot;
 
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.bosses.BlazingWitherEventListener;
-import net.thetowncraft.townbot.bosses.ChickenBossEventListener;
+import net.thetowncraft.townbot.custom_bosses.bosses.BlazingWitherEventListener;
+import net.thetowncraft.townbot.custom_bosses.bosses.ChickenBossEventListener;
+import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Plugin extends JavaPlugin {
 
+    public static final String OVERWORLD_NAME = "world_1597802541";
     public static final String VOID_DIMENSION_NAME = "world_1597802541_thetown_the_void";
 
     /**
@@ -48,6 +50,7 @@ public class Plugin extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ChickenBossEventListener::launchTNT, 600, 600);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ChickenBossEventListener::summonWolves, 300, 1200);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ChickenBossEventListener::useFangs, 0, 250);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, DimensionEventListener::checkPoisonWater, 60, 60);
     }
 
     @Override

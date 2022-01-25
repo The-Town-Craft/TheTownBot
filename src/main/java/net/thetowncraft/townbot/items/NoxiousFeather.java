@@ -21,6 +21,11 @@ public class NoxiousFeather extends CustomItem {
     }
 
     @Override
+    public int getCustomModelData() {
+        return 1;
+    }
+
+    @Override
     public Material getBaseItem() {
         return Material.FEATHER;
     }

@@ -16,8 +16,13 @@ public class CustomItems {
     private static final Map<String, CustomItem> ITEMS = new HashMap<>();
 
     public static final CustomItem SHAPED_GLASS = registerItem("shaped_glass", new ShapedGlass());
+    public static final CustomItem MYSTIC_PEARL = registerItem("mystic_pearl", new MysticPearl());
     public static final CustomItem BLAZING_THUNDERSTAR = registerItem("blazing_thunderstar", new BlazingThunderstar());
     public static final CustomItem NOXIOUS_FEATHER = registerItem("noxious_feather", new NoxiousFeather());
+    public static final CustomItem HUNTER_SKULL = registerItem("hunter_skull", new HunterSkull());
+    public static final CustomItem HUNTER_SWORD = registerItem("hunter_sword", new HunterSword());
+    public static final CustomItem ILLUSIONER_HEART = registerItem("illusioner_heart", new IllusionerHeart());
+    public static final CustomItem MYSTIC_TOTEM = registerItem("mystic_totem", new MysticTotem());
 
     static CustomItem registerItem(String id, CustomItem item) {
         ITEMS.put(id, item);

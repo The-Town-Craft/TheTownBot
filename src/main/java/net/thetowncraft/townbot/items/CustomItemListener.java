@@ -2,28 +2,25 @@ package net.thetowncraft.townbot.items;
 
 import com.google.common.collect.Sets;
 import net.thetowncraft.townbot.Plugin;
-import net.thetowncraft.townbot.bosses.BlazingWitherEventListener;
+import net.thetowncraft.townbot.custom_bosses.bosses.BlazingWitherEventListener;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.data.type.Fire;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class CustomItemListener implements Listener {
 
@@ -61,6 +58,13 @@ public class CustomItemListener implements Listener {
     }
 
     @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event) {
+        if(event.getItemInHand().getItemMeta().hasCustomModelData()) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void onShootBow(EntityShootBowEvent event) {
         ProjectileSource shooter = event.getEntity();
         if(shooter instanceof Player) {
@@ -79,10 +83,27 @@ public class CustomItemListener implements Listener {
 
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
-        if(event.getEntity() instanceof SizedFireball) {
-            if(event.getEntity().getName().equals("Thunderstar")) {
+        Entity entity = event.getEntity();
+        if(entity instanceof SizedFireball) {
+            if(entity.getName().equals("Thunderstar")) {
                 event.blockList().clear();
             }
+        }
+    }
+
+    private static final Map<String, Location> pearlLocations = new HashMap<>();
+
+    @EventHandler
+    public void onProjectileLaunch(ProjectileLaunchEvent event) {
+        Projectile projectile = event.getEntity();
+        ProjectileSource shooter = projectile.getShooter();
+        if(shooter == null) return;
+
+        if(projectile instanceof EnderPearl && shooter instanceof Player) {
+            Player player = (Player) shooter;
+            Location location = player.getLocation();
+
+            pearlLocations.put(player.getUniqueId().toString(), location);
         }
     }
 
@@ -96,6 +117,23 @@ public class CustomItemListener implements Listener {
         }
 
         LivingEntity entity = (LivingEntity) nonLiving;
+
+        if(damager instanceof EnderPearl) {
+            EnderPearl pearl = (EnderPearl) damager;
+            if(pearl.getItem().getItemMeta().getCustomModelData() == 1) {
+                ProjectileSource shooter = pearl.getShooter();
+                if(!(shooter instanceof Player)) return;
+
+                Player player = (Player) shooter;
+
+                Location location = pearlLocations.get(player.getUniqueId().toString());
+
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+                    player.teleport(new Location(location.getWorld(), location.getX(), location.getY(), location.getZ()));
+                    player.playSound(location, Sound.ENTITY_ENDERMAN_TELEPORT, 10, 1);
+                }, 60);
+            }
+        }
 
         if(damager instanceof SizedFireball && damager.getCustomName().equals("Thunderstar")) {
             SizedFireball fireball = (SizedFireball) damager;

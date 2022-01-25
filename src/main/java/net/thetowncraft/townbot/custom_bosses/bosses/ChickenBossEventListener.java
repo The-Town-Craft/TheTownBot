@@ -1,11 +1,10 @@
-package net.thetowncraft.townbot.bosses;
+package net.thetowncraft.townbot.custom_bosses.bosses;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.items.CustomItems;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.block.Biome;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -14,14 +13,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.projectiles.ProjectileSource;
-import org.bukkit.util.Vector;
 
 public class ChickenBossEventListener implements Listener {
 
@@ -103,6 +101,13 @@ public class ChickenBossEventListener implements Listener {
             event.setDroppedExp(1200);
             chicken = null;
             bossBar.removeAll();
+        }
+    }
+
+    @EventHandler
+    public void onBlockIgnite(BlockIgniteEvent event) {
+        if(event.getBlock().getWorld().getName().equals(world.getName())) {
+            event.setCancelled(true);
         }
     }
 
@@ -215,6 +220,7 @@ public class ChickenBossEventListener implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
+        if(chicken == null) return;
         Entity nonLiving = event.getEntity();
         if(!(nonLiving instanceof LivingEntity)) return;
         LivingEntity entity = (LivingEntity) nonLiving;

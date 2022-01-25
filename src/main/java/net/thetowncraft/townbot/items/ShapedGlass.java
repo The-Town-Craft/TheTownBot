@@ -20,6 +20,11 @@ public class ShapedGlass extends CustomItem {
     }
 
     @Override
+    public int getCustomModelData() {
+        return 1;
+    }
+
+    @Override
     public Material getBaseItem() {
         return Material.BLUE_STAINED_GLASS_PANE;
     }

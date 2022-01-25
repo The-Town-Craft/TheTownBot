@@ -4,8 +4,10 @@ import net.thetowncraft.townbot.api.command_handler.CommandHandler;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.bosses.BlazingWitherEventListener;
-import net.thetowncraft.townbot.bosses.ChickenBossEventListener;
+import net.thetowncraft.townbot.custom_bosses.bosses.BlazingWitherEventListener;
+import net.thetowncraft.townbot.custom_bosses.bosses.ChickenBossEventListener;
+import net.thetowncraft.townbot.custom_bosses.bosses.IllusionerBoss;
+import net.thetowncraft.townbot.custom_bosses.bosses.WickedHunterBoss;
 import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.economy.commands.*;
 import net.thetowncraft.townbot.economy.cosmetics.BuyCosmeticListener;
@@ -120,10 +122,14 @@ public class Registry {
                 new WorldChange(),
                 new PlayerShopListener(),
                 new CustomItemListener(),
+                new ItemDropListener(),
+                new DimensionEventListener(),
+
+                //Bosses
+                new WickedHunterBoss(),
                 new BlazingWitherEventListener(),
                 new ChickenBossEventListener(),
-                new ItemDropListener(),
-                new DimensionEventListener()
+                new IllusionerBoss()
         );
     }
     private static void registerSpigotListeners(JavaPlugin plugin, Listener... listeners) {

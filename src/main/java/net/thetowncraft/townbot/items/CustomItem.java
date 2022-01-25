@@ -21,7 +21,7 @@ public abstract class CustomItem {
         List<String> lore = new ArrayList<>();
         lore.add(this.getDescription());
         itemMeta.setLore(lore);
-        itemMeta.setCustomModelData(1);
+        if(this.getCustomModelData() != 0) itemMeta.setCustomModelData(this.getCustomModelData());
         itemMeta.setDisplayName(this.getRarity().getColor() + this.getName());
         stack.setItemMeta(itemMeta);
         return stack;
@@ -40,6 +40,8 @@ public abstract class CustomItem {
     public abstract String getName();
 
     public abstract String getDescription();
+
+    public abstract int getCustomModelData();
 
     public abstract Material getBaseItem();
 
