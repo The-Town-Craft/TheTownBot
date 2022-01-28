@@ -132,6 +132,12 @@ public class DimensionEventListener implements Listener {
                 AttributeInstance damage = enderman.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
                 damage.setBaseValue(damage.getBaseValue() * 2);
             }
+            if(entity.getType() == EntityType.WITHER_SKELETON) {
+                if(new Random().nextInt(30) == 1) {
+                    world.spawnEntity(entity.getLocation(), EntityType.LIGHTNING);
+                    event.setCancelled(true);
+                }
+            }
         }
     }
 

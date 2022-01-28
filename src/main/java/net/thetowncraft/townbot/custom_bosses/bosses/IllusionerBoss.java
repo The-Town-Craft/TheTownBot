@@ -5,17 +5,23 @@ import net.thetowncraft.townbot.custom_bosses.BossEventListener;
 import net.thetowncraft.townbot.items.CustomItem;
 import net.thetowncraft.townbot.items.CustomItems;
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.bukkit.event.block.*;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-
-import javax.sound.midi.ControllerEventListener;
+import org.bukkit.util.Vector;
 
 public class IllusionerBoss extends BossEventListener {
 
@@ -24,14 +30,56 @@ public class IllusionerBoss extends BossEventListener {
     Arrow rain
     Lightning wall
     Dodge
+
+    SOUNDS:
+    Beacon,
+    Explosion,
+    Lightning,
+    Totem,
+    Iron Golem Death
+    
      */
+
     @Override
     public void initAttacks() {
-        addAttack(this::updateParticles, 10, 10);
+        addAttack(this::dodge, 100, 100);
+        addAttack(this::fallingGold, 100, 100);
     }
 
-    public void updateParticles() {
-        world.spawnParticle(Particle.PORTAL, boss.getLocation(), 100);
+    @Override
+    public void dodge() {
+        dodge(1);
+        boss.removePotionEffect(PotionEffectType.INVISIBILITY);
+        player.removePotionEffect(PotionEffectType.BLINDNESS);
+    }
+
+    public void fallingGold() {
+        Location location = player.getLocation();
+        Location blockLocation = new Location(location.getWorld(), location.getX(), location.getY() + 10, location.getZ());
+        blockLocation.getBlock().setType(Material.GOLD_BLOCK);
+        FallingBlock fallingBlock = world.spawnFallingBlock(blockLocation, blockLocation.getBlock().getBlockData());
+        TNTPrimed tnt = (TNTPrimed) world.spawnEntity(blockLocation, EntityType.PRIMED_TNT);
+        tnt.setFuseTicks(40);
+        tnt.setCustomName("Gold");
+        blockLocation.getBlock().setType(Material.AIR);
+        fallingBlock.setDropItem(false);
+    }
+
+    @EventHandler
+    public void onEntityExplode(EntityExplodeEvent event) {
+        Entity entity = event.getEntity();
+        if(entity.getCustomName() == null) return;
+
+        if(entity.getWorld().getName().equals(world.getName())) {
+            if(entity.getType() == EntityType.PRIMED_TNT && entity.getCustomName().equals("Gold")) {
+                for(Block block : event.blockList()) {
+                    if(block.getType() == Material.GOLD_BLOCK && block.getY() < 107) {
+                        block.setType(Material.AIR);
+                    }
+                }
+            }
+            event.blockList().clear();
+        }
     }
 
     @EventHandler
@@ -68,18 +116,31 @@ public class IllusionerBoss extends BossEventListener {
     }
 
     @EventHandler
-    public void onEffect(EntityPotionEffectEvent event) {
+    public void onDamage(EntityDamageEvent event) {
+        if(!bossBeingChallenged) return;
         Entity entity = event.getEntity();
-        PotionEffect effect = event.getNewEffect();
-        if(effect == null) return;
-        if(entity.getType() == EntityType.ILLUSIONER) {
-            if(effect.getType() == PotionEffectType.INVISIBILITY) {
-                Illusioner illusioner = (Illusioner) entity;
-                illusioner.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, effect.getDuration(), 0, true, false, false));
+        if(entity instanceof Illusioner) {
+            Illusioner illusioner = (Illusioner) entity;
+            if(!illusioner.getWorld().getName().equals(world.getName())) return;
+            if(bossBar == null) return;
+
+            Location playerPos = player.getLocation();
+            Location bossLocation = illusioner.getLocation();
+            Vector velocity = player.getVelocity();
+
+            if(playerPos.getZ() > 60) return;
+
+            if(bossBar.getProgress() < 0.65 && playerPos.getX() > -60 && playerPos.getZ() > -60) {
+                player.teleport(new Location(playerPos.getWorld(), playerPos.getX() - 119, playerPos.getY(), playerPos.getZ(), playerPos.getYaw(), playerPos.getPitch()));
+                boss.teleport(new Location(bossLocation.getWorld(), bossLocation.getX() - 119, bossLocation.getY(), bossLocation.getZ(), bossLocation.getYaw(), bossLocation.getPitch()));
+                player.setVelocity(velocity);
             }
-        }
-        if(entity.getType() == EntityType.PLAYER & effect.getType() == PotionEffectType.BLINDNESS) {
-            event.setCancelled(true);
+
+            if(bossBar.getProgress() < 0.35 && playerPos.getX() < -60) {
+                player.teleport(new Location(playerPos.getWorld(), playerPos.getX() + 119, playerPos.getY() + 1, playerPos.getZ() + 120, playerPos.getYaw(), playerPos.getPitch()));
+                boss.teleport(new Location(bossLocation.getWorld(), bossLocation.getX() + 119, bossLocation.getY() + 1, bossLocation.getZ() + 120, bossLocation.getYaw(), bossLocation.getPitch()));
+                player.setVelocity(velocity);
+            }
         }
     }
 
@@ -130,11 +191,11 @@ public class IllusionerBoss extends BossEventListener {
 
     @Override
     public Location getBossSpawnLocation() {
-        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_illusioner"), 0, 101, 42, 180, 0);
+        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_illusioner"), 0, 101, 20, 180, 0);
     }
 
     @Override
     public Location getPlayerSpawnLocation() {
-        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_illusioner"), 0, 101, 0, 0, 0);
+        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_illusioner"), 0, 101, -20, 0, 0);
     }
 }

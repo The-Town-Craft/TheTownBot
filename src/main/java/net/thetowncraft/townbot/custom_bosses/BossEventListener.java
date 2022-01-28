@@ -21,9 +21,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class BossEventListener implements Listener {
 
@@ -44,6 +46,14 @@ public abstract class BossEventListener implements Listener {
         initEquipment();
     }
 
+    @EventHandler
+    public void onEntityResurrect(EntityResurrectEvent event) {
+        LivingEntity entity = event.getEntity();
+        if(entity.getType() == EntityType.PLAYER && entity.getWorld().getName().equals(world.getName())) {
+            event.setCancelled(true);
+        }
+    }
+
     public void initDefaultAttacks() {
         this.addAttack(this::focusPlayer, 30, 30);
     }
@@ -61,6 +71,29 @@ public abstract class BossEventListener implements Listener {
         if(boss instanceof Mob) {
             ((Mob) boss).setTarget(player);
         }
+    }
+
+    public void dodge() {
+        dodge(5);
+    }
+
+    public void dodge(int speed) {
+        Random random = new Random();
+        int dir = random.nextInt(4);
+        if(dir == 0) {
+            boss.setVelocity(new Vector(speed, 0, 0));
+        }
+        else if(dir == 1) {
+            boss.setVelocity(new Vector(-speed, 0, 0));
+        }
+        else if(dir == 2) {
+            boss.setVelocity(new Vector(0, 0, speed));
+        }
+        else {
+            boss.setVelocity(new Vector(0, 0, -speed));
+        }
+
+        boss.getWorld().playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
     }
 
     public boolean initBossFight(Player player) {
