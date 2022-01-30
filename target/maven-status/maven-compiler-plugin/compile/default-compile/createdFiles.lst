@@ -31,6 +31,7 @@ net\thetowncraft\townbot\api\command_handler\CommandHandler$Discord.class
 net\thetowncraft\townbot\api\command_handler\CommandEvent.class
 net\thetowncraft\townbot\util\SkinRender.class
 net\thetowncraft\townbot\economy\player_shops\PlayerShopListener.class
+net\thetowncraft\townbot\listeners\minecraft\commands\MaintenanceListener.class
 net\thetowncraft\townbot\listeners\minecraft\commands\GiveCustomItem.class
 net\thetowncraft\townbot\api\command_handler\CommandEvent$Discord.class
 net\thetowncraft\townbot\api\command_handler\discord\DiscordCommand.class
@@ -60,6 +61,7 @@ net\thetowncraft\townbot\listeners\minecraft\player_activity\afk\AFKListener.cla
 net\thetowncraft\townbot\api\command_handler\discord\ExampleCommand.class
 net\thetowncraft\townbot\economy\player_shops\PlayerShopManager.class
 net\thetowncraft\townbot\listeners\minecraft\chat\CommandLog.class
+net\thetowncraft\townbot\items\MysticArtifact.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\active\ActivityManager.class
 net\thetowncraft\townbot\listeners\discord\commands\DiscordActiveCommand.class
 net\thetowncraft\townbot\listeners\minecraft\anticheat\XrayDetection.class
@@ -69,6 +71,7 @@ net\thetowncraft\townbot\custom_bosses\bosses\WickedHunterBoss.class
 net\thetowncraft\townbot\util\Registry.class
 net\thetowncraft\townbot\listeners\discord\commands\SubtractActivityPointsCommand.class
 net\thetowncraft\townbot\listeners\minecraft\chat\RuleReminders.class
+net\thetowncraft\townbot\listeners\minecraft\commands\MaintenanceCommand.class
 net\thetowncraft\townbot\util\Utils.class
 net\thetowncraft\townbot\listeners\discord\commands\AddActivityPointsCommand.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\PlayerJoin.class
@@ -91,7 +94,6 @@ net\thetowncraft\townbot\listeners\discord\DiscordChatListener.class
 net\thetowncraft\townbot\economy\cosmetics\Cosmetic.class
 net\thetowncraft\townbot\items\CustomItem.class
 net\thetowncraft\townbot\custom_bosses\BossEventListener.class
-net\thetowncraft\townbot\items\MysticTotem.class
 net\thetowncraft\townbot\economy\cosmetics\CosmeticsManager.class
 net\thetowncraft\townbot\items\IllusionerHeart.class
 net\thetowncraft\townbot\economy\player_shops\commands\WithdrawDiamonds.class

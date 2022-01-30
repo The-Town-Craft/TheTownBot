@@ -104,6 +104,10 @@ public abstract class BossEventListener implements Listener {
 
         bossBeingChallenged = true;
 
+        for(PotionEffect effect : player.getActivePotionEffects()) {
+            player.removePotionEffect(effect.getType());
+        }
+
         sendBossTitleEffects(player);
         setUpBoss(player);
         return true;
@@ -197,15 +201,14 @@ public abstract class BossEventListener implements Listener {
         Player player = event.getEntity();
         if(!player.getWorld().getName().equals(world.getName())) return;
         event.setKeepInventory(true);
+        event.setKeepLevel(true);
         event.getDrops().clear();
-
         player.setGameMode(GameMode.SURVIVAL);
         bossBeingChallenged = false;
         boss.remove();
         boss = null;
         this.player = null;
         bossBar.removeAll();
-        return;
     }
 
 

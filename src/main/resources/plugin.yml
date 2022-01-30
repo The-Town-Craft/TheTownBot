@@ -33,3 +33,6 @@ commands:
   gci:
     description: Give yourself a custom item
     usage: /gci <item_name> <amount>
+
+  maintenance:
+    description: Turn server maintenance on and off

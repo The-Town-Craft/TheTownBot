@@ -2,26 +2,26 @@ package net.thetowncraft.townbot.custom_bosses.bosses;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
+import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.items.CustomItem;
 import net.thetowncraft.townbot.items.CustomItems;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.*;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntityResurrectEvent;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+
+import java.util.List;
+import java.util.Random;
 
 public class IllusionerBoss extends BossEventListener {
 
@@ -43,7 +43,8 @@ public class IllusionerBoss extends BossEventListener {
     @Override
     public void initAttacks() {
         addAttack(this::dodge, 100, 100);
-        addAttack(this::fallingGold, 100, 100);
+        addAttack(this::slam, 50, 200);
+        addAttack(this::levitate, 0, 200);
     }
 
     @Override
@@ -53,65 +54,114 @@ public class IllusionerBoss extends BossEventListener {
         player.removePotionEffect(PotionEffectType.BLINDNESS);
     }
 
-    public void fallingGold() {
-        Location location = player.getLocation();
-        Location blockLocation = new Location(location.getWorld(), location.getX(), location.getY() + 10, location.getZ());
-        blockLocation.getBlock().setType(Material.GOLD_BLOCK);
-        FallingBlock fallingBlock = world.spawnFallingBlock(blockLocation, blockLocation.getBlock().getBlockData());
-        TNTPrimed tnt = (TNTPrimed) world.spawnEntity(blockLocation, EntityType.PRIMED_TNT);
-        tnt.setFuseTicks(40);
-        tnt.setCustomName("Gold");
-        blockLocation.getBlock().setType(Material.AIR);
-        fallingBlock.setDropItem(false);
+    public void slam() {
+        boss.setVelocity(new Vector(0, 2, 0));
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            boss.teleport(new Location(world, player.getLocation().getX(), boss.getLocation().getY(), player.getLocation().getZ()));
+        }, 15);
     }
 
-    @EventHandler
-    public void onEntityExplode(EntityExplodeEvent event) {
-        Entity entity = event.getEntity();
-        if(entity.getCustomName() == null) return;
+    public void shootCreepers(Location location) {
+        Creeper creeper1 = spawnCreeper(location);
+        Creeper creeper2 = spawnCreeper(location);
+        Creeper creeper3 = spawnCreeper(location);
+        Creeper creeper4 = spawnCreeper(location);
 
-        if(entity.getWorld().getName().equals(world.getName())) {
-            if(entity.getType() == EntityType.PRIMED_TNT && entity.getCustomName().equals("Gold")) {
-                for(Block block : event.blockList()) {
-                    if(block.getType() == Material.GOLD_BLOCK && block.getY() < 107) {
-                        block.setType(Material.AIR);
-                    }
+        creeper1.setVelocity(new Vector(2, 0, 0));
+        creeper2.setVelocity(new Vector(-2, 0, 0));
+        creeper3.setVelocity(new Vector(0, 0, 2));
+        creeper4.setVelocity(new Vector(0, 0, -2));
+    }
+
+    private Creeper spawnCreeper(Location location) {
+        Creeper creeper = (Creeper) world.spawnEntity(location, EntityType.CREEPER);
+        creeper.setCustomName("Mystic Creeper");
+        creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+        creeper.setHealth(1);
+        creeper.setPowered(true);
+        return creeper;
+    }
+
+    public void levitate() {
+        boss.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 30, 1, true, false, false));
+        world.playSound(boss.getLocation(), Sound.ENTITY_EVOKER_PREPARE_SUMMON, 10, 1);
+        Location location = player.getLocation();
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+
+            double dx = boss.getLocation().getX() - location.getX();
+            double dz = boss.getLocation().getZ() - location.getZ();
+            if(dx < -60 || dx > 60 || dz < -60 || dz > 60) return;
+
+            boss.teleport(location);
+            for(Entity entity : boss.getNearbyEntities(3, 3, 3)) {
+                if(entity instanceof Player) {
+                    Player player = (Player) entity;
+                    player.setVelocity(new Vector(0, 1, 0));
+                    player.damage(20, boss);
                 }
             }
-            event.blockList().clear();
-        }
+            world.playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
+            world.playSound(boss.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 5, 1);
+            world.playSound(boss.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 5, 1);
+        }, 30);
+    }
+
+    public void playArenaChangeEffect() {
+        world.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 100, 0);
+        world.playSound(player.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 100, 0);
+        world.playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 100, 0);
+        world.playSound(player.getLocation(), Sound.ENTITY_IRON_GOLEM_DEATH, 100, 0);
+        player.playEffect(EntityEffect.TOTEM_RESURRECT);
     }
 
     @EventHandler
-    public void onTotem(EntityResurrectEvent event) {
-        if(event.isCancelled()) return;
-
+    public void onShootBow(EntityShootBowEvent event) {
         LivingEntity entity = event.getEntity();
-        if(!(entity instanceof Player)) return;
+        Entity projectile = event.getProjectile();
+        Vector velocity = projectile.getVelocity();
 
-        Player player = (Player) entity;
-        if(player.getWorld().getName().equals(world.getName())) return;
+        if(!entity.getWorld().getName().equals(world.getName())) return;
+        if(entity.getType() != EntityType.ILLUSIONER) return;
+        if(new Random().nextInt(4) != 1 && bossBar.getProgress() > 0.5) return;
 
-        ItemStack item = null;
+        SizedFireball fireball = (SizedFireball) world.spawnEntity(projectile.getLocation(), EntityType.FIREBALL);
+        fireball.setDisplayItem(CustomItems.ILLUSIONER_HEART.createItemStack(1));
+        fireball.setVelocity(new Vector(velocity.getX(), 0, velocity.getZ()));
+        fireball.setShooter(boss);
+        fireball.setVisualFire(false);
+        event.setProjectile(fireball);
+        world.playSound(fireball.getLocation(), Sound.ENTITY_WITCH_CELEBRATE, 10, 1);
+        world.playSound(fireball.getLocation(), Sound.ENTITY_ENDER_DRAGON_SHOOT, 10, 1);
+    }
 
-        EntityEquipment equipment = player.getEquipment();
-        if(equipment == null) return;
+    @EventHandler
+    public void onPlayerEat(PlayerItemConsumeEvent event) {
+        Player player = event.getPlayer();
+        ItemStack item = event.getItem();
 
-        ItemStack offHand = equipment.getItemInOffHand();
-        ItemStack mainHand = equipment.getItemInMainHand();
-
-        if(offHand.getType() == Material.TOTEM_OF_UNDYING) {
-            item = offHand;
+        if(item.getType() == CustomItems.MYSTIC_ARTIFACT.getBaseItem() && item.getItemMeta() != null) {
+            ItemMeta itemMeta = item.getItemMeta();
+            if(itemMeta.hasCustomModelData() && itemMeta.getCustomModelData() == 1) {
+                if(!player.getWorld().getName().equals(DimensionEventListener.MYSTIC_REALM)) {
+                    event.setCancelled(true);
+                    event.getPlayer().sendMessage(ChatColor.RED + "This item can only be consumed in The Mystic Realm.");
+                    return;
+                }
+                event.setCancelled(true);
+                item.setAmount(item.getAmount() - 1);
+                initBossFight(player);
+            }
         }
-        if(mainHand.getType() == Material.TOTEM_OF_UNDYING) {
-            item = mainHand;
-        }
+    }
 
-        if(item == null) return;
-        if(item.getItemMeta() == null) return;
+    @Override
+    public void onEntityExplode(EntityExplodeEvent event) {
+        super.onEntityExplode(event);
 
-        if(item.getItemMeta().hasCustomModelData() && item.getItemMeta().getCustomModelData() == 1) {
-            initBossFight(player);
+        Entity entity = event.getEntity();
+
+        if(entity.getType() == EntityType.CREEPER && entity.getWorld().getName().equals(world.getName())) {
+            shootCreepers(entity.getLocation());
         }
     }
 
@@ -124,6 +174,24 @@ public class IllusionerBoss extends BossEventListener {
             if(!illusioner.getWorld().getName().equals(world.getName())) return;
             if(bossBar == null) return;
 
+            if(event.getCause() == EntityDamageEvent.DamageCause.FALL && event.getEntity().getType() == EntityType.ILLUSIONER) {
+                event.setCancelled(true);
+                List<Entity> entities = illusioner.getNearbyEntities(4, 4, 4);
+                for(Entity nearby : entities) {
+                    if(nearby instanceof Player) {
+                        Player player = (Player) nearby;
+                        player.damage(20, illusioner);
+                        player.setVelocity(new Vector(0, 1, 0));
+                        if(bossBar.getProgress() < 0.5) {
+                            shootCreepers(boss.getLocation());
+                        }
+                    }
+                }
+                world.playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
+                world.playSound(boss.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 5, 1);
+                return;
+            }
+
             Location playerPos = player.getLocation();
             Location bossLocation = illusioner.getLocation();
             Vector velocity = player.getVelocity();
@@ -131,22 +199,78 @@ public class IllusionerBoss extends BossEventListener {
             if(playerPos.getZ() > 60) return;
 
             if(bossBar.getProgress() < 0.65 && playerPos.getX() > -60 && playerPos.getZ() > -60) {
-                player.teleport(new Location(playerPos.getWorld(), playerPos.getX() - 119, playerPos.getY(), playerPos.getZ(), playerPos.getYaw(), playerPos.getPitch()));
-                boss.teleport(new Location(bossLocation.getWorld(), bossLocation.getX() - 119, bossLocation.getY(), bossLocation.getZ(), bossLocation.getYaw(), bossLocation.getPitch()));
-                player.setVelocity(velocity);
+                player.setVelocity(new Vector(velocity.getX(), 1.5, velocity.getZ()));
+                world.playSound(playerPos, Sound.ENTITY_GENERIC_EXPLODE, 100, 1);
+                boss.setInvulnerable(true);
+
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+                    player.teleport(new Location(playerPos.getWorld(), playerPos.getX() - 119, playerPos.getY(), playerPos.getZ(), playerPos.getYaw(), playerPos.getPitch()));
+                    double health = boss.getHealth();
+                    boss.remove();
+                    boss = (LivingEntity) world.spawnEntity(new Location(bossLocation.getWorld(), -119, 110, 0, bossLocation.getYaw(), bossLocation.getPitch()), EntityType.ILLUSIONER);
+                    ItemStack[] stacks = {};
+                    boss.getEquipment().setArmorContents(stacks);
+                    boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(this.getBossHealth());
+                    boss.setHealth(health);
+                    boss.setCustomName(this.getBossName());
+                    boss.setCustomNameVisible(false);
+                    playArenaChangeEffect();
+                }, 35);
             }
 
             if(bossBar.getProgress() < 0.35 && playerPos.getX() < -60) {
-                player.teleport(new Location(playerPos.getWorld(), playerPos.getX() + 119, playerPos.getY() + 1, playerPos.getZ() + 120, playerPos.getYaw(), playerPos.getPitch()));
-                boss.teleport(new Location(bossLocation.getWorld(), bossLocation.getX() + 119, bossLocation.getY() + 1, bossLocation.getZ() + 120, bossLocation.getYaw(), bossLocation.getPitch()));
-                player.setVelocity(velocity);
+                player.setVelocity(new Vector(velocity.getX(), 1.5, velocity.getZ()));
+                world.playSound(playerPos, Sound.ENTITY_GENERIC_EXPLODE, 100, 1);
+                boss.setInvulnerable(true);
+
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+                    player.teleport(new Location(playerPos.getWorld(), playerPos.getX() + 119, playerPos.getY() + 1, playerPos.getZ() + 120, playerPos.getYaw(), playerPos.getPitch()));
+                    double health = boss.getHealth();
+                    boss.remove();
+                    boss = (LivingEntity) world.spawnEntity(new Location(bossLocation.getWorld(), 0, 110, 120, bossLocation.getYaw(), bossLocation.getPitch()), EntityType.ILLUSIONER);
+                    ItemStack[] stacks = {};
+                    boss.getEquipment().setArmorContents(stacks);
+                    boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(this.getBossHealth());
+                    boss.setHealth(health);
+                    boss.setCustomName(this.getBossName());
+                    boss.setCustomNameVisible(false);
+                    playArenaChangeEffect();
+                }, 35);
             }
+
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamageEntity(EntityDamageByEntityEvent event) {
+        Entity entity = event.getEntity();
+        Entity damager = event.getDamager();
+        if(!entity.getWorld().getName().equals(world.getName())) return;
+
+        if(damager instanceof SizedFireball) {
+            if(entity instanceof Illusioner) {
+                ((Illusioner) entity).damage(40);
+            }
+            if(entity instanceof Player) {
+                ((Player) entity).damage(5);
+            }
+        }
+        if(damager instanceof TNTPrimed && entity instanceof Illusioner) {
+            event.setCancelled(true);
+        }
+        if(damager instanceof Player && entity instanceof SizedFireball) {
+            ((Player) damager).setHealth(((Player) damager).getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+            damager.playEffect(EntityEffect.LOVE_HEARTS);
+            damager.playEffect(EntityEffect.WITCH_MAGIC);
+            damager.playEffect(EntityEffect.VILLAGER_HAPPY);
+            ((Player) damager).addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 100, 0, true, false, false));
+            ((Player) damager).playSound(damager.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
         }
     }
 
     @Override
     public String getBossName() {
-        return "The Mystic Illusioner";
+        return "Mystic Illusioner";
     }
 
     @Override
@@ -161,7 +285,7 @@ public class IllusionerBoss extends BossEventListener {
 
     @Override
     public double getBossHealth() {
-        return 180;
+        return 200;
     }
 
     @Override

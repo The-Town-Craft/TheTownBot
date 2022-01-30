@@ -4,11 +4,11 @@ import net.thetowncraft.townbot.util.Rarity;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
-public class MysticTotem extends CustomItem {
+public class MysticArtifact extends CustomItem {
 
     @Override
     public String getName() {
-        return "Mystic Totem";
+        return "Mystic Artifact";
     }
 
     @Override
@@ -23,7 +23,7 @@ public class MysticTotem extends CustomItem {
 
     @Override
     public Material getBaseItem() {
-        return Material.TOTEM_OF_UNDYING;
+        return Material.ENCHANTED_GOLDEN_APPLE;
     }
 
     @Override

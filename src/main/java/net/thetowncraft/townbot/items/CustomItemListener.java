@@ -135,7 +135,7 @@ public class CustomItemListener implements Listener {
             }
         }
 
-        if(damager instanceof SizedFireball && damager.getCustomName().equals("Thunderstar")) {
+        if(damager instanceof SizedFireball && damager.getCustomName() != null && damager.getCustomName().equals("Thunderstar")) {
             SizedFireball fireball = (SizedFireball) damager;
             ProjectileSource shooter = fireball.getShooter();
             if(shooter != entity) entity.damage(20);

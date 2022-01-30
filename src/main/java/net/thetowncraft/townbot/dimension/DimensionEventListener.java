@@ -124,13 +124,24 @@ public class DimensionEventListener implements Listener {
                 event.setCancelled(true);
             }
             if(entity.getType() == EntityType.ENDERMAN) {
-                Enderman enderman = (Enderman) entity;
-                enderman.setCustomName("Mystic Enderman");
-                AttributeInstance health = enderman.getAttribute(Attribute.GENERIC_MAX_HEALTH);
-                health.setBaseValue(health.getBaseValue() / 2);
+                if(new Random().nextInt(6) == 1) {
+                    event.setCancelled(true);
+                    Creeper creeper = (Creeper) world.spawnEntity(location, EntityType.CREEPER);
+                    creeper.setCustomName("Mystic Creeper");
+                    creeper.setPowered(true);
+                    creeper.setCustomNameVisible(false);
+                    creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+                    creeper.setHealth(1);
+                }
+                else {
+                    Enderman enderman = (Enderman) entity;
+                    enderman.setCustomName("Mystic Enderman");
+                    AttributeInstance health = enderman.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+                    health.setBaseValue(health.getBaseValue() / 2);
 
-                AttributeInstance damage = enderman.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
-                damage.setBaseValue(damage.getBaseValue() * 2);
+                    AttributeInstance damage = enderman.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+                    damage.setBaseValue(damage.getBaseValue() * 2);
+                }
             }
             if(entity.getType() == EntityType.WITHER_SKELETON) {
                 if(new Random().nextInt(30) == 1) {
@@ -158,6 +169,10 @@ public class DimensionEventListener implements Listener {
                 else {
                     event.getDrops().add(CustomItems.MYSTIC_PEARL.createItemStack(1));
                 }
+            }
+            if(entity.getType() == EntityType.CREEPER) {
+                event.getDrops().clear();
+                event.getDrops().add(CustomItems.MYSTIC_ARTIFACT.createItemStack(1));
             }
             if(entity.getType() == EntityType.WITHER_SKELETON) {
                 event.getDrops().clear();

@@ -22,7 +22,7 @@ public class CustomItems {
     public static final CustomItem HUNTER_SKULL = registerItem("hunter_skull", new HunterSkull());
     public static final CustomItem HUNTER_SWORD = registerItem("hunter_sword", new HunterSword());
     public static final CustomItem ILLUSIONER_HEART = registerItem("illusioner_heart", new IllusionerHeart());
-    public static final CustomItem MYSTIC_TOTEM = registerItem("mystic_totem", new MysticTotem());
+    public static final CustomItem MYSTIC_ARTIFACT = registerItem("mystic_artifact", new MysticArtifact());
 
     static CustomItem registerItem(String id, CustomItem item) {
         ITEMS.put(id, item);

@@ -86,7 +86,8 @@ public class Registry {
                 new ShopChestCommand(),
                 new DepositDiamonds(),
                 new WithdrawDiamonds(),
-                new GiveCustomItem()
+                new GiveCustomItem(),
+                new MaintenanceCommand()
         );
     }
 
@@ -124,6 +125,7 @@ public class Registry {
                 new CustomItemListener(),
                 new ItemDropListener(),
                 new DimensionEventListener(),
+                new MaintenanceListener(),
 
                 //Bosses
                 new WickedHunterBoss(),

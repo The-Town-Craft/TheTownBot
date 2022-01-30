@@ -136,7 +136,7 @@ public class PlayerShopManager {
     }
 
     public static boolean inShoppingDistrict(Location pos) {
-        return pos.getX() > -1245 && pos.getX() < -913 && pos.getZ() < -800 && pos.getZ() > -1123 && (pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockZ(), pos.getBlockZ()) == Biome.MUSHROOM_FIELD_SHORE || pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockZ(), pos.getBlockZ()) == Biome.MUSHROOM_FIELDS);
+        return pos.getX() > -1245 && pos.getX() < -913 && pos.getZ() < -800 && pos.getZ() > -1123 && (pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockZ(), pos.getBlockZ()) == Biome.MUSHROOM_FIELDS || pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockZ(), pos.getBlockZ()) == Biome.MUSHROOM_FIELDS);
     }
 
     public static void addShop(PlayerShop shop) {

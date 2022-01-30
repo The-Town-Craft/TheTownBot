@@ -7,6 +7,7 @@ import net.thetowncraft.townbot.custom_bosses.bosses.ChickenBossEventListener;
 import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import net.thetowncraft.townbot.listeners.minecraft.commands.MaintenanceCommand;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.RepeatingTasks;
@@ -21,6 +22,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 public class Plugin extends JavaPlugin {
+    
+    public static boolean serverUnderMaintenance;
 
     public static final String OVERWORLD_NAME = "world_1597802541";
     public static final String VOID_DIMENSION_NAME = "world_1597802541_thetown_the_void";
@@ -40,6 +43,8 @@ public class Plugin extends JavaPlugin {
 
         AccountManager.loadAccounts();
         EconomyManager.loadEconomy();
+
+        MaintenanceCommand.loadData();
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::updatePlayerActivity, 0, RepeatingTasks.REPEATING_TICKS);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, RepeatingTasks.TICKS_IN_A_DAY, RepeatingTasks.TICKS_IN_A_DAY);
@@ -87,6 +92,7 @@ public class Plugin extends JavaPlugin {
     public void onDisable() {
         EconomyManager.saveEconomy();
         Bot.disable();
+        MaintenanceCommand.saveData();
     }
 
     /**
