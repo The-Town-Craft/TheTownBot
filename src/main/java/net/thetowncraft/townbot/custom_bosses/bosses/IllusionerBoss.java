@@ -169,9 +169,9 @@ public class IllusionerBoss extends BossEventListener {
     public void onDamage(EntityDamageEvent event) {
         if(!bossBeingChallenged) return;
         Entity entity = event.getEntity();
+        if(!entity.getWorld().getName().equals(world.getName())) return;
         if(entity instanceof Illusioner) {
             Illusioner illusioner = (Illusioner) entity;
-            if(!illusioner.getWorld().getName().equals(world.getName())) return;
             if(bossBar == null) return;
 
             if(event.getCause() == EntityDamageEvent.DamageCause.FALL && event.getEntity().getType() == EntityType.ILLUSIONER) {
@@ -237,7 +237,6 @@ public class IllusionerBoss extends BossEventListener {
                     playArenaChangeEffect();
                 }, 35);
             }
-
         }
     }
 

@@ -10,14 +10,9 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBurnEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.block.BlockIgniteEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -35,6 +30,7 @@ public abstract class BossEventListener implements Listener {
     public boolean bossHalfHealth = false;
     public LivingEntity boss = null;
     public Player player = null;
+    public Location prevPlayerLocation;
     public BossBar bossBar = null;
     public final World world;
 
@@ -103,6 +99,7 @@ public abstract class BossEventListener implements Listener {
         }
 
         bossBeingChallenged = true;
+        prevPlayerLocation = player.getLocation();
 
         for(PotionEffect effect : player.getActivePotionEffects()) {
             player.removePotionEffect(effect.getType());
@@ -129,10 +126,10 @@ public abstract class BossEventListener implements Listener {
         bossHalfHealth = false;
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
         world.setGameRule(GameRule.MOB_GRIEFING, false);
+        world.setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
             player.teleport(this.getPlayerSpawnLocation());
-            Location bossSpawn = this.getBossSpawnLocation();
-            player.playSound(new Location(world, bossSpawn.getX(), bossSpawn.getY() + 200, bossSpawn.getZ()), this.getBossMusic(), 1000, 1);
+            playBossMusic();
             if(player.getGameMode() == GameMode.SURVIVAL) player.setGameMode(GameMode.ADVENTURE);
 
             world.setGameRule(GameRule.MOB_GRIEFING, false);
@@ -142,13 +139,8 @@ public abstract class BossEventListener implements Listener {
                     entity.remove();
                 }
             }
-            ItemStack[] stacks = {};
-            boss = (LivingEntity) world.spawnEntity(bossSpawn, this.getBaseEntity());
-            boss.getEquipment().setArmorContents(stacks);
-            boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(this.getBossHealth());
-            boss.setHealth(this.getBossHealth());
-            boss.setCustomName(this.getBossName());
-            boss.setCustomNameVisible(false);
+
+            spawnBoss();
 
             if(boss instanceof Boss) {
                 Boss bossEntity = (Boss) this.boss;
@@ -170,9 +162,24 @@ public abstract class BossEventListener implements Listener {
         }, 70);
     }
 
+    public void spawnBoss() {
+        ItemStack[] stacks = {};
+        boss = (LivingEntity) world.spawnEntity(getBossSpawnLocation(), this.getBaseEntity());
+        boss.getEquipment().setArmorContents(stacks);
+        boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(this.getBossHealth());
+        boss.setHealth(this.getBossHealth());
+        boss.setCustomName(this.getBossName());
+        boss.setCustomNameVisible(false);
+    }
+
     public void setUpBossBar(Player player) {
         bossBar = Bukkit.createBossBar(this.getBossName(), this.getBarColor(), BarStyle.SOLID);
         bossBar.addPlayer(player);
+    }
+
+    public void playBossMusic() {
+        Location bossSpawn = this.getBossSpawnLocation();
+        player.playSound(new Location(world, bossSpawn.getX(), bossSpawn.getY() + 200, bossSpawn.getZ()), this.getBossMusic(), 1000, 1);
     }
 
     public void onBossSpawn(LivingEntity boss, Player player) {
@@ -203,15 +210,29 @@ public abstract class BossEventListener implements Listener {
         event.setKeepInventory(true);
         event.setKeepLevel(true);
         event.getDrops().clear();
+        player.teleport(prevPlayerLocation);
+    }
+
+    public void resetFight() {
         player.setGameMode(GameMode.SURVIVAL);
         bossBeingChallenged = false;
-        boss.remove();
+        if(boss != null) boss.remove();
         boss = null;
         this.player = null;
         bossBar.removeAll();
     }
 
-
+    @EventHandler
+    public void onClickSign(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        if(!player.getWorld().getName().equals(world.getName())) return;
+        if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if(event.getClickedBlock().getType().name().contains("SIGN")) {
+                resetFight();
+                player.teleport(prevPlayerLocation);
+            }
+        }
+    }
 
     @EventHandler
     public final void onItemDrop(PlayerDropItemEvent event) {
@@ -259,10 +280,8 @@ public abstract class BossEventListener implements Listener {
     public final void onPlayerQuit(PlayerQuitEvent event) {
         if(world.getName().equals(event.getPlayer().getWorld().getName())) {
             if(event.getPlayer().getGameMode() != GameMode.ADVENTURE) return;
+            resetFight();
             event.getPlayer().setHealth(0);
-            boss.remove();
-            bossBar = null;
-            bossBeingChallenged = false;
         }
     }
 
@@ -280,6 +299,22 @@ public abstract class BossEventListener implements Listener {
                         bossHalfHealth = true;
                         onBossHalfHealth();
                     }
+                }
+            }
+            if(entity instanceof Player) {
+                if(player.getHealth() - event.getFinalDamage() < 1.0) {
+                    event.setCancelled(true);
+                    player.teleport(this.getPlayerSpawnLocation());
+                    player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+                    boss.remove();
+                    spawnBoss();
+                    bossBar.setProgress(1.0);
+                    player.stopAllSounds();
+                    player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+                    player.playSound(player.getLocation(), Sound.ENTITY_IRON_GOLEM_DEATH, 10, 1);
+                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_DEATH, 10, 1);
+                    player.playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 10, 1);
+                    playBossMusic();
                 }
             }
         }
@@ -302,19 +337,8 @@ public abstract class BossEventListener implements Listener {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 60, 0, true, false, false));
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 0, true, false, false));
-
-                    Location bedLocation = player.getBedSpawnLocation();
-                    if(bedLocation == null) {
-                        player.teleport(new Location(Bukkit.getWorld("world_1597802541"),-161, 64, 230));
-                        player.setGameMode(GameMode.SURVIVAL);
-                        bossBeingChallenged = false;
-                        this.player = null;
-                        return;
-                    }
-                    player.teleport(bedLocation);
-                    player.setGameMode(GameMode.SURVIVAL);
-                    bossBeingChallenged = false;
-                    this.player = null;
+                    player.teleport(prevPlayerLocation);
+                    resetFight();
                 }, 60);
             }
         }
