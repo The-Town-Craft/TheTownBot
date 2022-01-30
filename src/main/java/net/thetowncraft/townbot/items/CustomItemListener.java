@@ -2,7 +2,7 @@ package net.thetowncraft.townbot.items;
 
 import com.google.common.collect.Sets;
 import net.thetowncraft.townbot.Plugin;
-import net.thetowncraft.townbot.custom_bosses.bosses.BlazingWitherEventListener;
+import net.thetowncraft.townbot.custom_bosses.bosses.BlazingWitherBoss;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -158,11 +158,11 @@ public class CustomItemListener implements Listener {
             ProjectileSource shooter = projectile.getShooter();
             if(shooter instanceof Player) {
                 Player player = (Player) shooter;
-                if(BlazingWitherEventListener.bossWorldName.equals(player.getWorld().getName())) return;
+                if(BlazingWitherBoss.bossWorldName.equals(player.getWorld().getName())) return;
                 Random random = new Random();
                 int thunderstars = CustomItems.getItemAmountOf(player, CustomItems.BLAZING_THUNDERSTAR);
                 if(thunderstars == 0) return;
-                if(BlazingWitherEventListener.bossWorldName.equals(player.getWorld().getName())) return;
+                if(BlazingWitherBoss.bossWorldName.equals(player.getWorld().getName())) return;
                 int procChance = thunderstars * 25;
                 int num = random.nextInt(100);
 

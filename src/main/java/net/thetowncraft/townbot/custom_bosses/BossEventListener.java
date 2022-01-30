@@ -52,6 +52,7 @@ public abstract class BossEventListener implements Listener {
 
     public void initDefaultAttacks() {
         this.addAttack(this::focusPlayer, 30, 30);
+        this.addAttack(this::fillHunger, 10, 10);
     }
 
     public void initAttacks() {}
@@ -67,6 +68,9 @@ public abstract class BossEventListener implements Listener {
         if(boss instanceof Mob) {
             ((Mob) boss).setTarget(player);
         }
+    }
+    public void fillHunger() {
+        player.setFoodLevel(20);
     }
 
     public void dodge() {
@@ -97,6 +101,9 @@ public abstract class BossEventListener implements Listener {
             sendBossBeingChallengedMessage(player);
             return false;
         }
+
+        player.setGameMode(GameMode.ADVENTURE);
+        player.setInvulnerable(true);
 
         bossBeingChallenged = true;
         prevPlayerLocation = player.getLocation();
@@ -142,7 +149,7 @@ public abstract class BossEventListener implements Listener {
 
             spawnBoss();
 
-            if(boss instanceof Boss) {
+            if(boss instanceof Wither) {
                 Boss bossEntity = (Boss) this.boss;
                 BossBar bar = bossEntity.getBossBar();
                 if(bar == null) {
@@ -158,6 +165,7 @@ public abstract class BossEventListener implements Listener {
             }
 
             bossBeingChallenged = true;
+            player.setInvulnerable(false);
             onBossSpawn(boss, player);
         }, 70);
     }
@@ -170,6 +178,10 @@ public abstract class BossEventListener implements Listener {
         boss.setHealth(this.getBossHealth());
         boss.setCustomName(this.getBossName());
         boss.setCustomNameVisible(false);
+        if(boss instanceof Wither) {
+            ((Wither) boss).getBossBar().setColor(getBarColor());
+            this.bossBar = ((Wither) boss).getBossBar();
+        }
     }
 
     public void setUpBossBar(Player player) {
@@ -236,7 +248,9 @@ public abstract class BossEventListener implements Listener {
 
     @EventHandler
     public final void onItemDrop(PlayerDropItemEvent event) {
-        if(event.getPlayer().getWorld().getName().equals(world.getName())) event.setCancelled(true);
+        if(event.getPlayer().getWorld().getName().equals(world.getName())) {
+            if(boss != null) event.setCancelled(true);
+        }
     }
 
     @EventHandler
@@ -314,6 +328,9 @@ public abstract class BossEventListener implements Listener {
                     player.playSound(player.getLocation(), Sound.ENTITY_IRON_GOLEM_DEATH, 10, 1);
                     player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_DEATH, 10, 1);
                     player.playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 10, 1);
+                    player.removePotionEffect(PotionEffectType.WITHER);
+                    player.setFireTicks(0);
+                    player.setFreezeTicks(0);
                     playBossMusic();
                 }
             }

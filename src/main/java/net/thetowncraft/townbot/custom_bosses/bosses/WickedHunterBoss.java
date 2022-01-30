@@ -40,7 +40,6 @@ public class WickedHunterBoss extends BossEventListener {
         if(event.getItemInHand().getType() == Material.SKELETON_SKULL) {
             if(this.initBossFight(event.getPlayer())) {
                 secondsInvulnerable = 0;
-                event.getPlayer().setGameMode(GameMode.ADVENTURE);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> event.getBlock().setType(Material.AIR), 20);
             }
             else event.setCancelled(true);
