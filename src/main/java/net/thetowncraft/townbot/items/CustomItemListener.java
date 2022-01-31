@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
@@ -153,9 +154,9 @@ public class CustomItemListener implements Listener {
             event.setDamage(finalDamage);
         }
 
-        if(damager instanceof Projectile) {
-            Projectile projectile = (Projectile) damager;
-            ProjectileSource shooter = projectile.getShooter();
+        if(damager instanceof SizedFireball) {
+            SizedFireball fireball = (SizedFireball) damager;
+            ProjectileSource shooter = fireball.getShooter();
             if(shooter instanceof Player) {
                 Player player = (Player) shooter;
                 if(BlazingWitherBoss.bossWorldName.equals(player.getWorld().getName())) return;
@@ -200,6 +201,14 @@ public class CustomItemListener implements Listener {
             prevPlayersOnGround.add(player.getUniqueId());
         } else {
             prevPlayersOnGround.remove(player.getUniqueId());
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event) {
+        Entity entity = event.getEntity();
+        if(entity instanceof Player) {
+            CustomItems.onPlayerDamage(((Player) entity).getPlayer(), event);
         }
     }
 

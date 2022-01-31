@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -36,6 +37,7 @@ public abstract class CustomItem {
     public void updateStats(Player player, int itemAmount) {}
 
     public void onInteract(PlayerInteractEvent event, int amount) {}
+    public void onPlayerDamage(Player player, EntityDamageEvent event, int amount) {}
 
     public abstract String getName();
 

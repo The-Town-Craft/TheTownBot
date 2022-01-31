@@ -47,7 +47,7 @@ public class Plugin extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::updatePlayerActivity, 0, RepeatingTasks.REPEATING_TICKS);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, RepeatingTasks.TICKS_IN_A_DAY, RepeatingTasks.TICKS_IN_A_DAY);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, PlayerCountStatus::update, 5000, RepeatingTasks.REPEATING_TICKS);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, DimensionEventListener::checkPoisonWater, 60, 60);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, DimensionEventListener::checkBiomeEffects, 60, 60);
     }
 
     @Override

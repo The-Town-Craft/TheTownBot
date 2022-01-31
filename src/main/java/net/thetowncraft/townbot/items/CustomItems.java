@@ -1,6 +1,7 @@
 package net.thetowncraft.townbot.items;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -91,6 +92,14 @@ public class CustomItems {
             if(amount == 0) return;
 
             item.onInteract(event, amount);
+        }
+    }
+    static void onPlayerDamage(Player player, EntityDamageEvent event) {
+        for(CustomItem item : ITEMS.values()) {
+            int amount = playerHoldingItemAmount(player, item);
+            if(amount == 0) return;
+
+            item.onPlayerDamage(player, event, amount);
         }
     }
 }

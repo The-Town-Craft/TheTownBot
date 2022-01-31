@@ -12,6 +12,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockIgniteEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -55,7 +56,7 @@ public class DimensionEventListener implements Listener {
 
         World mysticRealm = Bukkit.getWorld(MYSTIC_REALM);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
-            player.teleport(new Location(mysticRealm, 146, 64, -270, 0, 0));
+            player.teleport(new Location(mysticRealm, 1108, 69, 1924, 0, 0));
             player.playSound(player.getLocation(), Sound.AMBIENT_SOUL_SAND_VALLEY_MOOD, 100, 1);
         }, 10);
 
@@ -77,6 +78,22 @@ public class DimensionEventListener implements Listener {
     }
 
     @EventHandler
+    public void onBlockIgnite(BlockIgniteEvent event) {
+        Block block = event.getBlock();
+        Location location = block.getLocation();
+        World world = block.getWorld();
+        if(world.getName().equals(MYSTIC_REALM)) {
+            if(getBiomeName(location).equalsIgnoreCase("ice_spikes")) {
+                Block fireBlock = location.getBlock();
+                if(fireBlock.getType() != Material.SOUL_FIRE) {
+                    fireBlock.setType(Material.SOUL_FIRE);
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         Location pos = player.getLocation();
@@ -92,12 +109,14 @@ public class DimensionEventListener implements Listener {
         }
     }
 
-    public static void checkPoisonWater() {
+    public static void checkBiomeEffects() {
         for(Player player : Bukkit.getOnlinePlayers()) {
             if(player.getWorld().getName().equals(MYSTIC_REALM)) {
-                if(player.isInWater()) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 60, 0, true, false, false));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 60, 0, true, false, false));
+                if(!getBiomeName(player.getLocation()).equalsIgnoreCase("ice_spikes")) {
+                    if(player.isInWater()) {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 60, 0, true, false, false));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 60, 0, true, false, false));
+                    }
                 }
             }
         }
@@ -111,6 +130,20 @@ public class DimensionEventListener implements Listener {
         World world = location.getWorld();
 
         if(world.getName().equals(MYSTIC_REALM)) {
+
+            if(getBiomeName(location).equalsIgnoreCase("ice_spikes")) {
+                if(entity.getType() == EntityType.GHAST) return;
+                if(!(entity instanceof LivingEntity)) return;
+
+                event.setCancelled(true);
+
+                if(new Random().nextInt(20) == 1) {
+                    if(location.getY() < 50) return;
+                    world.spawnEntity(new Location(world, location.getX(), location.getY() + 50, location.getZ()), EntityType.GHAST);
+                }
+                return;
+            }
+
             if(entity.getType() == EntityType.ZOMBIE) {
                 Random random = new Random();
                 if(random.nextInt(100) == 1) {
@@ -184,7 +217,7 @@ public class DimensionEventListener implements Listener {
     }
 
     public static String getBiomeName(Location location) {
-        Biome biome = location.getWorld().getBiome((int) location.getX(), (int) location.getY(), (int) location.getZ());
+        Biome biome = location.getWorld().getBiome(location);
         return biome.getKey().getKey();
     }
 }

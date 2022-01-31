@@ -128,7 +128,8 @@ public class Registry {
                 new WickedHunterBoss(),
                 new BlazingWitherBoss(),
                 new NoxiousChickenBoss(),
-                new IllusionerBoss()
+                new IllusionerBoss(),
+                new IceDragonBoss()
         );
     }
     private static void registerSpigotListeners(JavaPlugin plugin, Listener... listeners) {

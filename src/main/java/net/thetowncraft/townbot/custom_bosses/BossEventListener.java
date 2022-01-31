@@ -178,6 +178,7 @@ public abstract class BossEventListener implements Listener {
         boss.setHealth(this.getBossHealth());
         boss.setCustomName(this.getBossName());
         boss.setCustomNameVisible(false);
+        bossHalfHealth = false;
         if(boss instanceof Wither) {
             ((Wither) boss).getBossBar().setColor(getBarColor());
             this.bossBar = ((Wither) boss).getBossBar();
