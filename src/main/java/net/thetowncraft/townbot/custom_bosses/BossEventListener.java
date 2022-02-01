@@ -309,7 +309,7 @@ public abstract class BossEventListener implements Listener {
             }
             if(entity.equals(boss)) {
                 if(bossBar != null) {
-                    if(!(boss instanceof Boss)) bossBar.setProgress(boss.getHealth() / boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+                    if(!(boss instanceof Wither)) bossBar.setProgress(boss.getHealth() / boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
                     if(bossBar.getProgress() <= 0.5 && !bossHalfHealth) {
                         bossHalfHealth = true;
                         onBossHalfHealth();

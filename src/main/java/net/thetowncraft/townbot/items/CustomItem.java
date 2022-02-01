@@ -29,7 +29,7 @@ public abstract class CustomItem {
     }
 
     public void procOnHit(Player player, int itemAmount, LivingEntity target, World world) {
-
+        
     }
 
     public void onPlayerJump(Player player, int amount) {}

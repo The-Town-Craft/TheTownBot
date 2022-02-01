@@ -46,19 +46,7 @@ public class IllusionerHeart extends CustomItem {
                     players.remove(player.getUniqueId().toString());
                     return;
                 }
-                LivingEntity target = null;
-                for(Entity entity : player.getNearbyEntities(RADIUS, RADIUS, RADIUS)) {
-                    if(entity instanceof LivingEntity) {
-                        target = (LivingEntity) entity;
-                        break;
-                    }
-                }
-                if(target == null) return;
-
-                Location targetPos = target.getLocation();
-                player.teleport(new Location(world, targetPos.getX(), player.getLocation().getY(), targetPos.getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()));
                 player.setVelocity(new Vector(0, -2, 0));
-                player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10, 1);
             }, 15);
             Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
                 players.remove(player.getUniqueId().toString());

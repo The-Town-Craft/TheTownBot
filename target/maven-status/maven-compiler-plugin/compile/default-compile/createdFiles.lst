@@ -50,6 +50,7 @@ net\thetowncraft\townbot\listeners\minecraft\commands\ActiveCommand.class
 net\thetowncraft\townbot\Plugin.class
 net\thetowncraft\townbot\listeners\minecraft\commands\McUnmute.class
 net\thetowncraft\townbot\economy\commands\SetCoins.class
+net\thetowncraft\townbot\custom_bosses\bosses\IceDragonBoss.class
 net\thetowncraft\townbot\dimension\DimensionEventListener.class
 net\thetowncraft\townbot\economy\commands\Pay$Discord.class
 net\thetowncraft\townbot\economy\commands\Bal$MC.class

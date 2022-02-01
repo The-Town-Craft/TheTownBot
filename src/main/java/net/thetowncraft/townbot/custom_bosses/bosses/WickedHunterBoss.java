@@ -78,7 +78,10 @@ public class WickedHunterBoss extends BossEventListener {
                 boss.setAI(true);
                 TNTPrimed tnt = (TNTPrimed) world.spawnEntity(boss.getLocation(), EntityType.PRIMED_TNT);
                 tnt.setFuseTicks(0);
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> boss.setInvulnerable(false), 10);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+                            if(boss == null) return;
+                            boss.setInvulnerable(false);
+                        }, 10);
                 secondsInvulnerable = 0;
             }
             world.spawnEntity(boss.getLocation(), EntityType.LIGHTNING);
@@ -105,7 +108,10 @@ public class WickedHunterBoss extends BossEventListener {
     public void slam() {
         if(boss.isInvulnerable()) return;
         boss.setVelocity(new Vector(0, 2, 0));
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> boss.teleport(new Location(world, player.getLocation().getX(), boss.getLocation().getY(), player.getLocation().getZ())), 15);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            if(boss == null) return;
+            boss.teleport(new Location(world, player.getLocation().getX(), boss.getLocation().getY(), player.getLocation().getZ()));
+        }, 15);
     }
 
     public void levitate() {
@@ -113,6 +119,7 @@ public class WickedHunterBoss extends BossEventListener {
         boss.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 30, 1, true, false, false));
         Location location = player.getLocation();
         Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            if(boss == null) return;
             boss.teleport(location);
             for(Entity entity : boss.getNearbyEntities(3, 3, 3)) {
                 if(entity instanceof Player) {
