@@ -18,7 +18,13 @@ public class IceDragonBoss extends BossEventListener {
 
     @Override
     public void initAttacks() {
+        this.addAttack(this::tnt, 100, 100);
         this.addAttack(this::tryTeleport, 20, 20);
+    }
+
+    public void tnt(){
+        TNTPrimed tnt = (TNTPrimed) world.spawnEntity(boss.getLocation(), EntityType.PRIMED_TNT);
+        tnt.setFuseTicks(15);
     }
 
     public void tryTeleport() {
