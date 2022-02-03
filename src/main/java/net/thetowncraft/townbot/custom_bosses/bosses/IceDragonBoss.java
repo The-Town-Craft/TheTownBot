@@ -6,10 +6,54 @@ import net.thetowncraft.townbot.items.CustomItem;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LightningStrike;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.weather.LightningStrikeEvent;
 
 public class IceDragonBoss extends BossEventListener {
+
+    private int lightningPos;
+
+    @Override
+    public void initAttacks() {
+        this.addAttack(this::tryTeleport, 20, 20);
+    }
+
+    public void tryTeleport() {
+        Location location = boss.getLocation();
+        if(location.getY() > 90) {
+            world.strikeLightningEffect(location);
+            world.playSound(location, Sound.ENTITY_WITHER_BREAK_BLOCK, 10, 1);
+            world.playSound(location, Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+            boss.playEffect(EntityEffect.TOTEM_RESURRECT);
+            boss.teleport(new Location(location.getWorld(), 0, 60, 0));
+            lightningPos = 0;
+            lightningAttack();
+        }
+    }
+
+    public void lightningAttack() {
+        spawnLightning(0, 0);
+
+        if(lightningPos > 50 || lightningPos == -1) {
+            lightningPos = -1;
+            return;
+        }
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            spawnLightning(lightningPos, 0);
+            spawnLightning(0, lightningPos);
+            spawnLightning(-lightningPos, 0);
+            spawnLightning(0, -lightningPos);
+            lightningPos++;
+            lightningAttack();
+        }, 2);
+    }
+
+    public void spawnLightning(double x, double z) {
+        world.strikeLightning(new Location(world, x, 62, z));
+    }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
@@ -17,6 +61,21 @@ public class IceDragonBoss extends BossEventListener {
             initBossFight(event.getPlayer());
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onLightningStrike(LightningStrikeEvent event) {
+        if(!event.getWorld().getName().equals(world.getName())) return;
+
+        if(lightningPos == -1) return;
+        if(boss == null) return;
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            if(boss == null) return;
+            if(lightningPos == -1 || lightningPos > 50) return;
+            LightningStrike lightningStrike = world.strikeLightning(event.getLightning().getLocation());
+            lightningStrike.setSilent(true);
+        }, 10);
     }
 
     @Override
