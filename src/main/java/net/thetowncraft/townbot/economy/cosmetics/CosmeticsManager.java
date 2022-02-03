@@ -60,6 +60,8 @@ public class CosmeticsManager {
 
         EmbedBuilder embed = cosmetic.getShopMessageEmbedBuilder();
 
+        if(SHOP_CHANNEL_ID == null) return;
+
         Bot.jda.getTextChannelById(SHOP_CHANNEL_ID).sendMessage(embed.build()).queue(message -> {
             if(id != null) {
                 COSMETIC_MESSAGES.put(message.getId(), id);

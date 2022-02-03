@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
@@ -70,6 +71,7 @@ public class CustomItemListener implements Listener {
     public void onShootBow(EntityShootBowEvent event) {
         ProjectileSource shooter = event.getEntity();
         if(shooter instanceof Player) {
+
             ItemStack stack = CustomItems.getItemStackOf(((Player) shooter).getPlayer(), CustomItems.BLAZING_THUNDERSTAR);
             if(stack == null) return;
             SizedFireball fireball = event.getEntity().launchProjectile(SizedFireball.class);
@@ -122,7 +124,8 @@ public class CustomItemListener implements Listener {
 
         if(damager instanceof EnderPearl) {
             EnderPearl pearl = (EnderPearl) damager;
-            if(pearl.getItem().getItemMeta().getCustomModelData() == 1) {
+            ItemMeta meta = pearl.getItem().getItemMeta();
+            if(meta != null && meta.hasCustomModelData() && meta.getCustomModelData() == 1) {
                 ProjectileSource shooter = pearl.getShooter();
                 if(!(shooter instanceof Player)) return;
 

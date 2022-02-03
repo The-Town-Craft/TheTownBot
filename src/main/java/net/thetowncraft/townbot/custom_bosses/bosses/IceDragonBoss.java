@@ -5,11 +5,12 @@ import net.thetowncraft.townbot.custom_bosses.BossEventListener;
 import net.thetowncraft.townbot.items.CustomItem;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LightningStrike;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.weather.LightningStrikeEvent;
+import org.bukkit.util.Vector;
 
 public class IceDragonBoss extends BossEventListener {
 
@@ -64,6 +65,21 @@ public class IceDragonBoss extends BossEventListener {
     }
 
     @EventHandler
+    public void onEntityDamageEntity(EntityDamageByEntityEvent event) {
+        Entity entity = event.getEntity();
+        Entity damager = event.getDamager();
+        if(!entity.getWorld().getName().equals(world.getName())) return;
+
+        if(entity instanceof Player) {
+            Player player = (Player) entity;
+            if(damager instanceof EnderDragon || entity instanceof LightningStrike) {
+                player.setVelocity(new Vector(player.getVelocity().getX(), 2, player.getVelocity().getZ()));
+                player.setFreezeTicks(player.getFreezeTicks() + 100);
+            }
+        }
+    }
+
+    @EventHandler
     public void onLightningStrike(LightningStrikeEvent event) {
         if(!event.getWorld().getName().equals(world.getName())) return;
 
@@ -96,6 +112,11 @@ public class IceDragonBoss extends BossEventListener {
     @Override
     public double getBossHealth() {
         return 300;
+    }
+
+    @Override
+    public double getCustomAddedBossDamage() {
+        return 20;
     }
 
     @Override

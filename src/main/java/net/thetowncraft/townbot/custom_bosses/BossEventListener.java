@@ -185,6 +185,23 @@ public abstract class BossEventListener implements Listener {
         }
     }
 
+    public void respawnPlayer() {
+        player.teleport(this.getPlayerSpawnLocation());
+        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+        boss.remove();
+        spawnBoss();
+        bossBar.setProgress(1.0);
+        player.stopAllSounds();
+        player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
+        player.playSound(player.getLocation(), Sound.ENTITY_IRON_GOLEM_DEATH, 10, 1);
+        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_DEATH, 10, 1);
+        player.playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 10, 1);
+        player.removePotionEffect(PotionEffectType.WITHER);
+        player.setFireTicks(0);
+        player.setFreezeTicks(0);
+        playBossMusic();
+    }
+
     public void setUpBossBar(Player player) {
         bossBar = Bukkit.createBossBar(this.getBossName(), this.getBarColor(), BarStyle.SOLID);
         bossBar.addPlayer(player);
@@ -303,36 +320,38 @@ public abstract class BossEventListener implements Listener {
     @EventHandler
     public final void onEntityDamage(EntityDamageEvent event) {
         Entity entity = event.getEntity();
-        if(entity.getWorld().getName().equals(world.getName())) {
-            if(entity.getType() == EntityType.DROPPED_ITEM) {
+        if(event.isCancelled()) return;
+        if (entity.getWorld().getName().equals(world.getName())) {
+            if (entity.getType() == EntityType.DROPPED_ITEM) {
                 event.setCancelled(true);
             }
-            if(entity.equals(boss)) {
-                if(bossBar != null) {
-                    if(!(boss instanceof Wither)) bossBar.setProgress(boss.getHealth() / boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-                    if(bossBar.getProgress() <= 0.5 && !bossHalfHealth) {
+            if (entity.equals(boss)) {
+                if (bossBar != null) {
+                    if (!(boss instanceof Wither))
+                        bossBar.setProgress((boss.getHealth() - event.getFinalDamage()) / boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+                    if (bossBar.getProgress() <= 0.5 && !bossHalfHealth) {
                         bossHalfHealth = true;
                         onBossHalfHealth();
                     }
                 }
             }
-            if(entity instanceof Player) {
+            if (entity instanceof Player) {
+                if (player.getHealth() - event.getFinalDamage() < 1.0) {
+                    event.setCancelled(true);
+                    respawnPlayer();
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public final void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        if(event.getDamager().equals(boss)) {
+            event.setDamage(event.getDamage() + this.getCustomAddedBossDamage());
+            if(event.getEntity().equals(player)) {
                 if(player.getHealth() - event.getFinalDamage() < 1.0) {
                     event.setCancelled(true);
-                    player.teleport(this.getPlayerSpawnLocation());
-                    player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-                    boss.remove();
-                    spawnBoss();
-                    bossBar.setProgress(1.0);
-                    player.stopAllSounds();
-                    player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
-                    player.playSound(player.getLocation(), Sound.ENTITY_IRON_GOLEM_DEATH, 10, 1);
-                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_DEATH, 10, 1);
-                    player.playSound(player.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 10, 1);
-                    player.removePotionEffect(PotionEffectType.WITHER);
-                    player.setFireTicks(0);
-                    player.setFreezeTicks(0);
-                    playBossMusic();
+                    respawnPlayer();
                 }
             }
         }
@@ -367,6 +386,10 @@ public abstract class BossEventListener implements Listener {
         if(event.getBlock().getWorld().getName().equals(world.getName())) {
             event.setCancelled(true);
         }
+    }
+
+    public double getCustomAddedBossDamage() {
+        return 0.0;
     }
 
     public abstract String getBossName();
