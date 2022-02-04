@@ -212,7 +212,7 @@ public class CustomItemListener implements Listener {
     public void onEntityDamage(EntityDamageEvent event) {
         Entity entity = event.getEntity();
         if(entity instanceof Player) {
-            CustomItems.onPlayerDamage(((Player) entity).getPlayer(), event);
+            //CustomItems.onPlayerDamage(((Player) entity).getPlayer(), event);
         }
     }
 
