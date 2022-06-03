@@ -154,8 +154,8 @@ public class IllusionerBoss extends BossEventListener {
         }
     }
 
-    @Override
-    public void onEntityExplode(EntityExplodeEvent event) {
+    @EventHandler
+    public void entityExplode(EntityExplodeEvent event) {
         super.onEntityExplode(event);
 
         Entity entity = event.getEntity();

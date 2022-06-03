@@ -279,7 +279,7 @@ public abstract class BossEventListener implements Listener {
     }
 
     @EventHandler
-    public void onEntityExplode(EntityExplodeEvent event) {
+    public final void onEntityExplode(EntityExplodeEvent event) {
         if(event.getEntity().getWorld().getName().equals(world.getName())) {
             event.blockList().clear();
         }
@@ -315,6 +315,12 @@ public abstract class BossEventListener implements Listener {
             resetFight();
             event.getPlayer().setHealth(0);
         }
+    }
+
+    @EventHandler
+    public final void onEntitySpawn(EntitySpawnEvent event) {
+        EntityType type = event.getEntity().getType();
+        if(type == EntityType.SPLASH_POTION && event.getLocation().getWorld().getName().equals(getBossSpawnLocation().getWorld().getName())) event.setCancelled(true);
     }
 
     @EventHandler

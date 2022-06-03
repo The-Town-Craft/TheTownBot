@@ -159,12 +159,7 @@ public class DimensionEventListener implements Listener {
             if(entity.getType() == EntityType.ENDERMAN) {
                 if(new Random().nextInt(6) == 1) {
                     event.setCancelled(true);
-                    Creeper creeper = (Creeper) world.spawnEntity(location, EntityType.CREEPER);
-                    creeper.setCustomName("Mystic Creeper");
-                    creeper.setPowered(true);
-                    creeper.setCustomNameVisible(false);
-                    creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
-                    creeper.setHealth(1);
+                    spawnMysticCreeper(location);
                 }
                 else {
                     Enderman enderman = (Enderman) entity;
@@ -183,6 +178,15 @@ public class DimensionEventListener implements Listener {
                 }
             }
         }
+    }
+
+    public static void spawnMysticCreeper(Location location) {
+        Creeper creeper = (Creeper) location.getWorld().spawnEntity(location, EntityType.CREEPER);
+        creeper.setCustomName("Mystic Creeper");
+        creeper.setPowered(true);
+        creeper.setCustomNameVisible(false);
+        creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+        creeper.setHealth(1);
     }
 
     //Drops

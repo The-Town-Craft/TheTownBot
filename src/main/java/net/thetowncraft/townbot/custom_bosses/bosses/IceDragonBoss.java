@@ -2,6 +2,7 @@ package net.thetowncraft.townbot.custom_bosses.bosses;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
+import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.items.CustomItem;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
@@ -9,8 +10,10 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.util.Vector;
+import org.omg.PortableServer.LifespanPolicyValue;
 
 public class IceDragonBoss extends BossEventListener {
 
@@ -18,13 +21,14 @@ public class IceDragonBoss extends BossEventListener {
 
     @Override
     public void initAttacks() {
+        this.addAttack(this::mysticCreeper, 50, 100);
         this.addAttack(this::tnt, 100, 100);
         this.addAttack(this::tryTeleport, 20, 20);
     }
 
     public void tnt(){
         TNTPrimed tnt = (TNTPrimed) world.spawnEntity(boss.getLocation(), EntityType.PRIMED_TNT);
-        tnt.setFuseTicks(15);
+        tnt.setFuseTicks(200);
     }
 
     public void tryTeleport() {
@@ -37,6 +41,13 @@ public class IceDragonBoss extends BossEventListener {
             boss.teleport(new Location(location.getWorld(), 0, 60, 0));
             lightningPos = 0;
             lightningAttack();
+        }
+    }
+
+    public void mysticCreeper() {
+        if(player != null) {
+            Location pos = player.getLocation();
+            DimensionEventListener.spawnMysticCreeper(new Location(pos.getWorld(), pos.getX(), pos.getY() + 3, pos.getZ()));
         }
     }
 
@@ -67,6 +78,14 @@ public class IceDragonBoss extends BossEventListener {
         if(event.getBlock().getType() == Material.COMMAND_BLOCK) {
             initBossFight(event.getPlayer());
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void entityExplode(EntityExplodeEvent event) {
+        Entity entity = event.getEntity();
+        if(entity.getWorld().getName().equals(world.getName())) {
+            if(entity.getType() == EntityType.PRIMED_TNT) world.strikeLightning(entity.getLocation());
         }
     }
 

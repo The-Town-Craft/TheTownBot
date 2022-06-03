@@ -26,7 +26,6 @@ public class NoxiousChickenBoss extends BossEventListener {
 
     @Override
     public void initAttacks() {
-        this.addAttack(this::useFangs, 0, 250);
         this.addAttack(this::summonWolves, 300, 1200);
         this.addAttack(this::launchTNT, 600, 600);
     }
@@ -35,13 +34,6 @@ public class NoxiousChickenBoss extends BossEventListener {
     public void spawnBoss() {
         super.spawnBoss();
         canMirage = true;
-    }
-
-    public void useFangs() {
-        Chicken chicken = (Chicken) this.boss;
-        if(chicken.getTarget() == null) return;
-        EvokerFangs fangs = (EvokerFangs) world.spawnEntity(chicken.getTarget().getLocation(), EntityType.EVOKER_FANGS);
-        fangs.setOwner(chicken);
     }
 
     public void summonWolves() {
@@ -100,16 +92,6 @@ public class NoxiousChickenBoss extends BossEventListener {
             if(player == null) return;
 
             initBossFight(player);
-        }
-    }
-
-    @EventHandler
-    public void onFangsAttack(EntityDamageByEntityEvent event) {
-        if(event.getDamager().getType() == EntityType.EVOKER_FANGS && event.getEntity().getWorld().equals(world)) {
-            if(event.getEntity() instanceof LivingEntity) {
-                LivingEntity entity = (LivingEntity) event.getEntity();
-                entity.damage(15);
-            }
         }
     }
 
