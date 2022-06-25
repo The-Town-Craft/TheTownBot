@@ -13,7 +13,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.util.Vector;
-import org.omg.PortableServer.LifespanPolicyValue;
 
 public class IceDragonBoss extends BossEventListener {
 
@@ -21,12 +20,19 @@ public class IceDragonBoss extends BossEventListener {
 
     @Override
     public void initAttacks() {
-        this.addAttack(this::mysticCreeper, 50, 100);
+        this.addAttack(this::mysticCreeper, 500, 500);
         this.addAttack(this::tnt, 100, 100);
         this.addAttack(this::tryTeleport, 20, 20);
     }
 
+    @Override
+    public void setUpBoss(Player player) {
+        super.setUpBoss(player);
+        world.setGameRule(GameRule.FALL_DAMAGE, false);
+    }
+
     public void tnt(){
+        if(((EnderDragon) boss).getPhase() == EnderDragon.Phase.LAND_ON_PORTAL) return;
         TNTPrimed tnt = (TNTPrimed) world.spawnEntity(boss.getLocation(), EntityType.PRIMED_TNT);
         tnt.setFuseTicks(200);
     }
