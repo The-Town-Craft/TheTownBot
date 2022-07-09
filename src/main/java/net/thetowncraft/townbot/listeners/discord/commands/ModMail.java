@@ -120,6 +120,6 @@ public class ModMail extends DiscordCommand {
 
     @Override
     public Permission getRequiredPermission() {
-        return Permission.BAN_MEMBERS;
+        return Permission.MESSAGE_MANAGE;
     }
 }
