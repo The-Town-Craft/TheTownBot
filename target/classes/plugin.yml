@@ -36,3 +36,6 @@ commands:
 
   maintenance:
     description: Turn server maintenance on and off
+
+  hub:
+    description: Teleports you to the hub server!

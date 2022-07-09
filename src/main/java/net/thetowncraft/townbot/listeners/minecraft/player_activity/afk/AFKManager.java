@@ -14,7 +14,7 @@ import java.util.Map;
 public class AFKManager {
 
     public static final Map<Player, Long> AFK_PLAYER_TICKS = new HashMap<>();
-    public static final int TIME_UNTIL_AFK = 5;
+    public static final int TIME_UNTIL_AFK = 2;
 
 
 

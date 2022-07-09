@@ -13,15 +13,20 @@ import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.Activ
 import net.thetowncraft.townbot.util.Registry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Locale;
+
 public class Plugin extends JavaPlugin {
     
     public static boolean serverUnderMaintenance;
+
+    public static Location SPAWN_LOCATION;
 
     public static final String OVERWORLD_NAME = "world_1597802541";
     public static final String VOID_DIMENSION_NAME = "world_1597802541_thetown_the_void";
@@ -48,6 +53,7 @@ public class Plugin extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, RepeatingTasks.TICKS_IN_A_DAY, RepeatingTasks.TICKS_IN_A_DAY);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, PlayerCountStatus::update, 5000, RepeatingTasks.REPEATING_TICKS);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, DimensionEventListener::checkBiomeEffects, 60, 60);
+        SPAWN_LOCATION = new Location(Bukkit.getWorld(OVERWORLD_NAME),-161, 64, 230);
     }
 
     @Override

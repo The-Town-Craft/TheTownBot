@@ -2,12 +2,20 @@ package net.thetowncraft.townbot.listeners.discord.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
+import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
+import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,21 +47,7 @@ public class ModMail extends DiscordCommand {
                 try {
                     if(member.getUser().isBot()) continue;
                     if(member.hasPermission(Permission.ADMINISTRATOR) && !member.isOwner()) continue;
-                    member.getUser().openPrivateChannel().queue((channel -> {
-
-                        EmbedBuilder embed = new EmbedBuilder();
-                        embed.setAuthor("ModMail from The Town!", null, event.getGuild().getIconUrl());
-                        embed.setDescription(message);
-
-                        channel.sendMessage(embed.build()).queue();
-
-                        for(Message.Attachment attachment : attachments) {
-                            String url = attachment.getUrl();
-                            channel.sendMessage(url).queue();
-                        }
-
-                        event.getChannel().sendMessage("**Success!** ModMail was sent to **" + member.getUser().getAsTag() + "**!").queue();
-                    }));
+                    sendModMail(member.getUser(), event.getGuild(), message, attachments);
                 }
                 catch(Exception ex) {
                     event.getChannel().sendMessage(":x: **Something went wrong while messaging " + member.getEffectiveName() + "!** " + ex.getMessage()).queue();
@@ -80,26 +74,38 @@ public class ModMail extends DiscordCommand {
                 }
             }
 
-            member.getUser().openPrivateChannel().queue((channel -> {
-
-                EmbedBuilder embed = new EmbedBuilder();
-                embed.setAuthor("ModMail from The Town!", null, event.getGuild().getIconUrl());
-                embed.setDescription(message);
-
-                channel.sendMessage(embed.build()).queue();
-
-                for(Message.Attachment attachment : attachments) {
-                    String url = attachment.getUrl();
-                    channel.sendMessage(url).queue();
-                }
-
-            }));
-            event.getChannel().sendMessage("**Success!** ModMail was sent to **" + member.getUser().getAsTag() + "**!\nMessage: \"*" + message + "*\"").queue();
+            sendModMail(member.getUser(), event.getGuild(), message, attachments);
         }
         catch(Exception ex) {
             event.getChannel().sendMessage(":x: **Something went wrong!** " + ex.getMessage()).queue();
             ex.printStackTrace();
         }
+    }
+
+    public static void sendModMail(User user, Guild guild, String message, List<Message.Attachment> attachments) {
+        user.openPrivateChannel().queue((channel -> {
+
+            EmbedBuilder embed = new EmbedBuilder();
+            embed.setAuthor("ModMail from The Town!", null, guild.getIconUrl());
+            embed.setDescription(message);
+            embed.setColor(Constants.GREEN);
+
+            channel.sendMessage(embed.build()).queue();
+
+            for(Message.Attachment attachment : attachments) {
+                String url = attachment.getUrl();
+                channel.sendMessage(url).queue();
+            }
+
+        }));
+        Bot.jda.getTextChannelById(Constants.MODMAIL).sendMessage("**Success!** ModMail was sent to **" + user.getAsTag() + "**!\nMessage: \"*" + message + "*\"").queue();
+        Member member = guild.getMember(user);
+        if(member == null) return;
+        OfflinePlayer offPlayer = AccountManager.getInstance().getMinecraftPlayer(member);
+        if(offPlayer == null) return;
+        Player player = offPlayer.getPlayer();
+        if(player == null) return;
+        player.sendMessage(Color.AQUA + "Check your DMs, you have ModMail from The Town!");
     }
 
     @Override

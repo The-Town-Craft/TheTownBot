@@ -7,14 +7,12 @@ import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.custom_bosses.bosses.*;
 import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.economy.commands.*;
-import net.thetowncraft.townbot.economy.cosmetics.BuyCosmeticListener;
-import net.thetowncraft.townbot.economy.cosmetics.CosmeticListCommand;
-import net.thetowncraft.townbot.economy.cosmetics.CosmeticsManager;
-import net.thetowncraft.townbot.economy.cosmetics.TestCosmetic;
 import net.thetowncraft.townbot.economy.player_shops.PlayerShopListener;
 import net.thetowncraft.townbot.economy.player_shops.commands.DepositDiamonds;
 import net.thetowncraft.townbot.economy.player_shops.commands.ShopChestCommand;
 import net.thetowncraft.townbot.economy.player_shops.commands.WithdrawDiamonds;
+import net.thetowncraft.townbot.economy.shop.ShopManager;
+import net.thetowncraft.townbot.hub.HubCommand;
 import net.thetowncraft.townbot.items.ItemDropListener;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.discord.commands.AddActivityPointsCommand;
@@ -69,9 +67,7 @@ public class Registry {
                 new BalTop(),
                 new SetCoins(),
                 new SubtractCoins(),
-                new Pay.Discord(),
-                new CosmeticListCommand()
-
+                new Pay.Discord()
         );
     }
 
@@ -84,13 +80,13 @@ public class Registry {
                 new DepositDiamonds(),
                 new WithdrawDiamonds(),
                 new GiveCustomItem(),
-                new MaintenanceCommand()
+                new MaintenanceCommand(),
+                new HubCommand()
         );
     }
 
     public static void registerCosmetics() {
-        CosmeticsManager.register("test", new TestCosmetic());
-        System.out.println("Registered " + CosmeticsManager.getCosmetics().size() + " cosmetics!");
+        ShopManager.initShop();
     }
 
     public static void registerJDAListeners(JDABuilder builder) {
@@ -100,7 +96,6 @@ public class Registry {
         builder.addEventListeners(new MemberJoin());
         builder.addEventListeners(new LinkAccount());
         builder.addEventListeners(new ServerStart());
-        builder.addEventListeners(new BuyCosmeticListener());
     }
     public static void registerSpigotListeners(JavaPlugin plugin) {
         registerSpigotListeners(plugin,
@@ -129,7 +124,7 @@ public class Registry {
                 new BlazingWitherBoss(),
                 new NoxiousChickenBoss(),
                 new IllusionerBoss(),
-                new IceDragonBoss()
+                new IceologerBoss()
         );
     }
     private static void registerSpigotListeners(JavaPlugin plugin, Listener... listeners) {

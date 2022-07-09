@@ -115,23 +115,9 @@ public class WickedHunterBoss extends BossEventListener {
     }
 
     public void levitate() {
+        if(boss == null) return;
         if(boss.isInvulnerable()) return;
-        boss.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 30, 1, true, false, false));
-        Location location = player.getLocation();
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
-            if(boss == null) return;
-            boss.teleport(location);
-            for(Entity entity : boss.getNearbyEntities(3, 3, 3)) {
-                if(entity instanceof Player) {
-                    Player player = (Player) entity;
-                    player.setVelocity(new Vector(0, 1, 0));
-                    player.damage(30, boss);
-                }
-            }
-            world.playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
-            world.playSound(boss.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 5, 1);
-            world.playSound(boss.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 5, 1);
-        }, 30);
+        levitate(30);
     }
 
     @EventHandler
@@ -219,7 +205,7 @@ public class WickedHunterBoss extends BossEventListener {
 
     @Override
     public double getBossHealth() {
-        return 120;
+        return 145;
     }
 
     @Override
@@ -245,6 +231,16 @@ public class WickedHunterBoss extends BossEventListener {
     @Override
     public Sound getBossMusic() {
         return Sound.MUSIC_NETHER_SOUL_SAND_VALLEY;
+    }
+
+    @Override
+    public String getDeathMessage() {
+        return "was assassinated by";
+    }
+
+    @Override
+    public String getBossEmoji() {
+        return ":crossed_swords:";
     }
 
     @Override

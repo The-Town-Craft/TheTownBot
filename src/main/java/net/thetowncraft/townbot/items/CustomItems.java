@@ -1,7 +1,11 @@
 package net.thetowncraft.townbot.items;
 
+import net.thetowncraft.townbot.items.glacial_items.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -24,7 +28,11 @@ public class CustomItems {
     public static final CustomItem HUNTER_SWORD = registerItem("hunter_sword", new HunterSword());
     public static final CustomItem ILLUSIONER_HEART = registerItem("illusioner_heart", new IllusionerHeart());
     public static final CustomItem MYSTIC_ARTIFACT = registerItem("mystic_artifact", new MysticArtifact());
-
+    public static final CustomItem GLACIAL_SHARD = registerItem("glacial_shard", new GlacialShardItem());
+    public static final CustomItem GLACIAL_HELMET = registerItem("glacial_helmet", new GlacialHelmet());
+    public static final CustomItem GLACIAL_CHESTPLATE = registerItem("glacial_chestplate", new GlacialChestplate());
+    public static final CustomItem GLACIAL_LEGGINGS = registerItem("glacial_leggings", new GlacialLeggings());
+    public static final CustomItem GLACIAL_BOOTS = registerItem("glacial_boots", new GlacialBoots());
     static CustomItem registerItem(String id, CustomItem item) {
         ITEMS.put(id, item);
         return item;
@@ -74,6 +82,16 @@ public class CustomItems {
         return null;
     }
 
+    public static boolean isCustomItemStack(ItemStack stack, CustomItem customItem) {
+        if(stack == null) return false;
+        ItemMeta meta = stack.getItemMeta();
+        if(meta == null) return false;
+
+        List<String> lore = meta.getLore();
+        if(lore == null || lore.size() == 0) return false;
+        return lore.get(0).equals(customItem.getDescription());
+    }
+
     public static int playerHoldingItemAmount(Player player, CustomItem item) {
         ItemStack stack = player.getInventory().getItemInMainHand();
 
@@ -100,6 +118,12 @@ public class CustomItems {
             if(amount == 0) return;
 
             item.onPlayerDamage(player, event, amount);
+        }
+    }
+    static void onPlayerDropItem(PlayerDropItemEvent event) {
+        Item item = event.getItemDrop();
+        for(CustomItem custom : ITEMS.values()) {
+            if(isCustomItemStack(item.getItemStack(), custom)) custom.onPlayerDrop(event);
         }
     }
 }

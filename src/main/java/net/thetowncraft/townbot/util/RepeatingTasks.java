@@ -2,8 +2,11 @@ package net.thetowncraft.townbot.util;
 
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
+import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import net.thetowncraft.townbot.listeners.discord.commands.DiscordActiveCommand;
+import net.thetowncraft.townbot.listeners.minecraft.commands.ActiveCommand;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.AFKManager;
 import net.dv8tion.jda.api.entities.Member;
@@ -27,6 +30,10 @@ public class RepeatingTasks {
 
         if(day.equalsIgnoreCase("Sunday")) {
             rewardActivePlayers();
+        }
+
+        if(ActivityManager.sortedPlayerActivityMap().size() != 0) {
+            Bot.jda.getTextChannelById(Constants.THETOWN_CHAT).sendMessage(DiscordActiveCommand.getActiveEmbed().build()).queue();
         }
     }
 

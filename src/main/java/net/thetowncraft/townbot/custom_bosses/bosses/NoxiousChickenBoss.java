@@ -217,6 +217,16 @@ public class NoxiousChickenBoss extends BossEventListener {
     }
 
     @Override
+    public String getDeathMessage() {
+        return "was vanquished by";
+    }
+
+    @Override
+    public String getBossEmoji() {
+        return ":chicken:";
+    }
+
+    @Override
     public Location getBossSpawnLocation() {
         return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_chicken"), -40, 111, -26, 90, 0);
     }

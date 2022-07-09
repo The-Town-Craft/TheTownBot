@@ -1,6 +1,5 @@
 package net.thetowncraft.townbot.listeners.discord;
 
-import net.thetowncraft.townbot.economy.cosmetics.CosmeticsManager;
 import net.thetowncraft.townbot.util.Constants;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.ReadyEvent;
@@ -17,7 +16,6 @@ public class ServerStart extends ListenerAdapter {
         embed.setColor(Constants.GREEN);
         event.getJDA().getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
         event.getJDA().getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-        //CosmeticsManager.resetShopChannel();
         Registry.registerCosmetics();
     }
 }

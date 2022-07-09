@@ -168,6 +168,16 @@ public class BlazingWitherBoss extends BossEventListener {
     }
 
     @Override
+    public String getDeathMessage() {
+        return "was damned to hell by";
+    }
+
+    @Override
+    public String getBossEmoji() {
+        return ":fire:";
+    }
+
+    @Override
     public Location getBossSpawnLocation() {
         return new Location(Bukkit.getWorld(bossWorldName), 54, 140, 0, 90.0f, 0.0f);
     }

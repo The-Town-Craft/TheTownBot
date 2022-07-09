@@ -313,6 +313,16 @@ public class IllusionerBoss extends BossEventListener {
     }
 
     @Override
+    public String getDeathMessage() {
+        return "was brought to an end by";
+    }
+
+    @Override
+    public String getBossEmoji() {
+        return "<:mystic_artifact:990709236231188550>";
+    }
+
+    @Override
     public Location getBossSpawnLocation() {
         return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_illusioner"), 0, 101, 20, 180, 0);
     }

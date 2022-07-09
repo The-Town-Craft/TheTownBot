@@ -1,15 +1,24 @@
 package net.thetowncraft.townbot.listeners.discord.commands;
 
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.util.Constants;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ModMailListener extends ListenerAdapter {
+
+	public static final Map<String, String> MESSAGES = new HashMap<>();
+
 	public void onPrivateMessageReceived(PrivateMessageReceivedEvent event) {
 		if(!event.getAuthor().isBot()) {
 			String message = event.getMessage().getContentDisplay();
@@ -20,6 +29,7 @@ public class ModMailListener extends ListenerAdapter {
 			embed.setDescription(message);
 			embed.setAuthor("DM from " + member, null, event.getAuthor().getEffectiveAvatarUrl());
 			embed.setFooter("User ID: " + event.getAuthor().getId(), Constants.THE_TOWN.getIconUrl());
+			embed.setColor(Constants.GREEN);
 
 			if(attachments.size() == 1) {
 				String url = attachments.get(0).getUrl();
@@ -34,7 +44,24 @@ public class ModMailListener extends ListenerAdapter {
 				}
 			}
 			
-			event.getJDA().getTextChannelById("781421376086999040").sendMessage(embed.build()).queue();
+			event.getJDA().getTextChannelById("781421376086999040").sendMessage(embed.build()).queue(msg -> {
+				MESSAGES.put(msg.getId(), event.getAuthor().getId());
+			});
 		}
+	}
+
+	@Override
+	public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+		TextChannel channel = event.getChannel();
+		if(!channel.getId().equals(Constants.MODMAIL)) return;
+
+		Message message = event.getMessage();
+		Message reply = message.getReferencedMessage();
+		if(reply == null) return;
+
+		String userId = MESSAGES.get(reply.getId());
+		if(userId == null) return;
+
+		ModMail.sendModMail(Bot.jda.getUserById(userId), event.getGuild(), message.getContentRaw(), event.getMessage().getAttachments());
 	}
 }

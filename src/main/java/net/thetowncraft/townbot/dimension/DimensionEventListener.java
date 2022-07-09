@@ -101,7 +101,7 @@ public class DimensionEventListener implements Listener {
         if((int) pos.getX() == 100 && (int) pos.getY() == 50 && (int) pos.getZ() == 0) {
             Location spawn = player.getBedSpawnLocation();
             if(spawn == null) {
-                player.teleport(new Location(Bukkit.getWorld("world_1597802541"),-161, 64, 230));
+                player.teleport(Plugin.SPAWN_LOCATION);
             }
             else {
                 player.teleport(spawn);

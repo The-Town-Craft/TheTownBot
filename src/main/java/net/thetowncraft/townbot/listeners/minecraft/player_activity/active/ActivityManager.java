@@ -63,7 +63,7 @@ public class ActivityManager {
             if(i > 3) break;
 
             Member member = AccountManager.getInstance().getDiscordMember(Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())));
-
+            if(member == null) continue;
             if(member.getRoles().contains(Constants.ADMIN_ROLE)) {
                 continue;
             }

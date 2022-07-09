@@ -1,7 +1,10 @@
 package net.thetowncraft.townbot.custom_bosses;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.items.CustomItem;
+import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
@@ -19,6 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Random;
 
@@ -33,8 +37,10 @@ public abstract class BossEventListener implements Listener {
     public Location prevPlayerLocation;
     public BossBar bossBar = null;
     public final World world;
+    public List<Entity> entities;
 
     public BossEventListener() {
+        entities = new ArrayList<>();
         this.world = this.getBossSpawnLocation().getWorld();
         LISTENERS.add(this);
         initAttacks();
@@ -77,6 +83,7 @@ public abstract class BossEventListener implements Listener {
         dodge(5);
     }
 
+
     public void dodge(int speed) {
         Random random = new Random();
         int dir = random.nextInt(4);
@@ -96,6 +103,26 @@ public abstract class BossEventListener implements Listener {
         boss.getWorld().playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
     }
 
+    public void levitate(int damage) {
+        if(boss == null) return;
+        boss.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 30, 1, true, false, false));
+        world.playSound(boss.getLocation(), Sound.ENTITY_EVOKER_PREPARE_SUMMON, 10, 1);
+        Location location = player.getLocation();
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            boss.teleport(location);
+            for(Entity entity : boss.getNearbyEntities(3, 3, 3)) {
+                if(entity instanceof Player) {
+                    Player player = (Player) entity;
+                    player.setVelocity(new Vector(0, 1, 0));
+                    player.damage(damage, boss);
+                }
+            }
+            world.playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
+            world.playSound(boss.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 5, 1);
+            world.playSound(boss.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 5, 1);
+        }, 30);
+    }
+
     public boolean initBossFight(Player player) {
         if(bossBeingChallenged) {
             sendBossBeingChallengedMessage(player);
@@ -112,9 +139,28 @@ public abstract class BossEventListener implements Listener {
             player.removePotionEffect(effect.getType());
         }
 
+        sendBossChallengeMsg(player);
         sendBossTitleEffects(player);
-        setUpBoss(player);
+        setUpArena(player);
         return true;
+    }
+
+    public void sendBossChallengeMsg(Player player) {
+        Bukkit.getServer().broadcastMessage(player.getName() + " " + getChallengeMessage() + " " + getBossTitleColor() + getBossName());
+        Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> " + getBossEmoji() + " **" + player.getName() + "** " + getChallengeMessage() + " **" + getBossName() + "**").queue();
+    }
+
+    public String getChallengeMessage() {
+        return "has challenged";
+    }
+
+    public void sendVictoryMsg() {
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setDescription("```\n[" + player.getName() + " has defeated " + getBossName() + "]\n```");
+        embed.setColor(Constants.GREEN);
+        Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+
+        Bukkit.getServer().broadcastMessage(player.getName() + " has defeated " + getBossTitleColor() + getBossName());
     }
 
     public void sendBossBeingChallengedMessage(Player player) {
@@ -128,7 +174,7 @@ public abstract class BossEventListener implements Listener {
         player.playSound(player.getLocation(), Sound.ENTITY_WITHER_SPAWN, 100, 1);
     }
 
-    public void setUpBoss(Player player) {
+    public void setUpArena(Player player) {
         this.player = player;
         bossHalfHealth = false;
         world.setGameRule(GameRule.DO_MOB_SPAWNING, false);
@@ -141,33 +187,43 @@ public abstract class BossEventListener implements Listener {
 
             world.setGameRule(GameRule.MOB_GRIEFING, false);
 
-            for(Entity entity : player.getNearbyEntities(200, 200, 200)) {
-                if(!(entity instanceof Player)) {
-                    entity.remove();
-                }
-            }
-
             spawnBoss();
 
-            if(boss instanceof Wither) {
-                Boss bossEntity = (Boss) this.boss;
-                BossBar bar = bossEntity.getBossBar();
-                if(bar == null) {
-                    setUpBossBar(player);
-                }
-                else {
-                    bar.setColor(this.getBarColor());
-                    this.bossBar = bar;
-                }
-            }
-            else {
-                setUpBossBar(player);
-            }
+            checkBar();
 
             bossBeingChallenged = true;
             player.setInvulnerable(false);
             onBossSpawn(boss, player);
         }, 70);
+    }
+
+    public void clearEntities() {
+        try {
+            for(Entity entity : new ArrayList<>(entities)) {
+                if(entity != null) entity.remove();
+            }
+            entities.clear();
+        }
+        catch (ConcurrentModificationException ex) {
+            clearEntities();
+        }
+    }
+
+    public void checkBar() {
+        if(boss instanceof Wither) {
+            Boss bossEntity = (Boss) this.boss;
+            BossBar bar = bossEntity.getBossBar();
+            if(bar == null) {
+                setUpBossBar(player);
+            }
+            else {
+                bar.setColor(this.getBarColor());
+                this.bossBar = bar;
+            }
+        }
+        else {
+            setUpBossBar(player);
+        }
     }
 
     public void spawnBoss() {
@@ -183,14 +239,16 @@ public abstract class BossEventListener implements Listener {
             ((Wither) boss).getBossBar().setColor(getBarColor());
             this.bossBar = ((Wither) boss).getBossBar();
         }
+        System.out.println("SPAWNED BOSS");
     }
 
     public void respawnPlayer() {
         player.teleport(this.getPlayerSpawnLocation());
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-        boss.remove();
+        if(boss!= null) boss.remove();
+        clearEntities();
         spawnBoss();
-        bossBar.setProgress(1.0);
+        if(bossBar != null) bossBar.setProgress(1.0);
         player.stopAllSounds();
         player.playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10, 1);
         player.playSound(player.getLocation(), Sound.ENTITY_IRON_GOLEM_DEATH, 10, 1);
@@ -200,6 +258,12 @@ public abstract class BossEventListener implements Listener {
         player.setFireTicks(0);
         player.setFreezeTicks(0);
         playBossMusic();
+        Bukkit.getServer().broadcastMessage(player.getName() + " " + getDeathMessage() + " " + getBossTitleColor() + getBossName());
+
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setDescription("```css\n[" + player.getName() + " " + getDeathMessage() + " " + getBossName() + "]\n```");
+        embed.setColor(0xb83838);
+        Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
     }
 
     public void setUpBossBar(Player player) {
@@ -230,6 +294,8 @@ public abstract class BossEventListener implements Listener {
             boss = null;
             bossBar.removeAll();
             event.getDrops().add(this.getBossItem().createItemStack(1));
+            sendVictoryMsg();
+            clearEntities();
         }
     }
 
@@ -240,16 +306,18 @@ public abstract class BossEventListener implements Listener {
         event.setKeepInventory(true);
         event.setKeepLevel(true);
         event.getDrops().clear();
-        player.teleport(prevPlayerLocation);
+        clearEntities();
+        resetFight();
+        if(prevPlayerLocation != null) player.teleport(prevPlayerLocation);
     }
 
     public void resetFight() {
-        player.setGameMode(GameMode.SURVIVAL);
+        if(player != null) player.setGameMode(GameMode.SURVIVAL);
         bossBeingChallenged = false;
         if(boss != null) boss.remove();
         boss = null;
         this.player = null;
-        bossBar.removeAll();
+        if(bossBar != null) bossBar.removeAll();
     }
 
     @EventHandler
@@ -267,7 +335,13 @@ public abstract class BossEventListener implements Listener {
     @EventHandler
     public final void onItemDrop(PlayerDropItemEvent event) {
         if(event.getPlayer().getWorld().getName().equals(world.getName())) {
-            if(boss != null) event.setCancelled(true);
+            if(boss != null) {
+                if(this instanceof BossDungeonEventListener) {
+                    BossDungeonEventListener dungeon = (BossDungeonEventListener) this;
+                    if(dungeon.inDungeon) return;
+                }
+                event.setCancelled(true);
+            }
         }
     }
 
@@ -320,7 +394,18 @@ public abstract class BossEventListener implements Listener {
     @EventHandler
     public final void onEntitySpawn(EntitySpawnEvent event) {
         EntityType type = event.getEntity().getType();
-        if(type == EntityType.SPLASH_POTION && event.getLocation().getWorld().getName().equals(getBossSpawnLocation().getWorld().getName())) event.setCancelled(true);
+        if(!event.getLocation().getWorld().getName().equals(world.getName())) return;
+
+        if(type == EntityType.SPLASH_POTION) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if(event.isCancelled()) return;
+
+        Entity entity = event.getEntity();
+        if(entity.getType() == EntityType.PLAYER) return;
+        entities.add(entity);
     }
 
     @EventHandler
@@ -400,6 +485,7 @@ public abstract class BossEventListener implements Listener {
 
     public abstract String getBossName();
     public abstract String getBossDescription();
+    public abstract String getBossEmoji();
     public abstract EntityType getBaseEntity();
     public abstract double getBossHealth();
     public abstract ChatColor getBossTitleColor();
@@ -407,6 +493,12 @@ public abstract class BossEventListener implements Listener {
     public abstract BarColor getBarColor();
     public abstract CustomItem getBossItem();
     public abstract Sound getBossMusic();
+
+    /**
+     *
+     * @return the death message text in between the player name and the boss name
+     */
+    public abstract String getDeathMessage();
 
     public abstract Location getBossSpawnLocation();
     public abstract Location getPlayerSpawnLocation();
