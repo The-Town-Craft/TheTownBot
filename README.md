@@ -1,7 +1,8 @@
 # The Town Bot
 
-## A Discord Bot for The Town Discord/Minecraft server!
+## Core Plugin for The Town Discord/Minecraft server!
 
+- Adds custom dimensions, mobs, items, and bosses
 - Links the Discord & Minecraft Chat
 - Many Essential Minecraft Features
 - Player Activity System with built in AFK detection
