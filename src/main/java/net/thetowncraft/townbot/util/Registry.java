@@ -56,6 +56,7 @@ public class Registry {
                 new Log(),
                 new Whitelist(),
                 new RunMCCommand(),
+                new ChangelogCommand(),
 
                 //Activity Points
                 new AddActivityPointsCommand(),

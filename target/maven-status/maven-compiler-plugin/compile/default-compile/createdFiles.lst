@@ -103,6 +103,7 @@ net\thetowncraft\townbot\listeners\discord\DiscordChatListener.class
 net\thetowncraft\townbot\items\CustomItem.class
 net\thetowncraft\townbot\custom_bosses\BossEventListener.class
 net\thetowncraft\townbot\items\IllusionerHeart.class
+net\thetowncraft\townbot\listeners\discord\commands\ChangelogCommand.class
 net\thetowncraft\townbot\economy\player_shops\commands\WithdrawDiamonds.class
 net\thetowncraft\townbot\listeners\discord\ServerStart.class
 net\thetowncraft\townbot\custom_bosses\bosses\IllusionerBoss.class

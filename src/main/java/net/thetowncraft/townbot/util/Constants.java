@@ -26,6 +26,8 @@ public class Constants {
 	public static final Role ADMIN_ROLE = Bot.jda.getRoleById("819611983396601856");
 	public static final TextChannel MOD_CHAT = Bot.jda.getTextChannelById("759179669320237076");
 	public static final TextChannel DEV_CHAT = Bot.jda.getTextChannelById("819063742335680512");
+	public static final TextChannel CHANGELOGS = Bot.jda.getTextChannelById("995567151345836052");
+	public static final Role CHANGELOG_PING = Bot.jda.getRoleById("774074418942050324");
 	public static final TextChannel ACTIVE_PLAYER_CHAT = Bot.jda.getTextChannelById("817928132652433468");
 	public static final String THETOWN_CHAT = "755499624810283119";
 	public static final String MC_CHAT = "790082482363957278";
