@@ -64,9 +64,6 @@ public class ActivityManager {
 
             Member member = AccountManager.getInstance().getDiscordMember(Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())));
             if(member == null) continue;
-            if(member.getRoles().contains(Constants.ADMIN_ROLE)) {
-                continue;
-            }
             players.put(entry.getKey(), entry.getValue());
             i++;
         }

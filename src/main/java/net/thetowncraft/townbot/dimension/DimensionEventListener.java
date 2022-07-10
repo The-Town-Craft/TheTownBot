@@ -21,11 +21,14 @@ import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class DimensionEventListener implements Listener {
 
     public static final String MYSTIC_REALM = "world_1597802541_thetown_mystic_realm";
+    public static final Map<String, Location> PREV_PLAYER_POSITIONS = new HashMap<>();
 
     //Teleport
     @EventHandler
@@ -54,15 +57,39 @@ public class DimensionEventListener implements Listener {
 
         if(player.getGameMode() == GameMode.ADVENTURE) return;
 
-        World mysticRealm = Bukkit.getWorld(MYSTIC_REALM);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
-            player.teleport(new Location(mysticRealm, 1108, 69, 1924, 0, 0));
-            player.playSound(player.getLocation(), Sound.AMBIENT_SOUL_SAND_VALLEY_MOOD, 100, 1);
-        }, 10);
+        if(player.getWorld().getName().equals(MYSTIC_REALM)) {
+            Location location;
 
-        player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 5, false, false, false));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1, false, false, false));
-        player.sendTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "The Mystic Realm", ChatColor.DARK_GREEN + "A forgotten world, lost in time...", 10, 70, 20);
+            Location prevLocation = PREV_PLAYER_POSITIONS.get(player.getUniqueId().toString());
+            if(prevLocation == null) {
+                Location bedSpawnLocation = player.getBedSpawnLocation();
+                if(bedSpawnLocation != null) location = bedSpawnLocation;
+                else location = Plugin.SPAWN_LOCATION;
+            }
+            else {
+                location = prevLocation;
+            }
+
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+                player.teleport(location);
+            }, 10);
+
+            player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 5, false, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1, false, false, false));
+            player.sendTitle(null, ChatColor.AQUA + "Returning to the overworld...", 10, 70, 20);
+        }
+        else {
+            PREV_PLAYER_POSITIONS.put(player.getUniqueId().toString(), player.getLocation());
+            World mysticRealm = Bukkit.getWorld(MYSTIC_REALM);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+                player.teleport(new Location(mysticRealm, 1108, 69, 1924, 0, 0));
+                player.playSound(player.getLocation(), Sound.AMBIENT_SOUL_SAND_VALLEY_MOOD, 100, 1);
+            }, 10);
+
+            player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 5, false, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1, false, false, false));
+            player.sendTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "The Mystic Realm", ChatColor.DARK_GREEN + "A forgotten world, lost in time...", 10, 70, 20);
+        }
     }
 
     @EventHandler

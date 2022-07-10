@@ -60,7 +60,7 @@ public class Raid implements Listener {
         }
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Constants.GREEN);
-        embed.setDescription("```css\n" + players + "completed a raid\n```");
+        embed.setDescription("```\n" + players + "completed a raid\n```");
         TextChannel logChannel = Bot.jda.getTextChannelById(Constants.MC_LOGS);
         TextChannel channel = Bot.jda.getTextChannelById(Constants.MC_CHAT);
         logChannel.sendMessage(embed.build()).queue();

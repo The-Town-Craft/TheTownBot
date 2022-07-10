@@ -1,6 +1,7 @@
 
 package net.thetowncraft.townbot.util;
 
+import net.dv8tion.jda.api.entities.User;
 import net.thetowncraft.townbot.Bot;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Role;
@@ -8,6 +9,8 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.ChatColor;
 
 public class Constants {
+
+	public static final User CADEN = Bot.jda.getUserById("585334397914316820");
 
 	public static final Role DONATOR_ROLE = Bot.jda.getRoleById("803502592297664533");
 	public static final Role ACTIVE_PLAYER_ROLE = Bot.jda.getRoleById("817927959155179540");

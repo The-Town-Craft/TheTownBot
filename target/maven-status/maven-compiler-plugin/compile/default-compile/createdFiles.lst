@@ -27,6 +27,7 @@ net\thetowncraft\townbot\listeners\discord\commands\Log.class
 net\thetowncraft\townbot\economy\commands\Bal.class
 net\thetowncraft\townbot\listeners\discord\fun\Skin.class
 net\thetowncraft\townbot\listeners\discord\commands\Unban.class
+net\thetowncraft\townbot\listeners\minecraft\commands\DonateCommand.class
 net\thetowncraft\townbot\economy\player_shops\commands\DepositDiamonds.class
 net\thetowncraft\townbot\util\Constants.class
 net\thetowncraft\townbot\api\command_handler\CommandHandler$Discord.class

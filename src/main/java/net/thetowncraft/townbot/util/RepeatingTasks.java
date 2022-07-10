@@ -1,5 +1,6 @@
 package net.thetowncraft.townbot.util;
 
+import net.dv8tion.jda.api.Permission;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
@@ -7,6 +8,7 @@ import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.discord.commands.DiscordActiveCommand;
 import net.thetowncraft.townbot.listeners.minecraft.commands.ActiveCommand;
+import net.thetowncraft.townbot.listeners.minecraft.commands.DonateCommand;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.AFKManager;
 import net.dv8tion.jda.api.entities.Member;
@@ -18,6 +20,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 public class RepeatingTasks {
@@ -50,15 +53,26 @@ public class RepeatingTasks {
         for(Player offlinePlayer : Bukkit.getOnlinePlayers()) {
 
             Player player = offlinePlayer.getPlayer();
-            if(player != null)  {
-                if(AFKManager.isAFK(player)) return;
-            }
+            if(player == null) continue;
+            if(AFKManager.isAFK(player)) continue;
+
+            Member member = AccountManager.getInstance().getDiscordMember(player);
+            if(member == null) continue;
 
             Long points = ActivityManager.PLAYER_ACTIVITY_MAP.get(offlinePlayer.getUniqueId().toString());
 
             if(points == null) points = 0L;
 
             points++;
+            if(member.hasPermission(Permission.BAN_MEMBERS)) {
+                if(new Random().nextInt(10) > 3) {
+                    points--;
+                }
+            }
+
+            if(points == 1000) {
+                DonateCommand.sendDonationMessage(player);
+            }
 
             ActivityManager.PLAYER_ACTIVITY_MAP.put(offlinePlayer.getUniqueId().toString(), points);
         }

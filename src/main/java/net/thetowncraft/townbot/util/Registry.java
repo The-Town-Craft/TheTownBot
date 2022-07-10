@@ -81,7 +81,8 @@ public class Registry {
                 new WithdrawDiamonds(),
                 new GiveCustomItem(),
                 new MaintenanceCommand(),
-                new HubCommand()
+                new HubCommand(),
+                new DonateCommand()
         );
     }
 

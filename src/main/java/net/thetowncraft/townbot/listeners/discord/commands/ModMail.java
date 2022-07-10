@@ -13,7 +13,7 @@ import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -105,7 +105,7 @@ public class ModMail extends DiscordCommand {
         if(offPlayer == null) return;
         Player player = offPlayer.getPlayer();
         if(player == null) return;
-        player.sendMessage(Color.AQUA + "Check your DMs, you have ModMail from The Town!");
+        player.sendMessage(ChatColor.AQUA + "Check your DMs, you have ModMail from The Town!");
     }
 
     @Override

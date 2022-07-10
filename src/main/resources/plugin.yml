@@ -39,3 +39,6 @@ commands:
 
   hub:
     description: Teleports you to the hub server!
+
+  donate:
+    description: Consider donating!
