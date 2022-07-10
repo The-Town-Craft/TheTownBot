@@ -367,6 +367,8 @@ public abstract class BossEventListener implements Listener {
 
     @EventHandler
     public final void onConsume(PlayerItemConsumeEvent event) {
+        if(!event.getPlayer().getWorld().getName().equals(world.getName())) return;
+
         Material item = event.getItem().getType();
 
         if(item == Material.CHORUS_FRUIT) {
