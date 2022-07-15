@@ -26,6 +26,7 @@ public class Bot {
      * Initializes the bot, and sets its activity, status, and intents.
      */
     public static void enable() {
+
         JDABuilder builder = JDABuilder.createDefault(Config.get("token"));
         builder.setStatus(OnlineStatus.ONLINE);
         builder.setActivity(Activity.playing("The Town SMP!"));

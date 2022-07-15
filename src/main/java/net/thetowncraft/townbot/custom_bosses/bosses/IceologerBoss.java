@@ -80,7 +80,7 @@ public class IceologerBoss extends BossDungeonEventListener {
     @Override
     public void initAttacks() {
         addAttack(this::dodge, 500, 500);
-        addAttack(this::levitate, 250, 500);
+        addAttack(this::levitate, 100, 200);
     }
 
     public void levitate() {
@@ -212,6 +212,11 @@ public class IceologerBoss extends BossDungeonEventListener {
     @Override
     public CustomItem getBossItem() {
         return CustomItems.GLACIAL_SHARD;
+    }
+
+    @Override
+    public String getBossRoleId() {
+        return "995837403120013333";
     }
 
     @Override

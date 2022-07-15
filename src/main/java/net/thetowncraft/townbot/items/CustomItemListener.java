@@ -3,10 +3,7 @@ package net.thetowncraft.townbot.items;
 import com.google.common.collect.Sets;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.bosses.BlazingWitherBoss;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -71,9 +68,17 @@ public class CustomItemListener implements Listener {
     public void onShootBow(EntityShootBowEvent event) {
         ProjectileSource shooter = event.getEntity();
         if(shooter instanceof Player) {
+            Player player = ((Player) shooter).getPlayer();
+            if(player == null) return;
 
-            ItemStack stack = CustomItems.getItemStackOf(((Player) shooter).getPlayer(), CustomItems.BLAZING_THUNDERSTAR);
+            ItemStack stack = CustomItems.getItemStackOf(player, CustomItems.BLAZING_THUNDERSTAR);
             if(stack == null) return;
+
+            if(!CustomItems.BLAZING_THUNDERSTAR.canUse(player)) {
+                player.sendMessage(ChatColor.RED + "You must defeat the Blazing Wither to use the Blazing Thunderstar!");
+                return;
+            }
+
             SizedFireball fireball = event.getEntity().launchProjectile(SizedFireball.class);
             Vector vel = event.getProjectile().getVelocity();
             fireball.setVelocity(new Vector(vel.getX() * 2, vel.getY() * 2, vel.getZ() * 2));
@@ -111,10 +116,31 @@ public class CustomItemListener implements Listener {
         }
     }
 
+    /*
+[06:43:28 INFO]: [MinecordBot] [STDOUT] Name: §cOld Hunter's Sword
+[06:43:28 INFO]: [MinecordBot] [STDOUT] Description: §4Sword of §lThe Wicked Hunter
+[06:43:28 INFO]: [MinecordBot] [STDOUT] Actual Item Lore(0)§4Sword of §4§lThe Wicked Hunter
+     */
+
+    //Desc: §4Sword of §lThe Wicked Hunter
+    //Lore: §4Sword of §4§lThe Wicked Hunter
+
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
         Entity nonLiving = event.getEntity();
+
+        if(damager instanceof Player) {
+            Player player = (Player) damager;
+            ItemStack hand = player.getInventory().getItemInMainHand();
+            System.out.println(hand.getType().name());
+            if(CustomItems.getLore0(hand).equals("§4Sword of §4§lThe Wicked Hunter")) {
+                if(!CustomItems.HUNTER_SWORD.canUse(player)) {
+                    player.sendMessage(ChatColor.RED + "You must defeat the Wicked Hunter before using his sword!");
+                    event.setCancelled(true);
+                }
+            }
+        }
 
         if(!(nonLiving instanceof LivingEntity)) {
             return;
@@ -168,7 +194,7 @@ public class CustomItemListener implements Listener {
                 int thunderstars = CustomItems.getItemAmountOf(player, CustomItems.BLAZING_THUNDERSTAR);
                 if(thunderstars == 0) return;
                 if(BlazingWitherBoss.bossWorldName.equals(player.getWorld().getName())) return;
-                int procChance = thunderstars * 25;
+                int procChance = thunderstars * 10;
                 int num = random.nextInt(100);
 
                 boolean proc = num < procChance;

@@ -194,11 +194,6 @@ public class MinecraftChatListener implements Listener {
 				//mc chat
 				Bukkit.broadcastMessage(ChatColor.GOLD + entity + " lost their totem!");
 			
-				//discord chat embed
-				EmbedBuilder embed = new EmbedBuilder();
-				embed.setDescription("```css\n" + entity + " lost their totem!\n```");
-				embed.setColor(0xb83838);
-			
 				//discord log embed
 				EmbedBuilder log = new EmbedBuilder();
 
@@ -214,7 +209,7 @@ public class MinecraftChatListener implements Listener {
 				}
 				log.addField("Reason: " +  cause, "", false);
 			
-				Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
+				Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:Totem:995628428281794650> **" + entity + "** lost their totem!").queue();
 				Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(log.build()).queue();
 			}
 		}

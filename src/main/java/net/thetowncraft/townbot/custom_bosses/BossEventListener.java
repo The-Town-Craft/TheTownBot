@@ -1,9 +1,12 @@
 package net.thetowncraft.townbot.custom_bosses;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.items.CustomItem;
+import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -38,10 +41,13 @@ public abstract class BossEventListener implements Listener {
     public BossBar bossBar = null;
     public final World world;
     public List<Entity> entities;
+    public boolean slam;
+    public double slamDamage;
 
     public BossEventListener() {
         entities = new ArrayList<>();
         this.world = this.getBossSpawnLocation().getWorld();
+        getBossItem().setBoss(this);
         LISTENERS.add(this);
         initAttacks();
         initDefaultAttacks();
@@ -165,6 +171,18 @@ public abstract class BossEventListener implements Listener {
 
     public void sendBossBeingChallengedMessage(Player player) {
         player.sendMessage(ChatColor.RED + "This boss is already being challenged");
+    }
+
+    public void addBossRole() {
+        if(player == null) return;
+
+        Member member = AccountManager.getInstance().getDiscordMember(player);
+        if(member == null) return;
+
+        Role role = Bot.jda.getRoleById(getBossRoleId());
+        if(role == null) return;
+
+        member.getGuild().addRoleToMember(member, role).queue();
     }
 
     public void sendBossTitleEffects(Player player) {
@@ -294,8 +312,42 @@ public abstract class BossEventListener implements Listener {
             boss = null;
             bossBar.removeAll();
             event.getDrops().add(this.getBossItem().createItemStack(1));
+            addBossRole();
             sendVictoryMsg();
             clearEntities();
+        }
+    }
+
+    public void slam(double damage) {
+        if(boss.isInvulnerable()) return;
+        boss.setVelocity(new Vector(0, 2, 0));
+        slamDamage = damage;
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            if(boss == null) return;
+            boss.teleport(new Location(world, player.getLocation().getX(), boss.getLocation().getY(), player.getLocation().getZ()));
+        }, 15);
+    }
+
+    @EventHandler
+    public final void onFallDamageSlam(EntityDamageEvent event) {
+        if(!slam) return;
+        Entity damaged = event.getEntity();
+        if(!damaged.getWorld().getName().equals(world.getName())) return;
+
+        if(boss == null) return;
+
+        if(event.getCause() == EntityDamageEvent.DamageCause.FALL && event.getEntity().getType() == getBaseEntity()) {
+            event.setCancelled(true);
+            List<Entity> entities = damaged.getNearbyEntities(4, 4, 4);
+            for(Entity entity : entities) {
+                if(entity instanceof Player) {
+                    Player player = (Player) entity;
+                    player.setHealth(1);
+                    player.setVelocity(new Vector(0, 3, 0));
+                }
+            }
+            world.playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
+            world.playSound(boss.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 5, 1);
         }
     }
 
@@ -418,11 +470,13 @@ public abstract class BossEventListener implements Listener {
             if (entity.getType() == EntityType.DROPPED_ITEM) {
                 event.setCancelled(true);
             }
-            if (entity.equals(boss)) {
-                if (bossBar != null) {
-                    if (!(boss instanceof Wither))
-                        bossBar.setProgress((boss.getHealth() - event.getFinalDamage()) / boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
-                    if (bossBar.getProgress() <= 0.5 && !bossHalfHealth) {
+            if(entity.equals(boss)) {
+                if(bossBar != null) {
+                    if(!(boss instanceof Wither) && !event.isCancelled()) {
+                        double newProgress = (boss.getHealth() - event.getFinalDamage()) / boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+                        if(newProgress >= 0.0 && newProgress <= 1.0) bossBar.setProgress(newProgress);
+                    }
+                    if(bossBar.getProgress() <= 0.5 && !bossHalfHealth) {
                         bossHalfHealth = true;
                         onBossHalfHealth();
                     }
@@ -494,6 +548,7 @@ public abstract class BossEventListener implements Listener {
     public abstract ChatColor getBossDescColor();
     public abstract BarColor getBarColor();
     public abstract CustomItem getBossItem();
+    public abstract String getBossRoleId();
     public abstract Sound getBossMusic();
 
     /**

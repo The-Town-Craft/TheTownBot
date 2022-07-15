@@ -32,6 +32,11 @@ public class IllusionerHeart extends CustomItem {
             if(players.contains(player.getUniqueId().toString())) return;
             if(player.getCooldown(getBaseItem()) != 0) return;
 
+            if(!CustomItems.ILLUSIONER_HEART.canUse(player)) {
+                player.sendMessage(ChatColor.RED + "You must defeat the Mystic Illusioner to use this item!");
+                return;
+            }
+
             if(!player.isOnGround()) {
                 player.sendMessage(ChatColor.RED + "You must be on ground to use this item");
                 return;

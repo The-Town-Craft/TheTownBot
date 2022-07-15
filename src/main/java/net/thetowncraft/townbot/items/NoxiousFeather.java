@@ -38,6 +38,10 @@ public class NoxiousFeather extends CustomItem {
     @Override
     public void onPlayerJump(Player player, int amount) {
         Vector velocity = player.getVelocity();
+        if(!canUse(player)) {
+            player.sendMessage(ChatColor.RED + "You must defeat the Noxious Chicken to use this item!");
+            return;
+        }
         if(player.isSprinting()) {
             player.setVelocity(new Vector(velocity.getX() * (amount + 2), velocity.getY(), velocity.getZ() * (amount + 2)));
         }

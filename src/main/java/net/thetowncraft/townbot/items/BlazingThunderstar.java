@@ -13,8 +13,12 @@ public class BlazingThunderstar extends CustomItem {
 
     @Override
     public void procOnHit(Player player, int itemAmount, LivingEntity target, World world) {
+        if(!canUse(player)) return;
+        if(target instanceof Wither || target instanceof EnderDragon) return;
         world.strikeLightningEffect(target.getLocation());
-        target.damage(10 * itemAmount, player);
+        int damage = itemAmount * 2;
+        if(damage > 10) damage = 10;
+        target.damage(damage, player);
         target.addPotionEffect(PotionEffectType.WITHER.createEffect(20 * itemAmount, itemAmount - 1));
         target.setFireTicks(20 * itemAmount);
         int radius = 2 * itemAmount;

@@ -1,5 +1,6 @@
 package net.thetowncraft.townbot.items;
 
+import net.thetowncraft.townbot.custom_bosses.BossEventListener;
 import net.thetowncraft.townbot.util.Rarity;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

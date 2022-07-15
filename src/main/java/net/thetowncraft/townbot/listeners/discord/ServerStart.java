@@ -1,5 +1,6 @@
 package net.thetowncraft.townbot.listeners.discord;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.util.Constants;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.ReadyEvent;

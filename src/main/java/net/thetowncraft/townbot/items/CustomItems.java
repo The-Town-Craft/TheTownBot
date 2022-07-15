@@ -82,14 +82,18 @@ public class CustomItems {
         return null;
     }
 
-    public static boolean isCustomItemStack(ItemStack stack, CustomItem customItem) {
-        if(stack == null) return false;
+    public static String getLore0(ItemStack stack) {
+        if(stack == null) return "";
         ItemMeta meta = stack.getItemMeta();
-        if(meta == null) return false;
+        if(meta == null) return "";
 
         List<String> lore = meta.getLore();
-        if(lore == null || lore.size() == 0) return false;
-        return lore.get(0).equals(customItem.getDescription());
+        if(lore == null || lore.size() == 0) return "";
+        return lore.get(0);
+    }
+
+    public static boolean isCustomItemStack(ItemStack stack, CustomItem customItem) {
+        return getLore0(stack).equals(customItem.getDescription());
     }
 
     public static int playerHoldingItemAmount(Player player, CustomItem item) {
@@ -100,7 +104,7 @@ public class CustomItems {
 
         List<String> lore = meta.getLore();
         if(lore == null || lore.size() == 0) return 0;
-        if(lore.get(0).equals(item.getDescription())) return stack.getAmount();;
+        if(lore.get(0).equals(item.getDescription())) return stack.getAmount();
         return 0;
     }
 

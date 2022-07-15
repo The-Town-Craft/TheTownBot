@@ -308,6 +308,11 @@ public class IllusionerBoss extends BossEventListener {
     }
 
     @Override
+    public String getBossRoleId() {
+        return "995755089488773141";
+    }
+
+    @Override
     public Sound getBossMusic() {
         return Sound.MUSIC_DISC_PIGSTEP;
     }

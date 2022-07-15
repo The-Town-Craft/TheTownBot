@@ -1,5 +1,10 @@
 package net.thetowncraft.townbot.items;
 
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
+import net.thetowncraft.townbot.Bot;
+import net.thetowncraft.townbot.custom_bosses.BossEventListener;
+import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.Rarity;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -16,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CustomItem {
+
+    private BossEventListener boss;
 
     public ItemStack createItemStack(int amount) {
         ItemStack stack = new ItemStack(this.getBaseItem(), amount);
@@ -40,6 +47,27 @@ public abstract class CustomItem {
     public void onInteract(PlayerInteractEvent event, int amount) {}
     public void onPlayerDamage(Player player, EntityDamageEvent event, int amount) {}
     public void onPlayerDrop(PlayerDropItemEvent event) {}
+
+    public void setBoss(BossEventListener boss) {
+        this.boss = boss;
+    }
+
+    public BossEventListener getBoss() {
+        return boss;
+    }
+
+    public boolean canUse(Player player) {
+        Member member = AccountManager.getInstance().getDiscordMember(player);
+        if(member == null) return false;
+
+        BossEventListener boss = this.getBoss();
+        if(boss == null) return true;
+
+        Role role = Bot.jda.getRoleById(boss.getBossRoleId());
+        if(role == null) return true;
+
+        return member.getRoles().contains(role);
+    }
 
     public abstract String getName();
 

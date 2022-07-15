@@ -127,7 +127,7 @@ public class WickedHunterBoss extends BossEventListener {
 
         if(boss == null) return;
 
-        if(event.getCause() == EntityDamageEvent.DamageCause.FALL && event.getEntity().getType() == EntityType.STRAY) {
+        if(event.getCause() == EntityDamageEvent.DamageCause.FALL && event.getEntity().getType() == getBaseEntity()) {
             event.setCancelled(true);
             List<Entity> entities = damaged.getNearbyEntities(4, 4, 4);
             for(Entity entity : entities) {
@@ -226,6 +226,11 @@ public class WickedHunterBoss extends BossEventListener {
     @Override
     public CustomItem getBossItem() {
         return CustomItems.HUNTER_SWORD;
+    }
+
+    @Override
+    public String getBossRoleId() {
+        return "995754974908788756";
     }
 
     @Override

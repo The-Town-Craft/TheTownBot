@@ -163,6 +163,11 @@ public class BlazingWitherBoss extends BossEventListener {
     }
 
     @Override
+    public String getBossRoleId() {
+        return "995754819446906910";
+    }
+
+    @Override
     public Sound getBossMusic() {
         return Sound.MUSIC_DISC_PIGSTEP;
     }

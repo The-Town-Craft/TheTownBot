@@ -212,6 +212,11 @@ public class NoxiousChickenBoss extends BossEventListener {
     }
 
     @Override
+    public String getBossRoleId() {
+        return "995755275514552381";
+    }
+
+    @Override
     public Sound getBossMusic() {
         return Sound.MUSIC_DISC_PIGSTEP;
     }
