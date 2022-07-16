@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.items;
+package net.thetowncraft.townbot.custom_items;
 
 import com.google.common.collect.Sets;
 import net.thetowncraft.townbot.Plugin;
@@ -12,10 +12,8 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
@@ -133,7 +131,6 @@ public class CustomItemListener implements Listener {
         if(damager instanceof Player) {
             Player player = (Player) damager;
             ItemStack hand = player.getInventory().getItemInMainHand();
-            System.out.println(hand.getType().name());
             if(CustomItems.getLore0(hand).equals("§4Sword of §4§lThe Wicked Hunter")) {
                 if(!CustomItems.HUNTER_SWORD.canUse(player)) {
                     player.sendMessage(ChatColor.RED + "You must defeat the Wicked Hunter before using his sword!");
@@ -245,6 +242,7 @@ public class CustomItemListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         CustomItems.onItemInteract(event);
+        CustomItems.onItemClick(event);
     }
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {

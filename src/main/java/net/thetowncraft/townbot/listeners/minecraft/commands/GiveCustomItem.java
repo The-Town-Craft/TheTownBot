@@ -2,8 +2,8 @@ package net.thetowncraft.townbot.listeners.minecraft.commands;
 
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.items.CustomItem;
-import net.thetowncraft.townbot.items.CustomItems;
+import net.thetowncraft.townbot.custom_items.CustomItem;
+import net.thetowncraft.townbot.custom_items.CustomItems;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

@@ -2,11 +2,9 @@ package net.thetowncraft.townbot.custom_bosses.bosses;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
-import net.thetowncraft.townbot.items.CustomItem;
-import net.thetowncraft.townbot.items.CustomItems;
+import net.thetowncraft.townbot.custom_items.CustomItem;
+import net.thetowncraft.townbot.custom_items.CustomItems;
 import org.bukkit.*;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.block.data.type.TNT;
 import org.bukkit.boss.BarColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -21,8 +19,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
-
-import java.util.List;
 
 public class WickedHunterBoss extends BossEventListener {
 
@@ -106,12 +102,7 @@ public class WickedHunterBoss extends BossEventListener {
     }
 
     public void slam() {
-        if(boss.isInvulnerable()) return;
-        boss.setVelocity(new Vector(0, 2, 0));
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
-            if(boss == null) return;
-            boss.teleport(new Location(world, player.getLocation().getX(), boss.getLocation().getY(), player.getLocation().getZ()));
-        }, 15);
+        slam(50);
     }
 
     public void levitate() {
@@ -127,19 +118,6 @@ public class WickedHunterBoss extends BossEventListener {
 
         if(boss == null) return;
 
-        if(event.getCause() == EntityDamageEvent.DamageCause.FALL && event.getEntity().getType() == getBaseEntity()) {
-            event.setCancelled(true);
-            List<Entity> entities = damaged.getNearbyEntities(4, 4, 4);
-            for(Entity entity : entities) {
-                if(entity instanceof Player) {
-                    Player player = (Player) entity;
-                    player.setHealth(1);
-                    player.setVelocity(new Vector(0, 3, 0));
-                }
-            }
-            world.playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
-            world.playSound(boss.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 5, 1);
-        }
         if(event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
             event.setCancelled(true);
         }

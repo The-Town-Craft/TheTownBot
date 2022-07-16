@@ -2,8 +2,8 @@ package net.thetowncraft.townbot.custom_bosses.bosses;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
-import net.thetowncraft.townbot.items.CustomItem;
-import net.thetowncraft.townbot.items.CustomItems;
+import net.thetowncraft.townbot.custom_items.CustomItem;
+import net.thetowncraft.townbot.custom_items.CustomItems;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;

@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.items;
+package net.thetowncraft.townbot.custom_items;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -15,7 +15,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +43,7 @@ public abstract class CustomItem {
 
     public void updateStats(Player player, int itemAmount) {}
 
+    public void onClick(PlayerInteractEvent event) {}
     public void onInteract(PlayerInteractEvent event, int amount) {}
     public void onPlayerDamage(Player player, EntityDamageEvent event, int amount) {}
     public void onPlayerDrop(PlayerDropItemEvent event) {}

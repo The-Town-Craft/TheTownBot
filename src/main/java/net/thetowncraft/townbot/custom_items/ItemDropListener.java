@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.items;
+package net.thetowncraft.townbot.custom_items;
 
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;

@@ -126,7 +126,7 @@ public class RepeatingTasks {
         }
     }
 
-    private static void rewardActivePlayers() {
+    public static void rewardActivePlayers() {
 
         for(Member member : Constants.THE_TOWN.getMembersWithRoles(Constants.ACTIVE_PLAYER_ROLE)) {
             Constants.THE_TOWN.removeRoleFromMember(member, Constants.ACTIVE_PLAYER_ROLE).queue();

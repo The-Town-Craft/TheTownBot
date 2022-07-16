@@ -1,7 +1,6 @@
-package net.thetowncraft.townbot.items;
+package net.thetowncraft.townbot.custom_items;
 
-import net.thetowncraft.townbot.items.glacial_items.*;
-import org.bukkit.entity.Entity;
+import net.thetowncraft.townbot.custom_items.glacial_items.*;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -28,6 +27,7 @@ public class CustomItems {
     public static final CustomItem HUNTER_SWORD = registerItem("hunter_sword", new HunterSword());
     public static final CustomItem ILLUSIONER_HEART = registerItem("illusioner_heart", new IllusionerHeart());
     public static final CustomItem MYSTIC_ARTIFACT = registerItem("mystic_artifact", new MysticArtifact());
+    public static final CustomItem GLACIAL_AMULET = registerItem("glacial_amulet", new GlacialAmuletItem());
     public static final CustomItem GLACIAL_SHARD = registerItem("glacial_shard", new GlacialShardItem());
     public static final CustomItem GLACIAL_HELMET = registerItem("glacial_helmet", new GlacialHelmet());
     public static final CustomItem GLACIAL_CHESTPLATE = registerItem("glacial_chestplate", new GlacialChestplate());
@@ -96,6 +96,11 @@ public class CustomItems {
         return getLore0(stack).equals(customItem.getDescription());
     }
 
+    public static boolean isHolding(CustomItem item, Player player) {
+        PlayerInventory inventory = player.getInventory();
+        return isCustomItemStack(inventory.getItemInMainHand(), item);
+    }
+
     public static int playerHoldingItemAmount(Player player, CustomItem item) {
         ItemStack stack = player.getInventory().getItemInMainHand();
 
@@ -107,6 +112,15 @@ public class CustomItems {
         if(lore.get(0).equals(item.getDescription())) return stack.getAmount();
         return 0;
     }
+
+    static void onItemClick(PlayerInteractEvent event) {
+        for(CustomItem item : CustomItems.getItems()) {
+            if(isHolding(item, event.getPlayer())) {
+                item.onClick(event);
+            }
+         }
+    }
+
 
     static void onItemInteract(PlayerInteractEvent event) {
         for(CustomItem item : ITEMS.values()) {

@@ -1,6 +1,5 @@
-package net.thetowncraft.townbot.items.glacial_items;
+package net.thetowncraft.townbot.custom_items.glacial_items;
 
-import net.thetowncraft.townbot.util.Rarity;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 

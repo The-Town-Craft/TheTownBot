@@ -5,11 +5,12 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
-import net.thetowncraft.townbot.items.CustomItem;
+import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.data.type.TNT;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -115,17 +116,19 @@ public abstract class BossEventListener implements Listener {
         world.playSound(boss.getLocation(), Sound.ENTITY_EVOKER_PREPARE_SUMMON, 10, 1);
         Location location = player.getLocation();
         Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
-            boss.teleport(location);
-            for(Entity entity : boss.getNearbyEntities(3, 3, 3)) {
-                if(entity instanceof Player) {
-                    Player player = (Player) entity;
-                    player.setVelocity(new Vector(0, 1, 0));
-                    player.damage(damage, boss);
+            if(boss != null) {
+                boss.teleport(location);
+                for(Entity entity : boss.getNearbyEntities(3, 3, 3)) {
+                    if(entity instanceof Player) {
+                        Player player = (Player) entity;
+                        player.setVelocity(new Vector(0, 1, 0));
+                        player.damage(damage, boss);
+                    }
                 }
+                world.playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
+                world.playSound(boss.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 5, 1);
+                world.playSound(boss.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 5, 1);
             }
-            world.playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
-            world.playSound(boss.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 5, 1);
-            world.playSound(boss.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 5, 1);
         }, 30);
     }
 
@@ -212,6 +215,7 @@ public abstract class BossEventListener implements Listener {
             bossBeingChallenged = true;
             player.setInvulnerable(false);
             onBossSpawn(boss, player);
+            player.teleport(this.getPlayerSpawnLocation());
         }, 70);
     }
 
@@ -309,19 +313,28 @@ public abstract class BossEventListener implements Listener {
             event.getDrops().clear();
         }
         if(entity.equals(boss)) {
-            boss = null;
-            bossBar.removeAll();
-            event.getDrops().add(this.getBossItem().createItemStack(1));
-            addBossRole();
-            sendVictoryMsg();
-            clearEntities();
+            onBossDeath(event);
+        }
+    }
+
+    public void onBossDeath(EntityDeathEvent event) {
+        boss = null;
+        bossBar.removeAll();
+        event.getDrops().add(this.getBossItem().createItemStack(1));
+        addBossRole();
+        sendVictoryMsg();
+        clearEntities();
+        if(player != null) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 10));
         }
     }
 
     public void slam(double damage) {
         if(boss.isInvulnerable()) return;
+        slam = true;
         boss.setVelocity(new Vector(0, 2, 0));
         slamDamage = damage;
+        world.playSound(boss.getLocation(), Sound.ENTITY_EVOKER_PREPARE_SUMMON, 10, 0.5f);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
             if(boss == null) return;
             boss.teleport(new Location(world, player.getLocation().getX(), boss.getLocation().getY(), player.getLocation().getZ()));
@@ -337,18 +350,22 @@ public abstract class BossEventListener implements Listener {
         if(boss == null) return;
 
         if(event.getCause() == EntityDamageEvent.DamageCause.FALL && event.getEntity().getType() == getBaseEntity()) {
-            event.setCancelled(true);
-            List<Entity> entities = damaged.getNearbyEntities(4, 4, 4);
-            for(Entity entity : entities) {
-                if(entity instanceof Player) {
-                    Player player = (Player) entity;
-                    player.setHealth(1);
-                    player.setVelocity(new Vector(0, 3, 0));
-                }
-            }
-            world.playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
-            world.playSound(boss.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 5, 1);
+            onSlam(event, damaged);
         }
+    }
+
+    public void onSlam(EntityDamageEvent event, Entity boss) {
+        event.setCancelled(true);
+        List<Entity> entities = boss.getNearbyEntities(4, 4, 4);
+        for(Entity entity : entities) {
+            if(entity instanceof Player) {
+                Player player = (Player) entity;
+                player.damage(slamDamage, boss);
+                player.setVelocity(new Vector(0, 1, 0));
+            }
+        }
+        world.playSound(this.boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
+        world.playSound(this.boss.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 5, 1);
     }
 
     @EventHandler
@@ -473,7 +490,7 @@ public abstract class BossEventListener implements Listener {
             if(entity.equals(boss)) {
                 if(bossBar != null) {
                     if(!(boss instanceof Wither) && !event.isCancelled()) {
-                        double newProgress = (boss.getHealth() - event.getFinalDamage()) / boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+                        double newProgress = (boss.getHealth()) / boss.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
                         if(newProgress >= 0.0 && newProgress <= 1.0) bossBar.setProgress(newProgress);
                     }
                     if(bossBar.getProgress() <= 0.5 && !bossHalfHealth) {
@@ -493,6 +510,14 @@ public abstract class BossEventListener implements Listener {
 
     @EventHandler
     public final void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+
+        if(event.getEntity().equals(boss)) {
+            if(event.getDamager() instanceof TNTPrimed || event.getDamager() instanceof TNT || event.getDamager() instanceof LightningStrike) {
+                event.setCancelled(true);
+                return;
+            }
+        }
+
         if(event.getDamager().equals(boss)) {
             event.setDamage(event.getDamage() + this.getCustomAddedBossDamage());
             if(event.getEntity().equals(player)) {

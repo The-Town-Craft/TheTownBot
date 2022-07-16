@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.items.glacial_items;
+package net.thetowncraft.townbot.custom_items.glacial_items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ public class GlacialBoots extends GlacialArmor {
     public ItemStack createItemStack(int amount) {
         ItemStack stack = super.createItemStack(amount);
         stack.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 10);
-        stack.addUnsafeEnchantment(Enchantment.FROST_WALKER, 2);
+        stack.addUnsafeEnchantment(Enchantment.DEPTH_STRIDER, 5);
         stack.addUnsafeEnchantment(Enchantment.SOUL_SPEED, 5);
         return stack;
     }
