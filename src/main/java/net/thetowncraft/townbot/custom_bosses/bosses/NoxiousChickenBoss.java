@@ -157,6 +157,11 @@ public class NoxiousChickenBoss extends BossEventListener {
             return;
         }
 
+        if(entity.getType() == EntityType.CHICKEN && damager.getType() == EntityType.WOLF){
+            event.setCancelled(true);
+            return;
+        }
+
         if(damager.getType() != EntityType.PLAYER) return;
 
         Player player = (Player) damager;
