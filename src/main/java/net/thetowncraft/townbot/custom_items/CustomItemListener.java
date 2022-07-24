@@ -77,6 +77,8 @@ public class CustomItemListener implements Listener {
                 return;
             }
 
+            if(player.getWorld().getName().equals(BlazingWitherBoss.bossWorldName)) return;
+
             SizedFireball fireball = event.getEntity().launchProjectile(SizedFireball.class);
             Vector vel = event.getProjectile().getVelocity();
             fireball.setVelocity(new Vector(vel.getX() * 2, vel.getY() * 2, vel.getZ() * 2));

@@ -66,13 +66,15 @@ public class RepeatingTasks {
             if(points == null) points = 0L;
 
             points++;
+            boolean gotPoints = true;
             if(member.hasPermission(Permission.BAN_MEMBERS)) {
                 if(new Random().nextInt(10) > 3) {
                     points--;
+                    gotPoints = false;
                 }
             }
 
-            if(points == 1000) {
+            if(points == 1000 && gotPoints) {
                 DonateCommand.sendDonationMessage(player);
             }
 
