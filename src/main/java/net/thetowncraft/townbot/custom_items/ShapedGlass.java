@@ -51,6 +51,6 @@ public class ShapedGlass extends CustomItem {
             attribute.setBaseValue(20);
             return;
         }
-        attribute.setBaseValue(20.0 / (amount + 1));
+        attribute.setBaseValue(20.0 / 2);
     }
 }

@@ -4,6 +4,7 @@ import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
+import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
@@ -90,6 +91,12 @@ public class BlazingWitherBoss extends BossEventListener {
 
         if(world.getBlockAt(x, y, z + 1).getType() != surroundingBlock) return;
         if(world.getBlockAt(x, y, z - 1).getType() != surroundingBlock) return;
+
+        if(!world.getName().equals(DimensionEventListener.MYSTIC_REALM)) {
+            event.setCancelled(true);
+            player.sendMessage(ChatColor.RED + "You must be in the Mystic Realm to use this altar.");
+            return;
+        }
 
         initBossFight(player);
     }

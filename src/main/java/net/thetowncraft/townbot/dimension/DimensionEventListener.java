@@ -231,7 +231,7 @@ public class DimensionEventListener implements Listener {
         if(world.getName().equals(MYSTIC_REALM)) {
             if(entity.getType() == EntityType.ENDERMAN) {
                 event.getDrops().clear();
-                if(random.nextInt(25) == 1) {
+                if(random.nextInt(50) == 1) {
                     event.getDrops().add(CustomItems.SHAPED_GLASS.createItemStack(1));
                 }
                 else {

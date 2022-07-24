@@ -35,6 +35,11 @@ public abstract class CustomItem {
         return stack;
     }
 
+    public boolean has(Player player) {
+        ItemStack stack = CustomItems.getItemStackOf(player, this);
+        return stack != null;
+    }
+
     public void procOnHit(Player player, int itemAmount, LivingEntity target, World world) {
         
     }

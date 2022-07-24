@@ -171,14 +171,10 @@ public class CustomItemListener implements Listener {
 
         if(damager instanceof Player) {
             Player player = (Player) damager;
-            int damageMultiplier = CustomItems.getItemAmountOf(player, CustomItems.SHAPED_GLASS) + 1;
-            double finalDamage = event.getDamage();
-
-            for(int i = 1; i < damageMultiplier; i++) {
-                finalDamage = finalDamage * 2;
+            double finalDamage = event.getFinalDamage();
+            if(CustomItems.SHAPED_GLASS.has(player)) {
+                event.setDamage(finalDamage * 2);
             }
-
-            event.setDamage(finalDamage);
         }
 
         if(damager instanceof SizedFireball) {

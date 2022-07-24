@@ -43,12 +43,12 @@ public class NoxiousFeather extends CustomItem {
             return;
         }
         if(player.isSprinting()) {
-            player.setVelocity(new Vector(velocity.getX() * (amount + 2), velocity.getY(), velocity.getZ() * (amount + 2)));
+            player.setVelocity(new Vector(velocity.getX() * 3, velocity.getY(), velocity.getZ() * 3));
         }
         else {
-            player.setVelocity(new Vector(velocity.getX() * (amount * 4), velocity.getY(), velocity.getZ() * (amount * 4)));
+            player.setVelocity(new Vector(velocity.getX() * 4, velocity.getY(), velocity.getZ() * 4));
         }
-        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_GHAST_SHOOT, 3, 1);
+        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_GHAST_SHOOT, 0.5f, 1);
     }
 
     @Override
