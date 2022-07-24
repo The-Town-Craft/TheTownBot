@@ -68,7 +68,8 @@ public class Registry {
                 new BalTop(),
                 new SetCoins(),
                 new SubtractCoins(),
-                new Pay.Discord()
+                new Pay.Discord(),
+                new TodoCommand()
         );
     }
 

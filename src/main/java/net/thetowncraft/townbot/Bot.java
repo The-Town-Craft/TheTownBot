@@ -4,6 +4,7 @@ import javax.security.auth.login.LoginException;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.thetowncraft.townbot.listeners.discord.commands.ModMail;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.Registry;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -35,6 +36,7 @@ public class Bot {
 
         Registry.registerJDAListeners(builder);
         Registry.registerDiscordCommands();
+        ModMail.initActivityMessages();
 
         builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
         builder.setChunkingFilter(ChunkingFilter.ALL);

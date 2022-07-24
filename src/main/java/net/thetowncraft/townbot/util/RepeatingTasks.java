@@ -7,6 +7,7 @@ import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.discord.commands.DiscordActiveCommand;
+import net.thetowncraft.townbot.listeners.discord.commands.ModMail;
 import net.thetowncraft.townbot.listeners.minecraft.commands.ActiveCommand;
 import net.thetowncraft.townbot.listeners.minecraft.commands.DonateCommand;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
@@ -19,6 +20,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -126,7 +128,26 @@ public class RepeatingTasks {
         }
     }
 
+    private static void checkInactivePlayers() {
+        for(Member member : Constants.THE_TOWN.getMembersWithRoles(Constants.TOWN_MEMBER_ROLE)) {
+            OfflinePlayer player = AccountManager.getInstance().getMinecraftPlayer(member);
+            if(player == null) continue;
+
+            int points = ActivityManager.getActivityPoints(player);
+            if(points == 0) {
+
+                if(member.getRoles().contains(Constants.INACTIVE_PLAYER_ROLE)) {
+                    ModMail.sendModMail(member.getUser(), member.getGuild(), ModMail.randomInactiveMessage(), new ArrayList<>());
+                }
+
+                member.getGuild().addRoleToMember(member, Constants.INACTIVE_PLAYER_ROLE).queue();
+            }
+        }
+    }
+
     public static void rewardActivePlayers() {
+
+        checkInactivePlayers();
 
         for(Member member : Constants.THE_TOWN.getMembersWithRoles(Constants.ACTIVE_PLAYER_ROLE)) {
             Constants.THE_TOWN.removeRoleFromMember(member, Constants.ACTIVE_PLAYER_ROLE).queue();

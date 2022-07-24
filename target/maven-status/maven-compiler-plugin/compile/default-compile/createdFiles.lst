@@ -98,6 +98,7 @@ net\thetowncraft\townbot\listeners\accountlink\LinkAccount.class
 net\thetowncraft\townbot\listeners\discord\commands\RunMCCommand.class
 net\thetowncraft\townbot\economy\commands\Pay.class
 net\thetowncraft\townbot\api\command_handler\CommandEvent$Minecraft.class
+net\thetowncraft\townbot\listeners\discord\commands\TodoCommand.class
 net\thetowncraft\townbot\listeners\minecraft\chat\MinecraftChatListener.class
 net\thetowncraft\townbot\custom_items\glacial_items\GlacialHelmet.class
 net\thetowncraft\townbot\listeners\discord\commands\Whitelist.class

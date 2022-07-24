@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 public class GlacialShardItem extends CustomItem {
 
@@ -29,7 +30,9 @@ public class GlacialShardItem extends CustomItem {
                 player.sendMessage(ChatColor.RED + "You can only use this item in the Mystic Realm!");
                 return;
             }
-            player.getInventory().remove(player.getInventory().getItemInMainHand());
+            PlayerInventory inventory = player.getInventory();
+            ItemStack hand = inventory.getItemInMainHand();
+            hand.setAmount(hand.getAmount() - 1);
             boss.initBossFight(event.getPlayer());
         }
     }

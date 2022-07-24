@@ -245,7 +245,6 @@ public class DimensionEventListener implements Listener {
             if(entity.getType() == EntityType.WITHER_SKELETON) {
                 String name = entity.getCustomName();
                 if("Glacial Skeleton".equals(name)) {
-                    event.getDrops().clear();
                     if(new Random().nextInt(15) == 1) {
                         event.getDrops().add(CustomItems.GLACIAL_SHARD.createItemStack(1));
                     }

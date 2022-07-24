@@ -14,6 +14,7 @@ public class Constants {
 
 	public static final Role DONATOR_ROLE = Bot.jda.getRoleById("803502592297664533");
 	public static final Role ACTIVE_PLAYER_ROLE = Bot.jda.getRoleById("817927959155179540");
+	public static final Role INACTIVE_PLAYER_ROLE = Bot.jda.getRoleById("781282435701669900");
 	public static final Role TOWN_MEMBER_ROLE = Bot.jda.getRoleById("730982990959869982");
 	public static final Role PUBLIC_WORKS_ROLE = Bot.jda.getRoleById("730987270626344971");
 	public static final Role LAWYER_ROLE = Bot.jda.getRoleById("780950276597088288");

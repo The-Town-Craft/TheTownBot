@@ -22,6 +22,7 @@ public class PlayerJoin implements Listener {
 
             Member member = manager.getDiscordMember(player);
             manager.syncAccountData(player, member);
+            member.getGuild().removeRoleFromMember(member, Constants.INACTIVE_PLAYER_ROLE).queue();
 
             player.addAttachment(Plugin.get(), "tradeshop.help", true);
             player.addAttachment(Plugin.get(), "tradeshop.info", true);

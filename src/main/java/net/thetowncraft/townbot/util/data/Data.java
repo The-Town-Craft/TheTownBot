@@ -1,13 +1,50 @@
 package net.thetowncraft.townbot.util.data;
 
+import com.sun.tools.jdeprscan.scan.Scan;
 import net.thetowncraft.townbot.util.Utils;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Data {
+
+    public static File getFile(String path) {
+        File file = new File("plugins/MinecordBot/" + path);
+        if(!file.exists()) {
+            try {
+                if(!file.createNewFile()) {
+                    return null;
+                }
+            } catch (IOException e) {
+                return null;
+            }
+        }
+        if(!file.exists()) {
+            return null;
+        }
+        return file;
+    }
+
+    public static List<String> getStringsFromFile(File file) {
+        List<String> strings = new ArrayList<>();
+        if(file == null) return strings;
+        if(!file.exists()) return strings;
+
+        Scanner scan;
+        try {
+            scan = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            return strings;
+        }
+
+        while(scan.hasNextLine()) strings.add(scan.nextLine());
+        return strings;
+    }
 
     public static JSONObject getJSONObjectFromFile(File file) {
         String jsonString = "";
