@@ -54,9 +54,18 @@ public class Whitelist extends DiscordCommand {
 			Set<OfflinePlayer> players = Bukkit.getServer().getWhitelistedPlayers();
 			Object[] objects = players.toArray();
 			StringBuilder message = new StringBuilder("**Whitelisted Players**");
+			int i = 1;
 			for (Object object : objects) {
+
+				if(i > 20) {
+					event.getChannel().sendMessage(message).queue();
+					message = new StringBuilder();
+					i = 0;
+				}
+
 				OfflinePlayer player = (OfflinePlayer) object;
 				message.append("\n").append(player.getName());
+				i++;
 			}
 			event.getChannel().sendMessage(message).queue();
 		}
