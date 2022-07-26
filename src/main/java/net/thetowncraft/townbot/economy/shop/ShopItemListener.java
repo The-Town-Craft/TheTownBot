@@ -1,6 +1,7 @@
 package net.thetowncraft.townbot.economy.shop;
 
 import net.dv8tion.jda.api.entities.Member;
+import net.thetowncraft.townbot.economy.shop.items.ParticleShopItem;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,7 +14,13 @@ public class ShopItemListener implements Listener {
             Member member = AccountManager.getInstance().getDiscordMember(player);
             if(member == null) continue;
 
+            for(ShopItem item : ShopManager.getItems()) {
+                if(!item.possessedBy(member)) continue;
 
+                if(item instanceof ParticleShopItem) {
+                    player.spawnParticle(((ParticleShopItem) item).getParticle(), player.getLocation(), 5);
+                }
+            }
         }
     }
 }

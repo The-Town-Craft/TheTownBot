@@ -88,7 +88,6 @@ public class Registry {
     }
 
     public static void registerCosmetics() {
-        ShopManager.initShop();
     }
 
     public static void registerJDAListeners(JDABuilder builder) {
