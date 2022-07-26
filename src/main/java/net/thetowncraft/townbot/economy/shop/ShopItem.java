@@ -6,11 +6,11 @@ public class ShopItem {
     private final String desc;
     private final String image;
     private final int price;
-    private final int roleId;
+    private final String roleId;
     private String messageId;
 
 
-    public ShopItem(String name, String desc, String image, int price, int roleId) {
+    public ShopItem(String name, String desc, String image, int price, String roleId) {
         this.name = name;
         this.desc = desc;
         this.image = image;
@@ -34,7 +34,7 @@ public class ShopItem {
         return price;
     }
 
-    public int getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 

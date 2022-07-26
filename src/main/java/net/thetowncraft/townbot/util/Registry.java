@@ -7,11 +7,8 @@ import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.custom_bosses.bosses.*;
 import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.economy.commands.*;
-import net.thetowncraft.townbot.economy.player_shops.PlayerShopListener;
-import net.thetowncraft.townbot.economy.player_shops.commands.DepositDiamonds;
-import net.thetowncraft.townbot.economy.player_shops.commands.ShopChestCommand;
-import net.thetowncraft.townbot.economy.player_shops.commands.WithdrawDiamonds;
 import net.thetowncraft.townbot.economy.shop.ShopManager;
+import net.thetowncraft.townbot.economy.shop.commands.ShopViewCommand;
 import net.thetowncraft.townbot.hub.HubCommand;
 import net.thetowncraft.townbot.custom_items.ItemDropListener;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
@@ -69,7 +66,9 @@ public class Registry {
                 new SetCoins(),
                 new SubtractCoins(),
                 new Pay.Discord(),
-                new TodoCommand()
+                //new TodoCommand(),
+                new RewardActive(),
+                new ShopViewCommand()
         );
     }
 
@@ -78,9 +77,6 @@ public class Registry {
                 new Pay.Minecraft(),
                 new Bal.MC(),
                 new BalTop.MC(),
-                new ShopChestCommand(),
-                new DepositDiamonds(),
-                new WithdrawDiamonds(),
                 new GiveCustomItem(),
                 new MaintenanceCommand(),
                 new HubCommand(),
@@ -116,7 +112,6 @@ public class Registry {
                 new AFKListener(),
                 new ActiveCommand(),
                 new WorldChange(),
-                new PlayerShopListener(),
                 new CustomItemListener(),
                 new ItemDropListener(),
                 new DimensionEventListener(),

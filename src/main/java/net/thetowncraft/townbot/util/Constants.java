@@ -21,6 +21,7 @@ public class Constants {
 	public static final Role VICE_MAYOR_ROLE = Bot.jda.getRoleById("730983417952337950");
 	public static final Role MAYOR_ROLE = Bot.jda.getRoleById("781585659697037323");
 	public static final Role PINGS_CATEGORY_ROLE = Bot.jda.getRoleById("767576207792406568");
+	public static final Role PURCHASES_CATEGORY_ROLE = Bot.jda.getRoleById("1001355363293073518");
 	public static final Role OTHER_CATEGORY_ROLE = Bot.jda.getRoleById("767579733331935252");
 	public static final Role BOSSES_CATEGORY_ROLE = Bot.jda.getRoleById("995754478609375363");
 	public static final Role UNLINKED_ROLE = Bot.jda.getRoleById("815691410165858324");

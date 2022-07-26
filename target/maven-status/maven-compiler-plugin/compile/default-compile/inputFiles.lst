@@ -11,7 +11,6 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\li
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\player_activity\PlayerCountStatus.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\commands\SubtractCoins.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\ShapedGlass.java
-C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\player_shops\commands\WithdrawDiamonds.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\commands\DonateCommand.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_bosses\BossEventListener.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\CustomItems.java
@@ -19,7 +18,6 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\ut
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\RewardActive.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\TodoCommand.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\BanList.java
-C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\player_shops\commands\ShopChestCommand.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\commands\ActiveCommand.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\HunterSkull.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\api\command_handler\discord\DiscordCommand.java
@@ -27,14 +25,13 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\li
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\chat\Advancements.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\glacial_items\GlacialChestplate.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\SubtractActivityPointsCommand.java
-C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\player_shops\PlayerShopManager.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\Help.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\commands\Pay.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\chat\RuleReminders.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\commands\McUnmute.java
-C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\player_shops\commands\DepositDiamonds.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\util\Registry.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\api\command_handler\discord\ExampleCommand.java
+C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\shop\commands\ShopViewCommand.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\player_activity\PlayerJoin.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\chat\MinecraftChatListener.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\commands\UpdateCoinCommand.java
@@ -72,14 +69,12 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\cu
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\patches\AnvilItemDupePatch.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\chat\Enchants.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\accountlink\LinkAccount.java
-C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\player_shops\PlayerShop.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\HunterSword.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\accountlink\AccountManager.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\Plugin.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\util\Constants.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\anticheat\XrayDetection.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\CustomItem.java
-C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\player_shops\PlayerShopListener.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\commands\SetCoins.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_bosses\BossDungeonEventListener.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\player_activity\afk\AFKManager.java

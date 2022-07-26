@@ -91,6 +91,16 @@ public class CustomItemListener implements Listener {
     }
 
     @EventHandler
+    public void onSneak(EntityPoseChangeEvent event) {
+        Entity entity = event.getEntity();
+        if(!(entity instanceof Player)) {
+            return;
+        }
+
+        Player player = (Player) entity;
+    }
+
+    @EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
         Entity entity = event.getEntity();
         if(entity instanceof SizedFireball) {
