@@ -24,7 +24,7 @@ public class ShopManager {
         embed.setAuthor("\uD83D\uDCB0 **The Town Shop**", Constants.THE_TOWN.getIconUrl());
         embed.setDescription("For roles, cosmetics, and more!\nType \"*" + Bot.prefix + "shop <item name>*\" for more details.");
         for(ShopItem item : ITEMS) {
-            embed.appendDescription("**" + item.getName() + "**" + " (" + item.getPrice() + " coins)");
+            embed.appendDescription("\n" + item.getName() + " (" + item.getPrice() + " coins)");
         }
         return embed;
     }
