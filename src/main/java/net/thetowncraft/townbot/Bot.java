@@ -21,7 +21,7 @@ import org.bukkit.Bukkit;
 public class Bot {
 
     public static JDA jda;
-    public static String prefix = "/";
+    public static String prefix = "?";
 
     /**
      * Initializes the bot, and sets its activity, status, and intents.

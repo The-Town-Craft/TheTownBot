@@ -18,7 +18,7 @@ public class ShopItemListener implements Listener {
                 if(!item.possessedBy(member)) continue;
 
                 if(item instanceof ParticleShopItem) {
-                    player.spawnParticle(((ParticleShopItem) item).getParticle(), player.getLocation(), 5);
+                    player.spawnParticle(((ParticleShopItem) item).getParticle(), player.getLocation(), ((ParticleShopItem) item).getAmount());
                 }
             }
         }

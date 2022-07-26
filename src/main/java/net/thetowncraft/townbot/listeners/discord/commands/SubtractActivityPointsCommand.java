@@ -1,6 +1,7 @@
 package net.thetowncraft.townbot.listeners.discord.commands;
 
 import net.dv8tion.jda.api.Permission;
+import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
@@ -14,7 +15,7 @@ public class SubtractActivityPointsCommand extends DiscordCommand {
     public void execute(CommandEvent.Discord event) {
         String[] args = event.getArgs();
         if(args.length < 3) {
-            event.getChannel().sendMessage(":x: Incomplete command! Usage: `/" + getName() + "` `playername` `<amount>`").queue();
+            event.getChannel().sendMessage(":x: Incomplete command! Usage: `" + Bot.prefix + getName() + "` `playername` `<amount>`").queue();
             return;
         }
 

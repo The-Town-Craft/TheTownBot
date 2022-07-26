@@ -11,6 +11,9 @@ import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.OfflinePlayer;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class BuyItemCommand extends DiscordCommand {
 
     @Override
@@ -28,7 +31,7 @@ public class BuyItemCommand extends DiscordCommand {
             return;
         }
 
-        String name = args[1];
+        String name = Arrays.stream(args).skip(1).collect(Collectors.joining(" "));
         ShopItem item = ShopManager.getItemByName(name);
         if(item == null) {
             event.getChannel().sendMessage(":x: **Error**! Could not find an item by the name of \"" + name + "\"").queue();

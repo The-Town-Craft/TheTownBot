@@ -18,13 +18,18 @@ public class MysticParticleShopItem extends ParticleShopItem {
     }
 
     @Override
+    public int getAmount() {
+        return 70;
+    }
+
+    @Override
     public String getDesc() {
         return "Emit magical purple particles from your character!";
     }
 
     @Override
     public String getImage() {
-        return "https://cdn.discordapp.com/attachments/997986798254948392/997988512534110269/unknown.png";
+        return "https://cdn.discordapp.com/attachments/819063742335680512/1001421316148174930/mystic_aura.png";
     }
 
     @Override
@@ -34,7 +39,7 @@ public class MysticParticleShopItem extends ParticleShopItem {
 
     @Override
     public int getPrice() {
-        return 500;
+        return 400;
     }
 
     @Override

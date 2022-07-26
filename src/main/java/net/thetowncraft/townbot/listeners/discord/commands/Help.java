@@ -27,10 +27,10 @@ public class Help extends DiscordCommand {
             embed.setTitle("List of Commands");
 
             for(DiscordCommand cmd : DiscordCommand.COMMANDS) {
-                embed.appendDescription("`/" + cmd.getName() + "` - " + cmd.getDescription() + "\n");
+                embed.appendDescription("`" + Bot.prefix + cmd.getName() + "` - " + cmd.getDescription() + "\n");
             }
 
-            embed.appendDescription("\n**Type** `/help` `[command name]` **for more info about a command!**");
+            embed.appendDescription("\n**Type** `" + Bot.prefix + "help` `[command name]` **for more info about a command!**");
 
             event.getChannel().sendMessage(embed.build()).queue();
         }

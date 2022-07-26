@@ -1,6 +1,7 @@
 package net.thetowncraft.townbot.listeners.discord.commands;
 
 import net.dv8tion.jda.api.Permission;
+import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import org.bukkit.Bukkit;
@@ -16,9 +17,9 @@ public class Whitelist extends DiscordCommand {
 
 		String usage = "**Incomplete Command!**" +
 				"\nCorrect Usage:" +
-				"\n`/whitelist` `add` `<playername>`" +
-				"\n`/whitelist` `remove` `<playername>`" +
-				"\n`/whitelist` `list`";
+				"\n`" + Bot.prefix + "whitelist` `add` `<playername>`" +
+				"\n`" + Bot.prefix + "whitelist` `remove` `<playername>`" +
+				"\n`" + Bot.prefix + "whitelist` `list`";
 
 		if(args.length == 1) {
 			event.getChannel().sendMessage(usage).queue();

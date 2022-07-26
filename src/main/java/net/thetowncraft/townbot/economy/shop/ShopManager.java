@@ -2,6 +2,8 @@ package net.thetowncraft.townbot.economy.shop;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.thetowncraft.townbot.Bot;
+import net.thetowncraft.townbot.economy.shop.items.BlazingSpiritShopItem;
+import net.thetowncraft.townbot.economy.shop.items.MysticParticleShopItem;
 import net.thetowncraft.townbot.util.Constants;
 
 import java.awt.*;
@@ -10,7 +12,15 @@ import java.util.List;
 
 public class ShopManager {
 
+    public static ShopItem BLAZING_SPIRIT;
+    public static ShopItem MYSTIC_PARTICLES;
+
     private static final List<ShopItem> ITEMS = new ArrayList<>();
+
+    public static void initShop() {
+        BLAZING_SPIRIT = registerItem(new BlazingSpiritShopItem());
+        MYSTIC_PARTICLES = registerItem(new MysticParticleShopItem());
+    }
 
     public static ShopItem getItemByName(String name) {
         for(ShopItem item : ITEMS) {
