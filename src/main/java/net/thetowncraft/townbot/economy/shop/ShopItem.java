@@ -1,5 +1,7 @@
 package net.thetowncraft.townbot.economy.shop;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+
 public class ShopItem {
 
     private final String name;
@@ -16,6 +18,15 @@ public class ShopItem {
         this.image = image;
         this.price = price;
         this.roleId = roleId;
+    }
+
+    public EmbedBuilder getEmbed() {
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setTitle(name);
+        embed.setDescription(desc);
+        embed.appendDescription("\n" + "Price: " + price);
+        embed.setImage(image);
+        return embed;
     }
 
     public String getName() {

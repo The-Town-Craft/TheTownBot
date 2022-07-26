@@ -18,9 +18,18 @@ public class ShopManager {
                 10, "1001355803313315921"));
     }
 
+    public static ShopItem getShopByName(String name) {
+        for(ShopItem item : ITEMS) {
+            if(item.getName().equals(name)) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public static EmbedBuilder getShopEmbed() {
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setColor(Color.YELLOW);
+        embed.setColor(Color.GREEN);
         embed.setAuthor("\uD83D\uDCB0 **The Town Shop**", Constants.THE_TOWN.getIconUrl());
         embed.setDescription("For roles, cosmetics, and more!\nType \"*" + Bot.prefix + "shop <item name>*\" for more details.");
         for(ShopItem item : ITEMS) {
