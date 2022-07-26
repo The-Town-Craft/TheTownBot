@@ -15,12 +15,12 @@ public class ShopManager {
     public static void initShop() {
         registerItem(new ShopItem("Test", "Does literally nothing",
                 "https://cdn.discordapp.com/attachments/997986798254948392/997988512534110269/unknown.png",
-                10, "1001355803313315921"));
+                Color.GREEN, 10, "1001355803313315921"));
     }
 
     public static ShopItem getShopByName(String name) {
         for(ShopItem item : ITEMS) {
-            if(item.getName().equals(name)) {
+            if(item.getName().equalsIgnoreCase(name)) {
                 return item;
             }
         }
@@ -30,10 +30,10 @@ public class ShopManager {
     public static EmbedBuilder getShopEmbed() {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.GREEN);
-        embed.setAuthor("\uD83D\uDCB0 **The Town Shop**", Constants.THE_TOWN.getIconUrl());
-        embed.setDescription("For roles, cosmetics, and more!\nType \"*" + Bot.prefix + "shop <item name>*\" for more details.");
+        embed.setAuthor("\uD83D\uDCB0 The Town Shop", Constants.THE_TOWN.getIconUrl());
+        embed.setDescription("For roles, cosmetics, and more!\nType \"*" + Bot.prefix + "shop <item name>*\" for more details.\n----------------");
         for(ShopItem item : ITEMS) {
-            embed.appendDescription("\n" + item.getName() + " (" + item.getPrice() + " coins)");
+            embed.appendDescription("\n**" + item.getName() + "** (" + item.getPrice() + " coins)");
         }
         return embed;
     }
