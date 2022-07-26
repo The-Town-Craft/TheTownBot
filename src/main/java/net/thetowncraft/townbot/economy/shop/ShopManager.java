@@ -18,7 +18,7 @@ public class ShopManager {
                 Color.GREEN, 10, "1001355803313315921"));
     }
 
-    public static ShopItem getShopByName(String name) {
+    public static ShopItem getItemByName(String name) {
         for(ShopItem item : ITEMS) {
             if(item.getName().equalsIgnoreCase(name)) {
                 return item;
@@ -31,7 +31,7 @@ public class ShopManager {
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.GREEN);
         embed.setAuthor("\uD83D\uDCB0 The Town Shop", Constants.THE_TOWN.getIconUrl());
-        embed.setDescription("For roles, cosmetics, and more!\nType \"*" + Bot.prefix + "shop <item name>*\" for more details.\n----------------");
+        embed.setDescription("For roles, cosmetics, and more!\nType `" + Bot.prefix + "shop <item name>` for more details.\n----------------");
         for(ShopItem item : ITEMS) {
             embed.appendDescription("\n**" + item.getName() + "** (" + item.getPrice() + " coins)");
         }

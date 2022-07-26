@@ -1,6 +1,8 @@
 package net.thetowncraft.townbot.economy;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Plugin;
+import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.data.Data;
 import org.bukkit.OfflinePlayer;
 import org.json.JSONObject;
@@ -25,6 +27,12 @@ public class EconomyManager {
         Integer balance = COIN_MAP.get(playerUUID);
         if(balance == null) return 0;
         return balance;
+    }
+
+    public static int getCoinBalance(Member member) {
+        OfflinePlayer player = AccountManager.getInstance().getMinecraftPlayer(member);
+        if(player == null) return 0;
+        return getCoinBalance(player);
     }
 
     public static int getCoinBalance(OfflinePlayer player) {

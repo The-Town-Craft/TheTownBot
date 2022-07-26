@@ -1,6 +1,9 @@
 package net.thetowncraft.townbot.economy.shop;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
+import net.thetowncraft.townbot.Bot;
 
 import java.awt.*;
 
@@ -33,6 +36,10 @@ public class ShopItem {
         return embed;
     }
 
+    public boolean possessedBy(Member member) {
+        return member.getRoles().contains(getRole());
+    }
+
     public String getName() {
         return name;
     }
@@ -51,6 +58,10 @@ public class ShopItem {
 
     public int getPrice() {
         return price;
+    }
+
+    public Role getRole() {
+        return Bot.jda.getRoleById(getRoleId());
     }
 
     public String getRoleId() {

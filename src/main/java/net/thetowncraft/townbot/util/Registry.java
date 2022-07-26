@@ -8,6 +8,7 @@ import net.thetowncraft.townbot.custom_bosses.bosses.*;
 import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.economy.commands.*;
 import net.thetowncraft.townbot.economy.shop.ShopManager;
+import net.thetowncraft.townbot.economy.shop.commands.BuyItemCommand;
 import net.thetowncraft.townbot.economy.shop.commands.ShopViewCommand;
 import net.thetowncraft.townbot.hub.HubCommand;
 import net.thetowncraft.townbot.custom_items.ItemDropListener;
@@ -68,7 +69,8 @@ public class Registry {
                 new Pay.Discord(),
                 //new TodoCommand(),
                 new RewardActive(),
-                new ShopViewCommand()
+                new ShopViewCommand(),
+                new BuyItemCommand()
         );
     }
 

@@ -1,7 +1,6 @@
 package net.thetowncraft.townbot.economy.shop.commands;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.economy.shop.ShopItem;
@@ -18,12 +17,12 @@ public class ShopViewCommand extends DiscordCommand {
         }
 
         String name = args[1];
-        ShopItem shop = ShopManager.getShopByName(name);
-        if(shop == null) {
-            event.getChannel().sendMessage(":x: **Error**! Could not find a shop by the name of \"" + name + "\"").queue();
+        ShopItem item = ShopManager.getItemByName(name);
+        if(item == null) {
+            event.getChannel().sendMessage(":x: **Error**! Could not find an item by the name of \"" + name + "\"").queue();
             return;
         }
-        event.getChannel().sendMessage(shop.getEmbed().build()).queue();
+        event.getChannel().sendMessage(item.getEmbed().build()).queue();
     }
 
     @Override
