@@ -48,7 +48,8 @@ public class BuyItemCommand extends DiscordCommand {
 
         EconomyManager.subtractCoins(player.getUniqueId().toString(), item.getPrice());
         event.getGuild().addRoleToMember(member, item.getRole()).queue();
-        event.getChannel().sendMessage(":white_check_mark: **Success**! You have purchased the **" + item.getName() + "**").queue();
+        event.getGuild().addRoleToMember(member, Constants.PURCHASES_CATEGORY_ROLE).queue();
+        event.getChannel().sendMessage(":white_check_mark: **Success**! You have purchased the **" + item.getName() + "** for " + item.getPrice() + " coins!").queue();
     }
 
     @Override

@@ -13,7 +13,7 @@ public class ShopManager {
     private static final List<ShopItem> ITEMS = new ArrayList<>();
 
     public static void initShop() {
-        registerItem(new ShopItem("Test", "Does literally nothing",
+        registerItem(new ShopItem("Mystic Particles", "You get ", ShopItem.Type.PARTICLE,
                 "https://cdn.discordapp.com/attachments/997986798254948392/997988512534110269/unknown.png",
                 Color.GREEN, 10, "1001355803313315921"));
     }

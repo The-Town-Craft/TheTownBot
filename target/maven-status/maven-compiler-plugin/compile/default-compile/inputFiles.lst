@@ -69,6 +69,7 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\cu
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\patches\AnvilItemDupePatch.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\chat\Enchants.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\accountlink\LinkAccount.java
+C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\shop\commands\BuyItemCommand.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\HunterSword.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\accountlink\AccountManager.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\Plugin.java

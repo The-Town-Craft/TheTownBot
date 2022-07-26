@@ -99,6 +99,7 @@ net\thetowncraft\townbot\listeners\minecraft\chat\MinecraftChatListener.class
 net\thetowncraft\townbot\custom_items\glacial_items\GlacialHelmet.class
 net\thetowncraft\townbot\listeners\discord\commands\Whitelist.class
 net\thetowncraft\townbot\listeners\discord\DiscordChatListener.class
+net\thetowncraft\townbot\economy\shop\commands\BuyItemCommand.class
 net\thetowncraft\townbot\custom_items\glacial_items\GlacialLeggings.class
 net\thetowncraft\townbot\custom_bosses\BossEventListener.class
 net\thetowncraft\townbot\custom_items\HunterSkull.class

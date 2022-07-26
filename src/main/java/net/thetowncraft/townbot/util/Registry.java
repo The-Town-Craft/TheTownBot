@@ -7,6 +7,7 @@ import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.custom_bosses.bosses.*;
 import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.economy.commands.*;
+import net.thetowncraft.townbot.economy.shop.ShopItemListener;
 import net.thetowncraft.townbot.economy.shop.ShopManager;
 import net.thetowncraft.townbot.economy.shop.commands.BuyItemCommand;
 import net.thetowncraft.townbot.economy.shop.commands.ShopViewCommand;
@@ -118,6 +119,7 @@ public class Registry {
                 new ItemDropListener(),
                 new DimensionEventListener(),
                 new MaintenanceListener(),
+                new ShopItemListener(),
 
                 //Bosses
                 new WickedHunterBoss(),

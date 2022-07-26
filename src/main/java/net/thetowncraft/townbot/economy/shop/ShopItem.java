@@ -11,15 +11,17 @@ public class ShopItem {
 
     private final String name;
     private final String desc;
+    private final Type type;
     private final String image;
     private final Color color;
     private final int price;
     private final String roleId;
 
 
-    public ShopItem(String name, String desc, String image, Color color, int price, String roleId) {
+    public ShopItem(String name, String desc, Type type, String image, Color color, int price, String roleId) {
         this.name = name;
         this.desc = desc;
+        this.type = type;
         this.image = image;
         this.color = color;
         this.price = price;
@@ -48,6 +50,10 @@ public class ShopItem {
         return desc;
     }
 
+    public Type getType() {
+        return type;
+    }
+
     public String getImage() {
         return image;
     }
@@ -66,5 +72,12 @@ public class ShopItem {
 
     public String getRoleId() {
         return roleId;
+    }
+
+    public enum Type {
+        //particle effect cosmetic
+        PARTICLE,
+        //adds new content
+        CONTENT
     }
 }
