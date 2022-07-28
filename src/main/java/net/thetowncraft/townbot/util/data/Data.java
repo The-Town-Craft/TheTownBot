@@ -21,6 +21,7 @@ public class Data {
                     return null;
                 }
             } catch (IOException e) {
+                e.printStackTrace();
                 return null;
             }
         }
@@ -76,6 +77,9 @@ public class Data {
      * @return The log file from that date
      */
     public static File getLogFile(String name) {
-        return new File("plugins/DetailedLogs/compiled-log/" + name + ".txt");
+        return new File(getLogDir(), name + ".txt");
+    }
+    public static File getLogDir() {
+        return new File("plugins/DetailedLogs/compiled-log/");
     }
 }

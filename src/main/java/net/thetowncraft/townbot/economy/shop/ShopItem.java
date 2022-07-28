@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.thetowncraft.townbot.Bot;
+import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.data.Data;
 import org.bukkit.OfflinePlayer;
@@ -64,7 +65,7 @@ public abstract class ShopItem {
     }
 
     public File getToggleDir() {
-        return Data.getFile("economy/shop/" + getName() + "/");
+        return new File(Plugin.get().getDataFolder(), "economy/shop/" + getName() + "/");
     }
 
     public boolean possessedBy(OfflinePlayer player) {

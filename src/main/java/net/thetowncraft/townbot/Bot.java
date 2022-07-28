@@ -56,7 +56,7 @@ public class Bot {
     public static void disable() {
 
         EmbedBuilder embed = new EmbedBuilder();
-        embed.setAuthor("Server stopping!", null, "https://images-ext-2.discordapp.net/external/Q2AE1BtpdBXC7B0W4-Jb4R-GhCQ48RzBeaW_DHZs1YQ/https/cdn.discordapp.com/icons/730975912320827452/a_1440022f530b68ab784fa8bc1d536650.gif");
+        embed.setAuthor("Server stopping!", null, Constants.THE_TOWN.getIconUrl());
         embed.setColor(Constants.RED);
         Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
         Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).complete();

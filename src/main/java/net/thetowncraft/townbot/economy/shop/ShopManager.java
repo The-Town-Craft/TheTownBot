@@ -10,6 +10,7 @@ import net.thetowncraft.townbot.listeners.discord.fun.Skin;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.SkinRender;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -52,6 +53,12 @@ public class ShopManager {
         return embed;
     }
 
+    public static List<ShopItem> getPurchases(OfflinePlayer player) {
+        Member member = AccountManager.getInstance().getDiscordMember(player);
+        if(member == null) return new ArrayList<>();
+        return getPurchases(member);
+    }
+
     public static List<ShopItem> getPurchases(Member member) {
         List<ShopItem> items = new ArrayList<>();
         for(ShopItem item : ITEMS) {
@@ -65,15 +72,16 @@ public class ShopManager {
         OfflinePlayer player = AccountManager.getInstance().getMinecraftPlayer(member);
 
         if(player == null) url = member.getUser().getEffectiveAvatarUrl();
-        else url = SkinRender.renderFace(player);
+        else url = SkinRender.renderHead(player);
 
         EmbedBuilder embed = new EmbedBuilder();
+        embed.setColor(Color.GREEN);
         embed.setAuthor(member.getEffectiveName() + "'s Purchases", url);
         for(ShopItem item : getPurchases(member)) {
             if(item.isOff(member)) embed.appendDescription("\n*" + item.getName() + "* (Disabled)");
             else embed.appendDescription("\n**" + item.getName() + "**");
         }
-        embed.appendDescription("Type `" + Bot.prefix + "toggle <item name>` to toggle items on and off.");
+        embed.appendDescription("\nType `" + Bot.prefix + "toggle <item name>` to toggle items on and off.");
         return embed;
     }
 

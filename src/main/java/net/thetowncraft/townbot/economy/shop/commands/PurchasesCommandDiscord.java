@@ -10,7 +10,7 @@ import net.thetowncraft.townbot.economy.shop.ShopManager;
 
 import java.util.List;
 
-public class ViewPurchasesCommand extends DiscordCommand {
+public class PurchasesCommandDiscord extends DiscordCommand {
 
     @Override
     public void execute(CommandEvent.Discord event) {

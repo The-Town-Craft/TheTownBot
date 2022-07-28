@@ -42,3 +42,9 @@ commands:
 
   donate:
     description: Consider donating!
+
+  purchases:
+    description: View your purchases on The Town SMP!
+
+  toggle:
+    description: Toggle purchases on and off.

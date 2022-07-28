@@ -10,6 +10,9 @@ import net.thetowncraft.townbot.economy.shop.ShopManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import org.bukkit.OfflinePlayer;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class ToggleItemDiscord extends DiscordCommand {
 
     @Override
@@ -27,10 +30,15 @@ public class ToggleItemDiscord extends DiscordCommand {
             return;
         }
 
-        String name = args[1];
+        String name = Arrays.stream(args).skip(1).collect(Collectors.joining(" "));
         ShopItem item = ShopManager.getItemByName(name);
         if(item == null) {
             event.getChannel().sendMessage(":x: **Error**! Could not find an item by the name of \"" + name + "\"! Type `" + Bot.prefix + "shop` for more info!").queue();
+            return;
+        }
+
+        if(!item.possessedBy(player)) {
+            event.getChannel().sendMessage(":x: **You do not own this item**!").queue();
             return;
         }
 

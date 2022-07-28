@@ -40,6 +40,7 @@ net\thetowncraft\townbot\listeners\minecraft\commands\GiveCustomItem.class
 net\thetowncraft\townbot\api\command_handler\CommandEvent$Discord.class
 net\thetowncraft\townbot\api\command_handler\discord\DiscordCommand.class
 net\thetowncraft\townbot\custom_items\glacial_items\GlacialShardItem.class
+net\thetowncraft\townbot\economy\shop\commands\PurchasesCommandDiscord.class
 net\thetowncraft\townbot\listeners\discord\commands\Help.class
 net\thetowncraft\townbot\listeners\discord\commands\DiscordMute.class
 net\thetowncraft\townbot\listeners\patches\AnvilItemDupePatch.class
@@ -51,6 +52,7 @@ net\thetowncraft\townbot\listeners\minecraft\chat\Sleep.class
 net\thetowncraft\townbot\listeners\discord\commands\Ban.class
 net\thetowncraft\townbot\custom_bosses\bosses\IceologerBoss.class
 net\thetowncraft\townbot\custom_bosses\BossDungeonEventListener.class
+net\thetowncraft\townbot\economy\shop\commands\ToggleItemMinecraft.class
 net\thetowncraft\townbot\listeners\discord\commands\DiscordUnmute.class
 net\thetowncraft\townbot\custom_items\NoxiousFeather.class
 net\thetowncraft\townbot\listeners\minecraft\chat\Advancements.class
@@ -74,7 +76,6 @@ net\thetowncraft\townbot\custom_items\CustomItemListener.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\afk\AFKListener.class
 net\thetowncraft\townbot\custom_bosses\bosses\BlazingWitherBoss.class
 net\thetowncraft\townbot\api\command_handler\discord\ExampleCommand.class
-net\thetowncraft\townbot\economy\shop\commands\ViewPurchasesCommand.class
 net\thetowncraft\townbot\listeners\minecraft\chat\CommandLog.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\active\ActivityManager.class
 net\thetowncraft\townbot\listeners\discord\commands\DiscordActiveCommand.class
@@ -92,6 +93,7 @@ net\thetowncraft\townbot\listeners\discord\commands\AddActivityPointsCommand.cla
 net\thetowncraft\townbot\custom_items\glacial_items\GlacialArmor.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\PlayerJoin.class
 net\thetowncraft\townbot\listeners\discord\MemberJoin.class
+net\thetowncraft\townbot\economy\shop\commands\PurchasesCommandMinecraft.class
 net\thetowncraft\townbot\listeners\minecraft\chat\WitherSpawn.class
 net\thetowncraft\townbot\economy\shop\items\MysticParticleShopItem.class
 net\thetowncraft\townbot\api\command_handler\minecraft\MinecraftCommand.class
@@ -101,6 +103,7 @@ net\thetowncraft\townbot\economy\commands\Pay.class
 net\thetowncraft\townbot\api\command_handler\CommandEvent$Minecraft.class
 net\thetowncraft\townbot\listeners\discord\commands\TodoCommand.class
 net\thetowncraft\townbot\listeners\minecraft\chat\MinecraftChatListener.class
+net\thetowncraft\townbot\listeners\discord\commands\LogSearch.class
 net\thetowncraft\townbot\custom_items\glacial_items\GlacialHelmet.class
 net\thetowncraft\townbot\listeners\discord\commands\Whitelist.class
 net\thetowncraft\townbot\listeners\discord\DiscordChatListener.class

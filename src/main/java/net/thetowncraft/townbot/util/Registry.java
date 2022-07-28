@@ -8,10 +8,7 @@ import net.thetowncraft.townbot.custom_bosses.bosses.*;
 import net.thetowncraft.townbot.dimension.DimensionEventListener;
 import net.thetowncraft.townbot.economy.commands.*;
 import net.thetowncraft.townbot.economy.shop.ShopItemListener;
-import net.thetowncraft.townbot.economy.shop.commands.BuyItemCommand;
-import net.thetowncraft.townbot.economy.shop.commands.ShopViewCommand;
-import net.thetowncraft.townbot.economy.shop.commands.ToggleItemDiscord;
-import net.thetowncraft.townbot.economy.shop.commands.ViewPurchasesCommand;
+import net.thetowncraft.townbot.economy.shop.commands.*;
 import net.thetowncraft.townbot.hub.HubCommand;
 import net.thetowncraft.townbot.custom_items.ItemDropListener;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
@@ -54,6 +51,7 @@ public class Registry {
                 new DiscordMute(),
                 new DiscordUnmute(),
                 new Log(),
+                new LogSearch(),
                 new Whitelist(),
                 new RunMCCommand(),
                 new ChangelogCommand(),
@@ -74,7 +72,7 @@ public class Registry {
                 new ShopViewCommand(),
                 new BuyItemCommand(),
                 new ToggleItemDiscord(),
-                new ViewPurchasesCommand()
+                new PurchasesCommandDiscord()
         );
     }
 
@@ -86,7 +84,9 @@ public class Registry {
                 new GiveCustomItem(),
                 new MaintenanceCommand(),
                 new HubCommand(),
-                new DonateCommand()
+                new DonateCommand(),
+                new ToggleItemMinecraft(),
+                new PurchasesCommandMinecraft()
         );
     }
 
