@@ -1,10 +1,13 @@
 package net.thetowncraft.townbot.economy.shop.commands;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
+import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.economy.shop.ShopItem;
 import net.thetowncraft.townbot.economy.shop.ShopManager;
+import net.thetowncraft.townbot.util.Constants;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -25,7 +28,11 @@ public class ShopViewCommand extends DiscordCommand {
             event.getChannel().sendMessage(":x: **Error**! Could not find an item by the name of \"" + name + "\"").queue();
             return;
         }
-        event.getChannel().sendMessage(item.getEmbed().build()).queue();
+        EmbedBuilder embed = item.getEmbed();
+        if(EconomyManager.getCoinBalance(event.getMember()) < item.getPrice()) {
+            embed.appendDescription("\nFind out how you can earn coins in the " + Constants.COINS_CHANNEL.getAsMention() + " channel!");
+        }
+        event.getChannel().sendMessage(embed.build()).queue();
     }
 
     @Override

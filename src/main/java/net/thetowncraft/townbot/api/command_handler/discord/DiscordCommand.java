@@ -31,6 +31,10 @@ public abstract class DiscordCommand {
      */
     public abstract Permission getRequiredPermission();
 
+    public String[] getAliases() {
+        return new String[0];
+    }
+
     public static DiscordCommand getByName(String name) {
         for(DiscordCommand cmd : COMMANDS) {
             if (cmd.getName().equalsIgnoreCase(name)) return cmd;

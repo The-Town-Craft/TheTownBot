@@ -14,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+
 public class CommandHandler {
 
     public static class Discord extends ListenerAdapter {
@@ -29,14 +31,12 @@ public class CommandHandler {
                 if(member == null) return;
 
                 for(DiscordCommand cmd : DiscordCommand.COMMANDS) {
-
-                    if(!args[0].equalsIgnoreCase(Bot.prefix + cmd.getName())) continue;
-
-                    if(!member.hasPermission(cmd.getRequiredPermission())) {
-                        event.getChannel().sendMessage(":x: You must have the **" + cmd.getRequiredPermission().getName() + "** permission to use this command!").queue();
-                        return;
+                    if(args[0].equalsIgnoreCase(Bot.prefix + cmd.getName())) {
+                        execute(member, cmd, event);
                     }
-                    cmd.execute(new CommandEvent.Discord(event, cmd));
+                    else if (Arrays.asList(cmd.getAliases()).contains(args[0].replace(Bot.prefix, ""))) {
+                        execute(member, cmd, event);
+                    }
                 }
             }
             catch (Exception ex) {
@@ -44,5 +44,14 @@ public class CommandHandler {
                 ex.printStackTrace();
             }
         }
+
+        private void execute(Member member, DiscordCommand cmd, GuildMessageReceivedEvent event) {
+            if(!member.hasPermission(cmd.getRequiredPermission())) {
+                event.getChannel().sendMessage(":x: You must have the **" + cmd.getRequiredPermission().getName() + "** permission to use this command!").queue();
+                return;
+            }
+            cmd.execute(new CommandEvent.Discord(event, cmd));
+        }
+
     }
 }

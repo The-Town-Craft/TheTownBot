@@ -46,7 +46,7 @@ public class Pay {
         }
 
         EconomyManager.subtractCoins(giver.getUniqueId().toString(), amount);
-        EconomyManager.addCoins(receiver.getUniqueId().toString(), amount);
+        EconomyManager.addCoins(receiver.getUniqueId().toString(), amount, null);
 
         if(receiver.isOnline()) {
             ((Player) receiver).sendMessage(ChatColor.GREEN + giver.getName() + " just payed you " + amount + " coins!");

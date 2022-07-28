@@ -45,6 +45,7 @@ net\thetowncraft\townbot\listeners\discord\commands\DiscordMute.class
 net\thetowncraft\townbot\listeners\patches\AnvilItemDupePatch.class
 net\thetowncraft\townbot\economy\commands\BalTop$MC.class
 net\thetowncraft\townbot\custom_bosses\bosses\NoxiousChickenBoss.class
+net\thetowncraft\townbot\economy\shop\items\BlazingSpiritShopItem.class
 net\thetowncraft\townbot\listeners\discord\commands\ModMail.class
 net\thetowncraft\townbot\listeners\minecraft\chat\Sleep.class
 net\thetowncraft\townbot\listeners\discord\commands\Ban.class
@@ -57,8 +58,10 @@ net\thetowncraft\townbot\listeners\discord\commands\ModMailListener.class
 net\thetowncraft\townbot\listeners\minecraft\commands\ActiveCommand.class
 net\thetowncraft\townbot\custom_items\glacial_items\GlacialAmuletItem.class
 net\thetowncraft\townbot\Plugin.class
+net\thetowncraft\townbot\economy\shop\ShopItemListener.class
 net\thetowncraft\townbot\listeners\minecraft\commands\McUnmute.class
 net\thetowncraft\townbot\custom_items\HunterSword.class
+net\thetowncraft\townbot\economy\shop\commands\ToggleItemDiscord.class
 net\thetowncraft\townbot\economy\commands\SetCoins.class
 net\thetowncraft\townbot\custom_items\BlazingThunderstar.class
 net\thetowncraft\townbot\dimension\DimensionEventListener.class
@@ -71,6 +74,7 @@ net\thetowncraft\townbot\custom_items\CustomItemListener.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\afk\AFKListener.class
 net\thetowncraft\townbot\custom_bosses\bosses\BlazingWitherBoss.class
 net\thetowncraft\townbot\api\command_handler\discord\ExampleCommand.class
+net\thetowncraft\townbot\economy\shop\commands\ViewPurchasesCommand.class
 net\thetowncraft\townbot\listeners\minecraft\chat\CommandLog.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\active\ActivityManager.class
 net\thetowncraft\townbot\listeners\discord\commands\DiscordActiveCommand.class
@@ -89,6 +93,7 @@ net\thetowncraft\townbot\custom_items\glacial_items\GlacialArmor.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\PlayerJoin.class
 net\thetowncraft\townbot\listeners\discord\MemberJoin.class
 net\thetowncraft\townbot\listeners\minecraft\chat\WitherSpawn.class
+net\thetowncraft\townbot\economy\shop\items\MysticParticleShopItem.class
 net\thetowncraft\townbot\api\command_handler\minecraft\MinecraftCommand.class
 net\thetowncraft\townbot\listeners\accountlink\LinkAccount.class
 net\thetowncraft\townbot\listeners\discord\commands\RunMCCommand.class
@@ -109,4 +114,5 @@ net\thetowncraft\townbot\custom_bosses\bosses\IllusionerBoss.class
 net\thetowncraft\townbot\economy\EconomyManager.class
 net\thetowncraft\townbot\economy\commands\BalTop.class
 net\thetowncraft\townbot\custom_items\CustomItem.class
+net\thetowncraft\townbot\economy\shop\items\ParticleShopItem.class
 net\thetowncraft\townbot\listeners\discord\commands\OnlinePlayers.class

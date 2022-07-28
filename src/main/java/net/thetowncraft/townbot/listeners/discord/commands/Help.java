@@ -11,6 +11,8 @@ import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.Utils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+
 /**
  * This command does NOT need updating when new commands are added! It automatically gets commands from the List of DiscordCommands and displays them in /help!
  */
@@ -46,6 +48,7 @@ public class Help extends DiscordCommand {
             }
             embed.setAuthor(Utils.capFirstLetter(cmd.getName()));
             embed.addField("Description", cmd.getDescription(), false);
+            embed.addField("Aliases", Arrays.toString(cmd.getAliases()), false);
             Permission perm = cmd.getRequiredPermission();
             if(perm != null) embed.addField("Required Permission", perm.getName(), false);
 

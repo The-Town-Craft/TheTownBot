@@ -16,9 +16,10 @@ public class ShopItemListener implements Listener {
 
             for(ShopItem item : ShopManager.getItems()) {
                 if(!item.possessedBy(member)) continue;
+                if(item.isOff(player)) continue;
 
                 if(item instanceof ParticleShopItem) {
-                    player.spawnParticle(((ParticleShopItem) item).getParticle(), player.getLocation(), ((ParticleShopItem) item).getAmount());
+                    player.getWorld().spawnParticle(((ParticleShopItem) item).getParticle(), player.getLocation(), ((ParticleShopItem) item).getAmount());
                 }
             }
         }

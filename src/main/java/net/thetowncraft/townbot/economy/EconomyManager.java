@@ -3,15 +3,19 @@ package net.thetowncraft.townbot.economy;
 import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import net.thetowncraft.townbot.listeners.discord.commands.ModMail;
 import net.thetowncraft.townbot.util.data.Data;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class EconomyManager {
 
@@ -45,11 +49,19 @@ public class EconomyManager {
         COIN_MAP.put(playerUUID, balance);
     }
 
-    public static void addCoins(String playerUUID, int amount) {
+    public static void addCoins(String playerUUID, int amount, String reason) {
         Integer coins = COIN_MAP.get(playerUUID);
         if(coins == null) coins = 0;
 
         COIN_MAP.put(playerUUID, coins + amount);
+
+        if(reason == null) return;
+
+        OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(playerUUID));
+        Member member = AccountManager.getInstance().getDiscordMember(player);
+        if(member == null) return;
+
+        ModMail.sendModMail(member.getUser(), member.getGuild(), ":coin: **" + amount + " Coins** have been added to your account!\n:pencil: **Reason**: " + reason, new ArrayList<>());
     }
 
     public static void subtractCoins(String playerUUID, int amount) {
