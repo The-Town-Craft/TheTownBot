@@ -11,10 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -23,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
-public class AcidicSlimeBoss extends BossEventListener {
+public class AcidicCreeperBoss extends BossEventListener {
 
     @Override
     public void initAttacks() {
@@ -44,11 +41,12 @@ public class AcidicSlimeBoss extends BossEventListener {
         if(!entity.getWorld().getName().equals(world.getName())) return;
 
         if(entity.getType() == EntityType.CREEPER) {
+            respawnPlayer();
         }
     }
 
     public void slam() {
-        slam(30);
+        slam(40);
     }
 
     @Override
@@ -80,18 +78,18 @@ public class AcidicSlimeBoss extends BossEventListener {
     @Override
     public void spawnBoss() {
         super.spawnBoss();
-        Slime slime = (Slime) this.boss;
-        slime.setSize(15);
+        Creeper creeper = (Creeper) this.boss;
+        creeper.setPowered(true);
     }
 
     @Override
     public String getBossName() {
-        return "Acidic Slime";
+        return "Acidic Creeper";
     }
 
     @Override
     public String getBossDescription() {
-        return "King of Goo";
+        return "King of the Slimes";
     }
 
     @Override
@@ -101,7 +99,7 @@ public class AcidicSlimeBoss extends BossEventListener {
 
     @Override
     public EntityType getBaseEntity() {
-        return EntityType.SLIME;
+        return EntityType.CREEPER;
     }
 
     @Override

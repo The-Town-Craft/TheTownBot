@@ -14,7 +14,7 @@ public class AcidicArtifact extends CustomItem {
 
     @Override
     public String getDescription() {
-        return ChatColor.YELLOW + "The Acidic Slime awaits...";
+        return ChatColor.YELLOW + "The Acidic Creeper awaits...";
     }
 
     @Override

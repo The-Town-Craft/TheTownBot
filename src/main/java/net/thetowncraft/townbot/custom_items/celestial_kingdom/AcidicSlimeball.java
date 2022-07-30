@@ -24,7 +24,7 @@ public class AcidicSlimeball extends CustomItem {
         if(block == null) return;
 
         if(!CustomItems.ACIDIC_SLIMEBALL.has(player)) {
-            event.getPlayer().sendMessage(ChatColor.RED + "You must defeat the Acidic Slime to use this item.");
+            event.getPlayer().sendMessage(ChatColor.RED + "You must defeat the Acidic Creeper to use this item.");
             return;
         }
 
