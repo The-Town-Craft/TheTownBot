@@ -140,8 +140,9 @@ public class IllusionerBoss extends BossEventListener {
                     event.getPlayer().sendMessage(ChatColor.RED + "This item can only be consumed in The Mystic Realm.");
                     return;
                 }
-                item.setAmount(item.getAmount() - 2);
+                item.setAmount(item.getAmount() - 1);
                 event.setCancelled(true);
+                event.setItem(item);
                 initBossFight(player);
             }
         }

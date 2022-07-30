@@ -16,12 +16,45 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Slime;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
 
 public class AcidicSlimeBoss extends BossEventListener {
+
+    @Override
+    public void initAttacks() {
+        addAttack(this::dodge, 0, 200);
+        addAttack(this::slam, 100, 200);
+    }
+
+    @Override
+    public void onSlam(EntityDamageEvent event, Entity boss) {
+        super.onSlam(event, boss);
+        Location pos = event.getEntity().getLocation();
+        pos.getWorld().playSound(pos, Sound.ENTITY_SLIME_SQUISH, 1, 1);
+    }
+
+    @EventHandler
+    public void entityExplode(EntityExplodeEvent event) {
+        Entity entity = event.getEntity();
+        if(!entity.getWorld().getName().equals(world.getName())) return;
+
+        if(entity.getType() == EntityType.CREEPER) {
+        }
+    }
+
+    public void slam() {
+        slam(30);
+    }
+
+    @Override
+    public void dodge() {
+        dodge(1);
+    }
 
     @EventHandler
     public void onPlayerEat(PlayerItemConsumeEvent event) {
@@ -38,19 +71,10 @@ public class AcidicSlimeBoss extends BossEventListener {
                 }
                 event.setCancelled(true);
                 item.setAmount(item.getAmount() - 1);
+                event.setItem(item);
                 initBossFight(player);
             }
         }
-    }
-
-    @EventHandler
-    public void onSlimeSpawn(EntitySpawnEvent event) {
-        Entity entity = event.getEntity();
-        if(!entity.getWorld().getName().equals(world.getName())) return;
-        if(boss == null) return;
-        if(entity.equals(boss)) return;
-
-        event.setCancelled(true);
     }
 
     @Override

@@ -31,6 +31,7 @@ public class GlacialShardItem extends CustomItem {
             PlayerInventory inventory = player.getInventory();
             ItemStack hand = inventory.getItemInMainHand();
             hand.setAmount(hand.getAmount() - 1);
+            inventory.setItemInMainHand(hand);
             boss.initBossFight(event.getPlayer());
         }
     }
