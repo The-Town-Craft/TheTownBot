@@ -190,8 +190,12 @@ public class MysticRealmListener implements Listener {
     }
 
     public static Creeper spawnMysticCreeper(Location location) {
+        return spawnCustomCreeper(location, "Mystic Creeper");
+    }
+
+    public static Creeper spawnCustomCreeper(Location location, String name) {
         Creeper creeper = (Creeper) location.getWorld().spawnEntity(location, EntityType.CREEPER);
-        creeper.setCustomName("Mystic Creeper");
+        creeper.setCustomName(name);
         creeper.setPowered(true);
         creeper.setCustomNameVisible(false);
         creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
