@@ -4,13 +4,15 @@ import net.thetowncraft.townbot.api.command_handler.CommandHandler;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.custom_bosses.bosses.*;
-import net.thetowncraft.townbot.dimension.DimensionEventListener;
+import net.thetowncraft.townbot.custom_bosses.bosses.celestial_kingdom.AcidicSlimeBoss;
+import net.thetowncraft.townbot.custom_bosses.bosses.mystic_realm.*;
+import net.thetowncraft.townbot.dimension.CelestialKingdomListener;
+import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.economy.commands.*;
 import net.thetowncraft.townbot.economy.shop.ShopItemListener;
 import net.thetowncraft.townbot.economy.shop.commands.*;
 import net.thetowncraft.townbot.hub.HubCommand;
-import net.thetowncraft.townbot.custom_items.ItemDropListener;
+import net.thetowncraft.townbot.custom_items.mystic_realm.ItemDropListener;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.discord.commands.AddActivityPointsCommand;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
@@ -119,11 +121,16 @@ public class Registry {
                 new WorldChange(),
                 new CustomItemListener(),
                 new ItemDropListener(),
-                new DimensionEventListener(),
                 new MaintenanceListener(),
                 new ShopItemListener(),
 
-                //Bosses
+                new MysticRealmListener(),
+                new CelestialKingdomListener(),
+
+                //Celestial Bosses
+                new AcidicSlimeBoss(),
+
+                //Mystic Bosses
                 new WickedHunterBoss(),
                 new BlazingWitherBoss(),
                 new NoxiousChickenBoss(),

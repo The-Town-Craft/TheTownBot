@@ -265,7 +265,7 @@ public abstract class BossEventListener implements Listener {
     }
 
     public void respawnPlayer() {
-        player.sendTitle(ChatColor.RED + "You Died", ChatColor.DARK_RED + player.getName() + " was no match for " + getBossName(), 5, 20, 10);
+        player.sendTitle(ChatColor.RED + "You Died", null, 5, 20, 10);
         player.teleport(this.getPlayerSpawnLocation());
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
         if(boss!= null) boss.remove();

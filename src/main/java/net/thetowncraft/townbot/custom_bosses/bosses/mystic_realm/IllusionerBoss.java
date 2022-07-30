@@ -1,8 +1,8 @@
-package net.thetowncraft.townbot.custom_bosses.bosses;
+package net.thetowncraft.townbot.custom_bosses.bosses.mystic_realm;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
-import net.thetowncraft.townbot.dimension.DimensionEventListener;
+import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
 import org.bukkit.*;
@@ -135,7 +135,7 @@ public class IllusionerBoss extends BossEventListener {
         if(item.getType() == CustomItems.MYSTIC_ARTIFACT.getBaseItem() && item.getItemMeta() != null) {
             ItemMeta itemMeta = item.getItemMeta();
             if(itemMeta.hasCustomModelData() && itemMeta.getCustomModelData() == 1) {
-                if(!player.getWorld().getName().equals(DimensionEventListener.MYSTIC_REALM)) {
+                if(!player.getWorld().getName().equals(MysticRealmListener.MYSTIC_REALM)) {
                     event.setCancelled(true);
                     event.getPlayer().sendMessage(ChatColor.RED + "This item can only be consumed in The Mystic Realm.");
                     return;

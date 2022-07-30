@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.custom_items.glacial_items;
+package net.thetowncraft.townbot.custom_items.mystic_realm.glacial_items;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

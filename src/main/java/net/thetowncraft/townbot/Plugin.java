@@ -2,8 +2,8 @@ package net.thetowncraft.townbot;
 
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.custom_items.glacial_items.GlacialArmor;
-import net.thetowncraft.townbot.dimension.DimensionEventListener;
+import net.thetowncraft.townbot.custom_items.mystic_realm.glacial_items.GlacialArmor;
+import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.economy.shop.ShopItemListener;
 import net.thetowncraft.townbot.economy.shop.ShopManager;
@@ -22,8 +22,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
 
 public class Plugin extends JavaPlugin {
     
@@ -59,7 +57,7 @@ public class Plugin extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, GlacialArmor::bossDefeatCheck, 80, 80);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, PlayerCountStatus::update, 5000, RepeatingTasks.REPEATING_TICKS);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ShopItemListener::updateItems, 10, 10);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, DimensionEventListener::checkBiomeEffects, 60, 60);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, MysticRealmListener::checkBiomeEffects, 60, 60);
         SPAWN_LOCATION = new Location(Bukkit.getWorld(OVERWORLD_NAME),-161, 64, 230);
     }
 

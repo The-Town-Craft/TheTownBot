@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.custom_items;
+package net.thetowncraft.townbot.custom_items.mystic_realm;
 
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;

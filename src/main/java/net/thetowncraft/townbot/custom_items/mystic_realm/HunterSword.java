@@ -1,5 +1,6 @@
-package net.thetowncraft.townbot.custom_items;
+package net.thetowncraft.townbot.custom_items.mystic_realm;
 
+import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.util.Rarity;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

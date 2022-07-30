@@ -1,6 +1,8 @@
-package net.thetowncraft.townbot.custom_items;
+package net.thetowncraft.townbot.custom_items.mystic_realm;
 
 import net.thetowncraft.townbot.Plugin;
+import net.thetowncraft.townbot.custom_items.CustomItem;
+import net.thetowncraft.townbot.custom_items.CustomItems;
 import net.thetowncraft.townbot.util.Rarity;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;

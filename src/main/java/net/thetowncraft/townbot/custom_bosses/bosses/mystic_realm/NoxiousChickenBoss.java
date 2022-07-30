@@ -1,8 +1,8 @@
-package net.thetowncraft.townbot.custom_bosses.bosses;
+package net.thetowncraft.townbot.custom_bosses.bosses.mystic_realm;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
-import net.thetowncraft.townbot.dimension.DimensionEventListener;
+import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
 import org.bukkit.Bukkit;
@@ -85,7 +85,7 @@ public class NoxiousChickenBoss extends BossEventListener {
     public void onChickenDeath(EntityDeathEvent event) {
         LivingEntity entity = event.getEntity();
         if(entity.getType() == EntityType.CHICKEN) {
-            if (!entity.getWorld().getName().equals(DimensionEventListener.MYSTIC_REALM)) return;
+            if (!entity.getWorld().getName().equals(MysticRealmListener.MYSTIC_REALM)) return;
 
             Chicken chicken = (Chicken) entity;
             Player player = chicken.getKiller();

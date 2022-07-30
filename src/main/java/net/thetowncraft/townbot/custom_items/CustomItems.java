@@ -1,6 +1,9 @@
 package net.thetowncraft.townbot.custom_items;
 
-import net.thetowncraft.townbot.custom_items.glacial_items.*;
+import net.thetowncraft.townbot.custom_items.celestial_kingdom.AcidicArtifact;
+import net.thetowncraft.townbot.custom_items.celestial_kingdom.AcidicSlimeball;
+import net.thetowncraft.townbot.custom_items.mystic_realm.glacial_items.*;
+import net.thetowncraft.townbot.custom_items.mystic_realm.*;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -19,6 +22,7 @@ public class CustomItems {
 
     private static final Map<String, CustomItem> ITEMS = new HashMap<>();
 
+    //Mystic Realm
     public static final CustomItem SHAPED_GLASS = registerItem("shaped_glass", new ShapedGlass());
     public static final CustomItem MYSTIC_PEARL = registerItem("mystic_pearl", new MysticPearl());
     public static final CustomItem BLAZING_THUNDERSTAR = registerItem("blazing_thunderstar", new BlazingThunderstar());
@@ -33,6 +37,11 @@ public class CustomItems {
     public static final CustomItem GLACIAL_CHESTPLATE = registerItem("glacial_chestplate", new GlacialChestplate());
     public static final CustomItem GLACIAL_LEGGINGS = registerItem("glacial_leggings", new GlacialLeggings());
     public static final CustomItem GLACIAL_BOOTS = registerItem("glacial_boots", new GlacialBoots());
+
+    //Celestial Kingdom
+    public static final CustomItem ACIDIC_ARTIFACT = registerItem("acidic_artifact", new AcidicArtifact());
+    public static final CustomItem ACIDIC_SLIMEBALL = registerItem("acidic_slimeball", new AcidicSlimeball());
+
     static CustomItem registerItem(String id, CustomItem item) {
         ITEMS.put(id, item);
         return item;

@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.custom_bosses.bosses;
+package net.thetowncraft.townbot.custom_bosses.bosses.mystic_realm;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;

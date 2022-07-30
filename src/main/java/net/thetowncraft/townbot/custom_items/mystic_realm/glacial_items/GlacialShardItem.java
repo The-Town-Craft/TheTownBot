@@ -1,14 +1,12 @@
-package net.thetowncraft.townbot.custom_items.glacial_items;
+package net.thetowncraft.townbot.custom_items.mystic_realm.glacial_items;
 
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
-import net.thetowncraft.townbot.dimension.DimensionEventListener;
+import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.util.Rarity;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -26,7 +24,7 @@ public class GlacialShardItem extends CustomItem {
                 player.sendMessage(ChatColor.RED + "Error! Please type \"-apply bug-report\" on the Discord Server!");
                 return;
             }
-            if(!player.getWorld().getName().equals(DimensionEventListener.MYSTIC_REALM)) {
+            if(!player.getWorld().getName().equals(MysticRealmListener.MYSTIC_REALM)) {
                 player.sendMessage(ChatColor.RED + "You can only use this item in the Mystic Realm!");
                 return;
             }

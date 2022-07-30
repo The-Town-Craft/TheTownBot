@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class DimensionEventListener implements Listener {
+public class MysticRealmListener implements Listener {
 
     public static final String MYSTIC_REALM = "world_1597802541_thetown_mystic_realm";
     public static final Map<String, Location> PREV_PLAYER_POSITIONS = new HashMap<>();
@@ -32,29 +32,8 @@ public class DimensionEventListener implements Listener {
     //Teleport
     @EventHandler
     public void onFlintAndSteel(PlayerInteractEvent event) {
-
-        Material centerBlock = Material.OBSIDIAN;
-        Material surroundingBlock = Material.SLIME_BLOCK;
-        Block block = event.getClickedBlock();
+        if(!Portal.isPortal(event, Material.SLIME_BLOCK, Material.OBSIDIAN)) return;
         Player player = event.getPlayer();
-
-        if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        if(block == null || block.getType() != centerBlock) return;
-        if(player.getInventory().getItemInMainHand().getType() != Material.FLINT_AND_STEEL) return;
-
-        World world = block.getWorld();
-        int x = block.getX();
-        int y = block.getY();
-        int z = block.getZ();
-
-        if(world.getBlockAt(x + 1, y, z).getType() != surroundingBlock) return;
-        if(world.getBlockAt(x - 1, y, z).getType() != surroundingBlock) return;
-
-
-        if(world.getBlockAt(x, y, z + 1).getType() != surroundingBlock) return;
-        if(world.getBlockAt(x, y, z - 1).getType() != surroundingBlock) return;
-
-        if(player.getGameMode() == GameMode.ADVENTURE) return;
 
         if(player.getWorld().getName().equals(MYSTIC_REALM)) {
             Location location;

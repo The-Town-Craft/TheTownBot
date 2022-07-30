@@ -2,7 +2,8 @@ package net.thetowncraft.townbot.listeners.minecraft.chat;
 
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
-import net.thetowncraft.townbot.dimension.DimensionEventListener;
+import net.thetowncraft.townbot.dimension.CelestialKingdomListener;
+import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,9 +32,13 @@ public class WorldChange implements Listener {
             Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:mc_cow:818243740569305118> **" + name + "** returned to the overworld").queue();
             Bukkit.getServer().broadcastMessage(name + " returned to the overworld");
         }
-        else if(world.getName().equals(DimensionEventListener.MYSTIC_REALM)) {
+        else if(world.getName().equals(MysticRealmListener.MYSTIC_REALM)) {
             Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:mystic_artifact:990709236231188550> **" + name + "** entered the **Mystic Realm**!").queue();
             Bukkit.getServer().broadcastMessage(name + " entered the " + ChatColor.BOLD + ChatColor.DARK_PURPLE + "Mystic Realm");
+        }
+        else if(world.getName().equals(CelestialKingdomListener.CELESTIAL_KINGDOM)) {
+            Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:blaze_powder:1002487203940806726> **" + name + "** entered the **Celestial Kingdom**!").queue();
+            Bukkit.getServer().broadcastMessage(name + " entered the " + ChatColor.BOLD + ChatColor.YELLOW + "Celestial Kingdom");
         }
     }
 }

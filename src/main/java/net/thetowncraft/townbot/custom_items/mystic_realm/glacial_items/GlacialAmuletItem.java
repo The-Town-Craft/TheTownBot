@@ -1,13 +1,11 @@
-package net.thetowncraft.townbot.custom_items.glacial_items;
+package net.thetowncraft.townbot.custom_items.mystic_realm.glacial_items;
 
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
 import net.thetowncraft.townbot.util.Rarity;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;

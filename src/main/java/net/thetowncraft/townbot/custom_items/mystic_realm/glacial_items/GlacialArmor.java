@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.custom_items.glacial_items;
+package net.thetowncraft.townbot.custom_items.mystic_realm.glacial_items;
 
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;

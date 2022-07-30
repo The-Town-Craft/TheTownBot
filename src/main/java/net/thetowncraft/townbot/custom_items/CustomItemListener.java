@@ -2,7 +2,7 @@ package net.thetowncraft.townbot.custom_items;
 
 import com.google.common.collect.Sets;
 import net.thetowncraft.townbot.Plugin;
-import net.thetowncraft.townbot.custom_bosses.bosses.BlazingWitherBoss;
+import net.thetowncraft.townbot.custom_bosses.bosses.mystic_realm.BlazingWitherBoss;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;

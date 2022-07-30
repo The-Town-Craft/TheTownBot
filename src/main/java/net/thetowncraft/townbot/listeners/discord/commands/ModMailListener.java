@@ -44,7 +44,7 @@ public class ModMailListener extends ListenerAdapter {
 				}
 			}
 			
-			event.getJDA().getTextChannelById("781421376086999040").sendMessage(embed.build()).queue(msg -> {
+			event.getJDA().getTextChannelById("781421376086999040").sendMessage("[" + Constants.STAFF_ROLE.getAsMention() + "]").embed(embed.build()).queue(msg -> {
 				MESSAGES.put(msg.getId(), event.getAuthor().getId());
 			});
 		}

@@ -1,8 +1,8 @@
-package net.thetowncraft.townbot.custom_bosses.bosses;
+package net.thetowncraft.townbot.custom_bosses.bosses.mystic_realm;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossDungeonEventListener;
-import net.thetowncraft.townbot.dimension.DimensionEventListener;
+import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
 import org.bukkit.*;
@@ -171,10 +171,10 @@ public class IceologerBoss extends BossDungeonEventListener {
     @Override
     public void onSlam(EntityDamageEvent event, Entity boss) {
         super.onSlam(event, boss);
-        DimensionEventListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(1, 0.3, 0));
-        DimensionEventListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(-1, 0.3, 0));
-        DimensionEventListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(0, 0.3, 1));
-        DimensionEventListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(0, 0.3, -1));
+        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(1, 0.3, 0));
+        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(-1, 0.3, 0));
+        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(0, 0.3, 1));
+        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(0, 0.3, -1));
     }
 
     public void levitate() {
