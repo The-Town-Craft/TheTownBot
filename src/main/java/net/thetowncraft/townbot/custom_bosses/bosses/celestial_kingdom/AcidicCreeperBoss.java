@@ -6,16 +6,16 @@ import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
 import net.thetowncraft.townbot.dimension.CelestialKingdomListener;
 import net.thetowncraft.townbot.dimension.MysticRealmListener;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityCombustEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
@@ -24,8 +24,25 @@ public class AcidicCreeperBoss extends BossEventListener {
 
     @Override
     public void initAttacks() {
-        addAttack(this::dodge, 0, 200);
+        addAttack(this::zombie, 0, 400);
+        addAttack(this::slime, 200, 400);
+        addAttack(this::dodge, 50, 100);
         addAttack(this::slam, 100, 200);
+    }
+
+    public void zombie() {
+        if(world == null) return;
+        if(boss == null) return;
+        Zombie zombie = (Zombie) world.spawnEntity(boss.getLocation(), EntityType.ZOMBIE);
+        zombie.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(10);
+        zombie.setHealth(40);
+        EntityEquipment equipment = zombie.getEquipment();
+        if(equipment == null) return;
+        equipment.setItemInMainHand(CustomItems.HUNTER_SWORD.createItemStack(1));
+    }
+
+    public void slime() {
+        CelestialKingdomListener.spawnAcidicSlime(boss.getLocation());
     }
 
     @Override
@@ -33,6 +50,10 @@ public class AcidicCreeperBoss extends BossEventListener {
         super.onSlam(event, boss);
         Location pos = event.getEntity().getLocation();
         pos.getWorld().playSound(pos, Sound.ENTITY_SLIME_SQUISH, 1, 1);
+        summonTNT(new Vector(0.5, 0, 0));
+        summonTNT(new Vector(-0.5, 0, 0));
+        summonTNT(new Vector(0, 0, 0.5));
+        summonTNT(new Vector(0, 0, -0.5));
     }
 
     @EventHandler
@@ -40,9 +61,15 @@ public class AcidicCreeperBoss extends BossEventListener {
         Entity entity = event.getEntity();
         if(!entity.getWorld().getName().equals(world.getName())) return;
 
-        if(entity.getType() == EntityType.CREEPER) {
+        if(entity instanceof Creeper) {
             respawnPlayer();
         }
+    }
+
+    @Override
+    public void setUpArena(Player player) {
+        super.setUpArena(player);
+        world.setGameRule(GameRule.MOB_GRIEFING, true);
     }
 
     public void slam() {
@@ -139,7 +166,7 @@ public class AcidicCreeperBoss extends BossEventListener {
 
     @Override
     public String getDeathMessage() {
-        return "was squished by";
+        return "was obliterated by";
     }
 
     @Override

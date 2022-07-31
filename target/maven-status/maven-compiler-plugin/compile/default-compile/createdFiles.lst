@@ -3,7 +3,9 @@ net\thetowncraft\townbot\listeners\minecraft\player_activity\PlayerCountStatus.c
 net\thetowncraft\townbot\economy\shop\commands\ShopViewCommand.class
 net\thetowncraft\townbot\hub\HubCommand.class
 net\thetowncraft\townbot\Bot.class
+net\thetowncraft\townbot\custom_bosses\bosses\celestial_kingdom\AcidicCreeperBoss.class
 net\thetowncraft\townbot\listeners\minecraft\chat\Enchants.class
+net\thetowncraft\townbot\custom_bosses\bosses\celestial_kingdom\HellfireGhast.class
 net\thetowncraft\townbot\util\Rarity.class
 net\thetowncraft\townbot\api\command_handler\CommandHandler.class
 net\thetowncraft\townbot\util\RepeatingTasks.class
@@ -14,6 +16,7 @@ net\thetowncraft\townbot\util\data\Config.class
 net\thetowncraft\townbot\listeners\accountlink\AccountManager.class
 net\thetowncraft\townbot\listeners\minecraft\anticheat\AntiCheatManager$1.class
 net\thetowncraft\townbot\listeners\minecraft\commands\McMute.class
+net\thetowncraft\townbot\custom_items\celestial_kingdom\SatanicMagmaball.class
 net\thetowncraft\townbot\listeners\discord\commands\BanList.class
 net\thetowncraft\townbot\economy\shop\ShopItem.class
 net\thetowncraft\townbot\custom_items\mystic_realm\ShapedGlass.class
@@ -89,6 +92,7 @@ net\thetowncraft\townbot\listeners\minecraft\player_activity\PlayerJoin.class
 net\thetowncraft\townbot\listeners\discord\MemberJoin.class
 net\thetowncraft\townbot\economy\shop\commands\PurchasesCommandMinecraft.class
 net\thetowncraft\townbot\listeners\minecraft\chat\WitherSpawn.class
+net\thetowncraft\townbot\custom_items\celestial_kingdom\GhastBlood.class
 net\thetowncraft\townbot\economy\shop\items\MysticParticleShopItem.class
 net\thetowncraft\townbot\api\command_handler\minecraft\MinecraftCommand.class
 net\thetowncraft\townbot\listeners\accountlink\LinkAccount.class
@@ -113,7 +117,6 @@ net\thetowncraft\townbot\custom_bosses\BossEventListener.class
 net\thetowncraft\townbot\custom_items\celestial_kingdom\AcidicArtifact.class
 net\thetowncraft\townbot\listeners\discord\commands\ChangelogCommand.class
 net\thetowncraft\townbot\listeners\discord\ServerStart.class
-net\thetowncraft\townbot\custom_bosses\bosses\celestial_kingdom\AcidicSlimeBoss.class
 net\thetowncraft\townbot\economy\EconomyManager.class
 net\thetowncraft\townbot\custom_items\celestial_kingdom\AcidicSlimeball.class
 net\thetowncraft\townbot\economy\commands\BalTop.class

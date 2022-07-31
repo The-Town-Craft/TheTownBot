@@ -10,10 +10,9 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-public class AcidicSlimeball extends CustomItem {
+public class SatanicMagmaball extends CustomItem {
 
     @Override
     public void onClick(PlayerInteractEvent event) {
@@ -24,7 +23,7 @@ public class AcidicSlimeball extends CustomItem {
         if(block == null) return;
 
         if(!canUse(player)) {
-            event.getPlayer().sendMessage(ChatColor.RED + "You must defeat the Acidic Creeper to use this item.");
+            event.getPlayer().sendMessage(ChatColor.RED + "You must defeat the Hellfire Ghast to use this item.");
             return;
         }
 
@@ -33,7 +32,7 @@ public class AcidicSlimeball extends CustomItem {
         int targetX = block.getX();
         int targetZ = block.getZ();
 
-        int amount = CustomItems.getItemAmountOf(player, CustomItems.ACIDIC_SLIMEBALL);
+        int amount = CustomItems.getItemAmountOf(player, this);
 
         double speed = 1.2;
 
@@ -45,18 +44,18 @@ public class AcidicSlimeball extends CustomItem {
         double vx = (speed) * Math.sin(angle);
         double vz = (speed) * Math.cos(angle);
 
-        player.setVelocity(new Vector(vx, speed, vz));
-        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_SLIME_SQUISH, 0.5f, 1);
+        player.setVelocity(new Vector(-vx, speed, -vz));
+        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_MAGMA_CUBE_SQUISH, 0.5f, 0.3f);
     }
 
     @Override
     public String getName() {
-        return ChatColor.YELLOW + "Acidic Slimeball";
+        return ChatColor.GOLD + "Satanic Magmaball";
     }
 
     @Override
     public String getDescription() {
-        return ChatColor.YELLOW + "Bouncy ball of acid. [LEFT CLICK BLOCK]";
+        return ChatColor.DARK_RED + "Bouncy Satanic Goo";
     }
 
     @Override
@@ -66,12 +65,12 @@ public class AcidicSlimeball extends CustomItem {
 
     @Override
     public Material getBaseItem() {
-        return Material.SLIME_BALL;
+        return Material.MAGMA_CREAM;
     }
 
     @Override
     public Rarity getRarity() {
-        return Rarity.EPIC;
+        return Rarity.RARE;
     }
 
     @Override

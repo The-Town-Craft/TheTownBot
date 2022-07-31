@@ -58,16 +58,6 @@ public class BlazingWitherBoss extends BossEventListener {
         }, 20);
     }
 
-    private void summonTNT(Vector velocity) {
-        summonTNT(velocity, 100);
-    }
-    private void summonTNT(Vector velocity, int fuse) {
-        TNTPrimed tnt = (TNTPrimed) boss.getWorld().spawnEntity(boss.getLocation(), EntityType.PRIMED_TNT);
-        tnt.setFuseTicks(fuse);
-        tnt.setVelocity(velocity);
-        tnt.setSource(boss);
-    }
-
     @EventHandler
     public void onFlintAndSteel(PlayerInteractEvent event) {
         Material centerBlock = Material.CRYING_OBSIDIAN;

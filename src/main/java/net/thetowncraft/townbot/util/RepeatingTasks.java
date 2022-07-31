@@ -33,7 +33,7 @@ public class RepeatingTasks {
     public static void doDailyTasks() {
         String day = Utils.getNameOfDay();
 
-        if(day.equalsIgnoreCase("Sunday")) {
+        if(day.equalsIgnoreCase("Friday")) {
             rewardActivePlayers();
         }
 
@@ -159,10 +159,13 @@ public class RepeatingTasks {
 
         Map<String, Long> mostActivePlayers = ActivityManager.get3MostActivePlayers();
         for(Map.Entry<String, Long> entry : mostActivePlayers.entrySet()) {
-            Member discordMember = AccountManager.getInstance().getDiscordMember(Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey())));
+            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(entry.getKey()));
+            Member discordMember = AccountManager.getInstance().getDiscordMember(player);
             discordMember.getGuild().addRoleToMember(discordMember, Constants.ACTIVE_PLAYER_ROLE).queue();
             Bot.jda.getTextChannelById(Constants.ANNOUNCEMENTS)
                     .sendMessage(discordMember.getAsMention() + " has been awarded the **" + Constants.ACTIVE_PLAYER_ROLE.getName() + "** role! :partying_face:").queue();
+
+            EconomyManager.addCoins(player.getUniqueId().toString(), ActivityManager.getActivityPoints(player) / 100, "Reaching top three on the activity leaderboard!");
         }
 
         resetActivity();

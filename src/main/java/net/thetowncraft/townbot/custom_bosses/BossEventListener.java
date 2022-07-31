@@ -154,6 +154,16 @@ public abstract class BossEventListener implements Listener {
         return true;
     }
 
+    public void summonTNT(Vector velocity) {
+        summonTNT(velocity, 100);
+    }
+    public void summonTNT(Vector velocity, int fuse) {
+        TNTPrimed tnt = (TNTPrimed) boss.getWorld().spawnEntity(boss.getLocation(), EntityType.PRIMED_TNT);
+        tnt.setFuseTicks(fuse);
+        tnt.setVelocity(velocity);
+        tnt.setSource(boss);
+    }
+
     public void sendBossChallengeMsg(Player player) {
         Bukkit.getServer().broadcastMessage(player.getName() + " " + getChallengeMessage() + " " + getBossTitleColor() + getBossName());
         Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> " + getBossEmoji() + " **" + player.getName() + "** " + getChallengeMessage() + " **" + getBossName() + "**").queue();
@@ -205,8 +215,6 @@ public abstract class BossEventListener implements Listener {
             player.teleport(this.getPlayerSpawnLocation());
             playBossMusic();
             if(player.getGameMode() == GameMode.SURVIVAL) player.setGameMode(GameMode.ADVENTURE);
-
-            world.setGameRule(GameRule.MOB_GRIEFING, false);
 
             spawnBoss();
 
@@ -265,7 +273,7 @@ public abstract class BossEventListener implements Listener {
     }
 
     public void respawnPlayer() {
-        player.sendTitle(ChatColor.RED + "You Died", null, 5, 20, 10);
+        player.sendTitle(ChatColor.RED + "You Died", ChatColor.DARK_RED + "RIP " + player.getName(), 5, 20, 10);
         player.teleport(this.getPlayerSpawnLocation());
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
         if(boss!= null) boss.remove();

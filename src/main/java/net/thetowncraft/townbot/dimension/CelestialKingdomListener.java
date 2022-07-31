@@ -35,8 +35,7 @@ public class CelestialKingdomListener implements Listener {
 
         if(type == EntityType.ZOMBIE) {
             event.setCancelled(true);
-            Slime slime = (Slime) world.spawnEntity(entity.getLocation(), EntityType.SLIME);
-            slime.setCustomName("Acidic Slime");
+            spawnAcidicSlime(entity.getLocation());
         }
         if(type == EntityType.SLIME) {
             Slime slime = (Slime) entity;
@@ -54,6 +53,14 @@ public class CelestialKingdomListener implements Listener {
         }
     }
 
+    public static Slime spawnAcidicSlime(Location pos) {
+        World world = pos.getWorld();
+        if(world == null) return null;
+        Slime slime = (Slime) world.spawnEntity(pos, EntityType.SLIME);
+        slime.setCustomName("Acidic Slime");
+        return slime;
+    }
+
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         Entity entity = event.getEntity();
@@ -67,6 +74,10 @@ public class CelestialKingdomListener implements Listener {
             if(new Random().nextInt(15) == 1) {
                 event.getDrops().add(CustomItems.ACIDIC_ARTIFACT.createItemStack(1));
             }
+        }
+        if(type == EntityType.GHAST) {
+            event.getDrops().clear();
+            event.getDrops().add(CustomItems.HELLFIRE_GHAST_TEAR.createItemStack(1));
         }
     }
 

@@ -2,6 +2,8 @@ package net.thetowncraft.townbot.custom_items;
 
 import net.thetowncraft.townbot.custom_items.celestial_kingdom.AcidicArtifact;
 import net.thetowncraft.townbot.custom_items.celestial_kingdom.AcidicSlimeball;
+import net.thetowncraft.townbot.custom_items.celestial_kingdom.GhastBlood;
+import net.thetowncraft.townbot.custom_items.celestial_kingdom.SatanicMagmaball;
 import net.thetowncraft.townbot.custom_items.mystic_realm.glacial_items.*;
 import net.thetowncraft.townbot.custom_items.mystic_realm.*;
 import org.bukkit.entity.Item;
@@ -41,6 +43,8 @@ public class CustomItems {
     //Celestial Kingdom
     public static final CustomItem ACIDIC_ARTIFACT = registerItem("acidic_artifact", new AcidicArtifact());
     public static final CustomItem ACIDIC_SLIMEBALL = registerItem("acidic_slimeball", new AcidicSlimeball());
+    public static final CustomItem HELLFIRE_GHAST_TEAR = registerItem("ghast_blood", new GhastBlood());
+    public static final CustomItem SATANIC_MAGMABALL = registerItem("satanic_magmaball", new SatanicMagmaball());
 
     static CustomItem registerItem(String id, CustomItem item) {
         ITEMS.put(id, item);
