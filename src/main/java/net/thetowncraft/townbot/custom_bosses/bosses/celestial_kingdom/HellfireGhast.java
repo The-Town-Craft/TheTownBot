@@ -9,9 +9,27 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Fireball;
+import org.bukkit.entity.Ghast;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 public class HellfireGhast extends BossEventListener {
+
+    @EventHandler
+    public void entityDamage(EntityDamageByEntityEvent event) {
+        Entity entity = event.getEntity();
+        if(!entity.getWorld().getName().equals(world.getName())) return;
+
+        if(entity instanceof Ghast && event.getDamager() instanceof Fireball) {
+            event.setCancelled(true);
+            ((Ghast) entity).damage(10, player);
+        }
+    }
 
     @Override
     public String getBossName() {
@@ -75,11 +93,11 @@ public class HellfireGhast extends BossEventListener {
 
     @Override
     public Location getBossSpawnLocation() {
-        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_ghast"), 0, 135, 0);
+        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_ghast"), 0, 100, 0);
     }
 
     @Override
     public Location getPlayerSpawnLocation() {
-        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_ghast"), 50, 100, 0, 180, 0);
+        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_ghast"), 10, 100, 0, 180, 0);
     }
 }
