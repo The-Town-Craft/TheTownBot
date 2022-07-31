@@ -40,7 +40,7 @@ public class CommandHandler {
                 }
             }
             catch (Exception ex) {
-                Constants.DEV_CHAT.sendMessage(":x: [**" + Constants.DEV_ROLE.getAsMention() + "**] **An exception has occurred with a Discord command!** `" + ex + "`").queue();
+                event.getChannel().sendMessage(":x: [**" + Constants.DEV_ROLE.getAsMention() + "**] **An exception has occurred with a Discord command!** `" + ex + "`").queue();
                 ex.printStackTrace();
             }
         }
