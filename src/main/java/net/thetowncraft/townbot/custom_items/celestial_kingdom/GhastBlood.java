@@ -9,12 +9,17 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class GhastBlood extends CustomItem {
 
     @Override
     public void onClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        if(player.getCooldown(getBaseItem()) != 0) return;
+
+        player.setCooldown(getBaseItem(), 20);
+
         if(!player.getWorld().getName().equals(CelestialKingdomListener.CELESTIAL_KINGDOM)) {
             player.sendMessage("You can only use this item in the Celestial Kingdom!");
             return;
@@ -26,6 +31,14 @@ public class GhastBlood extends CustomItem {
             return;
         }
 
+        ItemStack item = event.getItem();
+        if(item == null) {
+            player.sendMessage(ChatColor.RED + "Error! Please report this to ModMail: Could not summon boss because item is null!");
+            return;
+        }
+
+        item.setAmount(item.getAmount() - 1);
+        player.getInventory().setItemInMainHand(item);
         boss.initBossFight(player);
     }
 

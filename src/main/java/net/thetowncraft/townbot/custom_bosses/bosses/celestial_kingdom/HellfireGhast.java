@@ -2,6 +2,7 @@ package net.thetowncraft.townbot.custom_bosses.bosses.celestial_kingdom;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
+import net.thetowncraft.townbot.custom_bosses.bosses.mystic_realm.BlazingWitherBoss;
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
 import org.bukkit.Bukkit;
@@ -17,8 +18,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 
-public class HellfireGhast extends BossEventListener {
+public class HellfireGhast extends BlazingWitherBoss {
+
+    @Override
+    public void onFlintAndSteel(PlayerInteractEvent event) {
+
+    }
 
     @EventHandler
     public void entityDamage(EntityDamageByEntityEvent event) {
@@ -63,7 +70,7 @@ public class HellfireGhast extends BossEventListener {
 
     @Override
     public ChatColor getBossDescColor() {
-        return ChatColor.YELLOW;
+        return ChatColor.GOLD;
     }
 
     @Override

@@ -5,6 +5,7 @@ import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.custom_bosses.bosses.celestial_kingdom.AcidicCreeperBoss;
+import net.thetowncraft.townbot.custom_bosses.bosses.celestial_kingdom.CelestialPhantom;
 import net.thetowncraft.townbot.custom_bosses.bosses.celestial_kingdom.HellfireGhast;
 import net.thetowncraft.townbot.custom_bosses.bosses.mystic_realm.*;
 import net.thetowncraft.townbot.dimension.CelestialKingdomListener;
@@ -131,6 +132,7 @@ public class Registry {
                 //Celestial Bosses
                 new AcidicCreeperBoss(),
                 new HellfireGhast(),
+                new CelestialPhantom(),
 
                 //Mystic Bosses
                 new WickedHunterBoss(),

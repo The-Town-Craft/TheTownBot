@@ -34,7 +34,7 @@ public class AcidicCreeperBoss extends BossEventListener {
         if(world == null) return;
         if(boss == null) return;
         Zombie zombie = (Zombie) world.spawnEntity(boss.getLocation(), EntityType.ZOMBIE);
-        zombie.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(10);
+        zombie.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
         zombie.setHealth(40);
         EntityEquipment equipment = zombie.getEquipment();
         if(equipment == null) return;
@@ -94,9 +94,9 @@ public class AcidicCreeperBoss extends BossEventListener {
                     event.getPlayer().sendMessage(ChatColor.RED + "This item can only be consumed in Celestial Kingdom.");
                     return;
                 }
-                event.setCancelled(true);
                 item.setAmount(item.getAmount() - 1);
                 event.setItem(item);
+                event.setCancelled(true);
                 initBossFight(player);
             }
         }

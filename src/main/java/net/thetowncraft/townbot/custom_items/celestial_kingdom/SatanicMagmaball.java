@@ -32,9 +32,7 @@ public class SatanicMagmaball extends CustomItem {
         int targetX = block.getX();
         int targetZ = block.getZ();
 
-        int amount = CustomItems.getItemAmountOf(player, this);
-
-        double speed = 1.2;
+        double speed = 1.5;
 
         int cooldown = 10;
 
@@ -55,7 +53,7 @@ public class SatanicMagmaball extends CustomItem {
 
     @Override
     public String getDescription() {
-        return ChatColor.DARK_RED + "Bouncy Satanic Goo";
+        return ChatColor.DARK_RED + "Bouncy satanic goo. [LEFT CLICK BLOCK]";
     }
 
     @Override
