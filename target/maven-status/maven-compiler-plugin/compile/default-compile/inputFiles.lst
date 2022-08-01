@@ -54,8 +54,10 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\ec
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\api\command_handler\CommandHandler.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_bosses\bosses\mystic_realm\BlazingWitherBoss.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\Whitelist.java
+C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\celestial_kingdom\CelestialMembrane.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\mystic_realm\MysticArtifact.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\util\data\Config.java
+C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\celestial_kingdom\CelestineElytra.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\AddActivityPointsCommand.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\minecraft\chat\Sleep.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\mystic_realm\BlazingThunderstar.java
@@ -109,6 +111,7 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\li
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\DiscordUnmute.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\mystic_realm\MysticPearl.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\api\command_handler\CommandEvent.java
+C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_bosses\bosses\celestial_kingdom\CelestialPhantom.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\shop\commands\ToggleItemMinecraft.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\economy\shop\items\BlazingSpiritShopItem.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\dimension\CelestialKingdomListener.java

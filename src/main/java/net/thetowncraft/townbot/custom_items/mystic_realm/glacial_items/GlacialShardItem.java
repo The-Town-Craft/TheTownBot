@@ -17,23 +17,7 @@ public class GlacialShardItem extends CustomItem {
 
     @Override
     public void onClick(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            BossEventListener boss = CustomItems.GLACIAL_AMULET.getBoss();
-            if(boss == null) {
-                player.sendMessage(ChatColor.RED + "Error! Please type \"-apply bug-report\" on the Discord Server!");
-                return;
-            }
-            if(!player.getWorld().getName().equals(MysticRealmListener.MYSTIC_REALM)) {
-                player.sendMessage(ChatColor.RED + "You can only use this item in the Mystic Realm!");
-                return;
-            }
-            PlayerInventory inventory = player.getInventory();
-            ItemStack hand = inventory.getItemInMainHand();
-            hand.setAmount(hand.getAmount() - 1);
-            inventory.setItemInMainHand(hand);
-            boss.initBossFight(event.getPlayer());
-        }
+        tryInitBossFight(event, CustomItems.GLACIAL_AMULET, MysticRealmListener.MYSTIC_REALM, "Mystic Realm");
     }
 
     @Override

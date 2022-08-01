@@ -4,12 +4,15 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
+import net.thetowncraft.townbot.dimension.CelestialKingdomListener;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.Rarity;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -38,6 +41,37 @@ public abstract class CustomItem {
     public boolean has(Player player) {
         ItemStack stack = CustomItems.getItemStackOf(player, this);
         return stack != null;
+    }
+
+    public void tryInitBossFight(PlayerInteractEvent event, CustomItem bossItem, String requiredWorld, String requiredWorldName) {
+
+        if(event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+
+        Player player = event.getPlayer();
+        if(player.getCooldown(getBaseItem()) != 0) return;
+
+        player.setCooldown(getBaseItem(), 20);
+
+        if(!player.getWorld().getName().equals(requiredWorld)) {
+            player.sendMessage("You can only use this item in the " + requiredWorldName + "!");
+            return;
+        }
+
+        BossEventListener boss = bossItem.getBoss();
+        if(boss == null) {
+            player.sendMessage(ChatColor.RED + "Error! Please report this to ModMail: Could not summon boss because boss is null!");
+            return;
+        }
+
+        ItemStack item = event.getItem();
+        if(item == null) {
+            player.sendMessage(ChatColor.RED + "Error! Please report this to ModMail: Could not summon boss because item is null!");
+            return;
+        }
+
+        item.setAmount(item.getAmount() - 1);
+        player.getInventory().setItemInMainHand(item);
+        boss.initBossFight(player);
     }
 
     public void procOnHit(Player player, int itemAmount, LivingEntity target, World world) {

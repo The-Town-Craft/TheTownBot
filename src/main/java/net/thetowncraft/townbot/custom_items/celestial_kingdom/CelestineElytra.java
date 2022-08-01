@@ -16,8 +16,9 @@ public class CelestineElytra extends CustomItem {
         ItemStack stack = super.createItemStack(amount);
         ItemMeta meta = stack.getItemMeta();
         meta.setUnbreakable(true);
-        meta.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier("GENERIC_ARMOR", 3, AttributeModifier.Operation.ADD_NUMBER));
-        meta.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier("GENERIC_ARMOR_TOUGHNESS", 8, AttributeModifier.Operation.ADD_NUMBER));
+        meta.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier("generic.armor", 6, AttributeModifier.Operation.ADD_NUMBER));
+        meta.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier("generic.armor_toughness", 8, AttributeModifier.Operation.ADD_NUMBER));
+        stack.setItemMeta(meta);
         return stack;
     }
 

@@ -15,31 +15,7 @@ public class GhastBlood extends CustomItem {
 
     @Override
     public void onClick(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
-        if(player.getCooldown(getBaseItem()) != 0) return;
-
-        player.setCooldown(getBaseItem(), 20);
-
-        if(!player.getWorld().getName().equals(CelestialKingdomListener.CELESTIAL_KINGDOM)) {
-            player.sendMessage("You can only use this item in the Celestial Kingdom!");
-            return;
-        }
-
-        BossEventListener boss = CustomItems.SATANIC_MAGMABALL.getBoss();
-        if(boss == null) {
-            player.sendMessage(ChatColor.RED + "Error! Please report this to ModMail: Could not summon boss because boss is null!");
-            return;
-        }
-
-        ItemStack item = event.getItem();
-        if(item == null) {
-            player.sendMessage(ChatColor.RED + "Error! Please report this to ModMail: Could not summon boss because item is null!");
-            return;
-        }
-
-        item.setAmount(item.getAmount() - 1);
-        player.getInventory().setItemInMainHand(item);
-        boss.initBossFight(player);
+        tryInitBossFight(event, CustomItems.SATANIC_MAGMABALL, CelestialKingdomListener.CELESTIAL_KINGDOM, "Celestial Kingdom");
     }
 
     @Override
