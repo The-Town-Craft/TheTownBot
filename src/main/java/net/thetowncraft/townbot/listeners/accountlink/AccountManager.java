@@ -1,5 +1,7 @@
 package net.thetowncraft.townbot.listeners.accountlink;
 
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.User;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.util.Constants;
@@ -9,10 +11,13 @@ import net.dv8tion.jda.api.exceptions.HierarchyException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.List;
 
 /**
  * Manages Discord & Minecraft Account linking!
@@ -155,6 +160,47 @@ public class AccountManager {
             }
         });
     }
+
+    public List<EmbedBuilder> getAccountsEmbeds() {
+        List<EmbedBuilder> embeds = new ArrayList<>();
+        EmbedBuilder embed = new EmbedBuilder();
+        embed.setAuthor("Linked Accounts", null, Constants.THE_TOWN.getIconUrl());
+        embed.setColor(Constants.GREEN);
+        int i = 1;
+        for(Map.Entry<String, String> entry : DISCORD_ACCOUNTS.entrySet()) {
+            Member member = Constants.THE_TOWN.getMemberById(entry.getKey());
+            if(member == null) continue;
+
+            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(entry.getValue()));
+            embed.appendDescription("\n" + player.getName() + " <----> " + member.getAsMention());
+            i++;
+            if(i > 20) {
+                embeds.add(embed);
+                embed = new EmbedBuilder();
+                embed.setColor(Constants.GREEN);
+                i = 1;
+            }
+        }
+        embeds.add(embed);
+        return embeds;
+    }
+
+    public void unlink(OfflinePlayer player) {
+        Member member = getDiscordMember(player);
+        if(member == null) return;
+
+        DISCORD_ACCOUNTS.remove(member.getId());
+        MINECRAFT_ACCOUNTS.remove(player.getUniqueId().toString());
+    }
+
+    public void unlink(Member member) {
+        OfflinePlayer player = getMinecraftPlayer(member);
+        if(player == null) return;
+
+        DISCORD_ACCOUNTS.remove(member.getId());
+        MINECRAFT_ACCOUNTS.remove(player.getUniqueId().toString());
+    }
+
     public String generatePassword(OfflinePlayer player) {
         int password = (int) Math.round(Math.random() * 100000);
         PASSWORDS.put(String.valueOf(password), player.getUniqueId().toString());

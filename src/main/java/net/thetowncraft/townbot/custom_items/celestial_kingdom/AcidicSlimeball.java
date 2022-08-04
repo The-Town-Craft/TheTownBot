@@ -48,7 +48,7 @@ public class AcidicSlimeball extends CustomItem {
         double vx = (speed) * Math.sin(angle);
         double vz = (speed) * Math.cos(angle);
 
-        return new Vector(vx, speed, vz);
+        return new Vector(vx, speed * 0.7, vz);
     }
 
     @Override

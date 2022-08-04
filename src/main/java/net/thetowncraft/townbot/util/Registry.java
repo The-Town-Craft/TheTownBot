@@ -16,6 +16,8 @@ import net.thetowncraft.townbot.economy.shop.commands.*;
 import net.thetowncraft.townbot.hub.HubCommand;
 import net.thetowncraft.townbot.custom_items.mystic_realm.ItemDropListener;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
+import net.thetowncraft.townbot.listeners.accountlink.commands.AccountsCommand;
+import net.thetowncraft.townbot.listeners.accountlink.commands.UnlinkCommand;
 import net.thetowncraft.townbot.listeners.discord.commands.AddActivityPointsCommand;
 import net.thetowncraft.townbot.listeners.discord.commands.*;
 import net.thetowncraft.townbot.listeners.minecraft.commands.*;
@@ -64,6 +66,10 @@ public class Registry {
                 //Activity Points
                 new AddActivityPointsCommand(),
                 new SubtractActivityPointsCommand(),
+
+                //Account Link
+                new AccountsCommand(),
+                new UnlinkCommand(),
 
                 //Economy
                 new AddCoins(),

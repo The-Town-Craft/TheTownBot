@@ -55,6 +55,7 @@ net\thetowncraft\townbot\listeners\discord\commands\Ban.class
 net\thetowncraft\townbot\custom_bosses\BossDungeonEventListener.class
 net\thetowncraft\townbot\economy\shop\commands\ToggleItemMinecraft.class
 net\thetowncraft\townbot\listeners\discord\commands\DiscordUnmute.class
+net\thetowncraft\townbot\listeners\accountlink\commands\UnlinkCommand.class
 net\thetowncraft\townbot\listeners\minecraft\chat\Advancements.class
 net\thetowncraft\townbot\listeners\discord\commands\ModMailListener.class
 net\thetowncraft\townbot\listeners\minecraft\commands\ActiveCommand.class
@@ -83,6 +84,7 @@ net\thetowncraft\townbot\custom_bosses\bosses\mystic_realm\WickedHunterBoss.clas
 net\thetowncraft\townbot\economy\shop\ShopManager.class
 net\thetowncraft\townbot\listeners\minecraft\anticheat\XrayDetection.class
 net\thetowncraft\townbot\util\data\Data.class
+net\thetowncraft\townbot\listeners\accountlink\commands\AccountsCommand.class
 net\thetowncraft\townbot\listeners\minecraft\chat\WorldChange.class
 net\thetowncraft\townbot\util\Registry.class
 net\thetowncraft\townbot\custom_items\mystic_realm\HunterSword.class
