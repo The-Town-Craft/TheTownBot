@@ -28,6 +28,7 @@ import net.thetowncraft.townbot.listeners.discord.ServerStart;
 import net.thetowncraft.townbot.listeners.discord.fun.Skin;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.AFKListener;
 import net.dv8tion.jda.api.JDABuilder;
+import net.thetowncraft.townbot.listeners.patches.Vanish;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -125,6 +126,7 @@ public class Registry {
                 new ItemDropListener(),
                 new MaintenanceListener(),
                 new ShopItemListener(),
+                new Vanish(),
 
                 new MysticRealmListener(),
                 new CelestialKingdomListener(),

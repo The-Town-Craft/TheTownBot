@@ -4,6 +4,7 @@ import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.dimension.CelestialKingdomListener;
 import net.thetowncraft.townbot.dimension.MysticRealmListener;
+import net.thetowncraft.townbot.listeners.patches.Vanish;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +20,8 @@ public class WorldChange implements Listener {
         Player player = event.getPlayer();
         String name = player.getName();
         World world = player.getLocation().getWorld();
+
+        if(Vanish.isVanished(player)) return;
 
         if(world.getName().contains("nether")) {
             Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:netherrack:818241306198409237> **" + name + "** entered the nether").queue();

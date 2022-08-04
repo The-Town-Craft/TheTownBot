@@ -7,8 +7,11 @@ import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import net.thetowncraft.townbot.listeners.minecraft.chat.Advancements;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.*;
+import org.bukkit.advancement.Advancement;
+import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.data.type.TNT;
 import org.bukkit.boss.BarColor;
@@ -164,6 +167,22 @@ public abstract class BossEventListener implements Listener {
         tnt.setSource(boss);
     }
 
+    public Entity summonEntity(EntityType type, Vector velocity) {
+        if(boss == null) return null;
+        Entity entity = boss.getWorld().spawnEntity(boss.getLocation(), type);
+        entity.setVelocity(velocity);
+        return entity;
+    }
+
+    public void lightning() {
+        Location targetPos = player.getLocation();
+        world.playSound(targetPos, Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1f, 0.2f);
+        player.addPotionEffect(PotionEffectType.NIGHT_VISION.createEffect(30, 0));
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
+            world.spawnEntity(targetPos, EntityType.LIGHTNING);
+        }, 30);
+    }
+
     public void sendBossChallengeMsg(Player player) {
         Bukkit.getServer().broadcastMessage(player.getName() + " " + getChallengeMessage() + " " + getBossTitleColor() + getBossName());
         Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> " + getBossEmoji() + " **" + player.getName() + "** " + getChallengeMessage() + " **" + getBossName() + "**").queue();
@@ -182,6 +201,49 @@ public abstract class BossEventListener implements Listener {
         Bukkit.getServer().broadcastMessage(player.getName() + " has defeated " + getBossTitleColor() + getBossName());
     }
 
+    @EventHandler
+    public void onLightning(EntityDamageEvent event) {
+        Entity entity = event.getEntity();
+        if(!entity.getWorld().getName().equals(world.getName())) return;
+        if(!superLightning()) return;
+
+        if(entity instanceof Player) {
+            if(event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
+                onSuperLightning(entity);
+            }
+        }
+    }
+
+    public void onSuperLightning(Entity entity) {
+        Player player = (Player) entity;
+        player.setHealth(2);
+        entity.setVelocity(new Vector(entity.getVelocity().getX(), 1, entity.getVelocity().getZ()));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200,1, false, false, false));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100,1));
+    }
+
+    public boolean superLightning() {
+        return false;
+    }
+    public boolean superTNT() {
+        return false;
+    }
+
+    @EventHandler
+    public void tntExplode(EntityExplodeEvent event) {
+        Entity entity = event.getEntity();
+        if(!entity.getWorld().getName().equals(world.getName())) return;
+
+        if(entity.getType() == EntityType.PRIMED_TNT) {
+            if(superTNT()) onSuperTNT(event);
+        }
+    }
+
+    public void onSuperTNT(EntityExplodeEvent event) {
+        Location pos = event.getLocation();
+        pos.getWorld().strikeLightning(pos);
+    }
+
     public void sendBossBeingChallengedMessage(Player player) {
         player.sendMessage(ChatColor.RED + "This boss is already being challenged");
     }
@@ -196,6 +258,10 @@ public abstract class BossEventListener implements Listener {
         if(role == null) return;
 
         member.getGuild().addRoleToMember(member, role).queue();
+    }
+
+    public void addBossAdvancement() {
+//        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "advancement ");
     }
 
     public void sendBossTitleEffects(Player player) {
@@ -334,10 +400,20 @@ public abstract class BossEventListener implements Listener {
         bossBar.removeAll();
         event.getDrops().add(this.getBossItem().createItemStack(1));
         addBossRole();
+        addBossAdvancement();
         sendVictoryMsg();
         clearEntities();
+        clearStatusEffects();
         if(player != null) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 10));
+        }
+    }
+
+    public void clearStatusEffects() {
+        if(player != null) {
+            for(PotionEffect effect : player.getActivePotionEffects()) {
+                player.removePotionEffect(effect.getType());
+            }
         }
     }
 
@@ -405,10 +481,16 @@ public abstract class BossEventListener implements Listener {
     public void onClickSign(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         if(!player.getWorld().getName().equals(world.getName())) return;
+        if(player.getGameMode() != GameMode.ADVENTURE) return;
         if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if(event.getClickedBlock().getType().name().contains("SIGN")) {
                 resetFight();
-                player.teleport(prevPlayerLocation);
+                if(prevPlayerLocation != null) player.teleport(prevPlayerLocation);
+                else {
+                    Location bed = player.getBedSpawnLocation();
+                    if(bed != null) player.teleport(bed);
+                    else player.teleport(Plugin.SPAWN_LOCATION);
+                }
             }
         }
     }

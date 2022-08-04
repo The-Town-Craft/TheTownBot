@@ -26,13 +26,20 @@ public class AcidicCreeperBoss extends BossEventListener {
     public void initAttacks() {
         addAttack(this::zombie, 0, 400);
         addAttack(this::slime, 200, 400);
+
         addAttack(this::dodge, 50, 100);
         addAttack(this::slam, 100, 200);
+        addAttack(this::tnt, 150, 200);
+    }
+
+    public void tnt() {
+        summonTNT(new Vector(0,0,0));
     }
 
     public void zombie() {
         if(world == null) return;
         if(boss == null) return;
+        if(!bossHalfHealth) return;
         Zombie zombie = (Zombie) world.spawnEntity(boss.getLocation(), EntityType.ZOMBIE);
         zombie.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
         zombie.setHealth(40);
@@ -50,10 +57,22 @@ public class AcidicCreeperBoss extends BossEventListener {
         super.onSlam(event, boss);
         Location pos = event.getEntity().getLocation();
         pos.getWorld().playSound(pos, Sound.ENTITY_SLIME_SQUISH, 1, 1);
-        summonTNT(new Vector(0.5, 0, 0));
-        summonTNT(new Vector(-0.5, 0, 0));
-        summonTNT(new Vector(0, 0, 0.5));
-        summonTNT(new Vector(0, 0, -0.5));
+        if(bossHalfHealth) {
+            summonTNT(new Vector(0.5, 0, 0));
+            summonTNT(new Vector(-0.5, 0, 0));
+            summonTNT(new Vector(0, 0, 0.5));
+            summonTNT(new Vector(0, 0, -0.5));
+        }
+    }
+
+    @Override
+    public boolean superLightning() {
+        return true;
+    }
+
+    @Override
+    public boolean superTNT() {
+        return true;
     }
 
     @EventHandler
@@ -73,12 +92,14 @@ public class AcidicCreeperBoss extends BossEventListener {
     }
 
     public void slam() {
-        slam(40);
+        if(bossHalfHealth) slam(50);
+        else levitate(30);
     }
 
     @Override
     public void dodge() {
         dodge(1);
+        tnt();
     }
 
     @EventHandler
@@ -131,7 +152,7 @@ public class AcidicCreeperBoss extends BossEventListener {
 
     @Override
     public double getBossHealth() {
-        return 500;
+        return 300;
     }
 
     @Override

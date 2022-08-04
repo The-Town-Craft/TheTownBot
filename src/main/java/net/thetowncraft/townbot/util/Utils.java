@@ -1,6 +1,10 @@
 package net.thetowncraft.townbot.util;
 
 import net.thetowncraft.townbot.Plugin;
+import net.thetowncraft.townbot.listeners.patches.Vanish;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.metadata.MetadataValue;
 
 import java.io.File;
 import java.text.DateFormatSymbols;
@@ -63,5 +67,15 @@ public class Utils {
 
     public static String capFirstLetter(String string) {
         return string.substring(0,1).toUpperCase() + string.substring(1).toLowerCase();
+    }
+
+    //Gets all players that are not vanished
+    public static List<Player> getEffectiveOnlinePlayers() {
+        List<Player> effectivePlayers = new ArrayList<>();
+        Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
+        for(Player player : onlinePlayers) {
+            if(!Vanish.isVanished(player)) effectivePlayers.add(player);
+        }
+        return effectivePlayers;
     }
 }

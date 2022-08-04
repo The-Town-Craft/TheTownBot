@@ -33,14 +33,6 @@ public class BlazingWitherBoss extends BossEventListener {
         this.addAttack(this::tnt, 40, 160);
     }
 
-    public void lightning() {
-        Location targetPos = player.getLocation();
-
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
-            world.spawnEntity(targetPos, EntityType.LIGHTNING);
-        }, 30);
-    }
-
     @Override
     public void dodge() {
         super.dodge(5);
@@ -91,25 +83,9 @@ public class BlazingWitherBoss extends BossEventListener {
         initBossFight(player);
     }
 
-    @EventHandler
-    public void onDamage(EntityDamageEvent event) {
-        Entity entity = event.getEntity();
-        if(!entity.getWorld().getName().equals(world.getName())) return;
-
-        if(entity instanceof Player) {
-
-            if(event.getCause() != EntityDamageEvent.DamageCause.FIRE_TICK) entity.setFireTicks(100);
-
-            if(event.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
-                ((Player) entity).setHealth(2);
-                entity.setVelocity(new Vector(entity.getVelocity().getX(), 1, entity.getVelocity().getZ()));
-                ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200,1, false, false, false));
-                ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100,1));
-            }
-            if(event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
-                ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100,1));
-            }
-        }
+    @Override
+    public boolean superLightning() {
+        return true;
     }
 
     @EventHandler

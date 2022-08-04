@@ -22,6 +22,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 
+import java.awt.*;
+
 
 public class MinecraftChatListener implements Listener {
 
@@ -93,47 +95,59 @@ public class MinecraftChatListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		AccountManager manager = AccountManager.getInstance();
-		Player player = event.getPlayer();
-		if(!manager.isLinked(player)) {
-			return;
-		}
-		String playerName = event.getPlayer().getName();
-		EmbedBuilder embed = new EmbedBuilder();
-		embed.setAuthor(playerName + " joined the game", null, SkinRender.renderHead(event.getPlayer()));
-		embed.setColor(0x50bb5f);
-
-		Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+		sendPlayerJoinMessage(event.getPlayer());
 	}
 	
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		Player player = event.getPlayer();
-		if(!manager.isLinked(player)) {
-			return;
-		}
-		String playerName = event.getPlayer().getName();
-		EmbedBuilder embed = new EmbedBuilder();
-		embed.setAuthor(playerName + " left the game", null, SkinRender.renderHead(event.getPlayer()));
-		embed.setColor(0xb83838);
-		
-		Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
-		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
+		sendPlayerLeaveMessage(event.getPlayer());
 	}
 
 	@EventHandler
 	public void onPlayerKick(PlayerKickEvent event) {
-		Player player = event.getPlayer();
-		if(!manager.isLinked(player)) {
+		sendPlayerKickMessage(event.getPlayer(), event.getReason());
+	}
+
+	public static void sendPlayerJoinMessage(Player player) {
+		if(!AccountManager.getInstance().isLinked(player)) {
 			return;
 		}
-		String playerName = event.getPlayer().getName();
-		EmbedBuilder embed = new EmbedBuilder();
-		embed.setAuthor(playerName + " was kicked", null, SkinRender.renderHead(event.getPlayer()));
-		embed.setDescription("Reason: " + event.getReason());
-		embed.setColor(0xb83838);
+		EmbedBuilder embed = getJoinLeaveEmbed(player, "joined the game", Constants.GREEN);
+		if(embed != null) sendMcChatEmbed(embed);
+	}
 
+	public static void sendPlayerKickMessage(Player player, String reason) {
+		if(!AccountManager.getInstance().isLinked(player)) {
+			return;
+		}
+
+		EmbedBuilder embed = getJoinLeaveEmbed(player, "was kicked", Constants.RED);
+		if(embed == null) return;
+
+		embed.setDescription("Reason: " + reason);
+		sendMcChatEmbed(embed);
+	}
+
+	public static void sendPlayerLeaveMessage(Player player) {
+		if(!AccountManager.getInstance().isLinked(player)) {
+			return;
+		}
+		EmbedBuilder embed = getJoinLeaveEmbed(player, "left the game", Constants.RED);
+		if(embed != null) sendMcChatEmbed(embed);
+	}
+
+	public static EmbedBuilder getJoinLeaveEmbed(Player player, String action, int color) {
+		if(!AccountManager.getInstance().isLinked(player)) {
+			return null;
+		}
+		String playerName = player.getName();
+		EmbedBuilder embed = new EmbedBuilder();
+		embed.setColor(color);
+		embed.setAuthor(playerName + " " + action, null, SkinRender.renderHead(player));
+		return embed;
+	}
+
+	public static void sendMcChatEmbed(EmbedBuilder embed) {
 		Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).queue();
 		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 	}

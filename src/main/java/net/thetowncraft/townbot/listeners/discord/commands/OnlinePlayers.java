@@ -6,6 +6,7 @@ import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.AFKManager;
 import net.thetowncraft.townbot.util.Constants;
+import net.thetowncraft.townbot.util.Utils;
 import org.bukkit.Bukkit;
 
 import net.thetowncraft.townbot.Bot;
@@ -16,12 +17,13 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
+import java.util.List;
 
 public class OnlinePlayers extends DiscordCommand {
 
 	@Override
 	public void execute(CommandEvent.Discord event) {
-		Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
+		List<Player> players = Utils.getEffectiveOnlinePlayers();
 		int playerCount = players.size();
 
 		EmbedBuilder embed = new EmbedBuilder();

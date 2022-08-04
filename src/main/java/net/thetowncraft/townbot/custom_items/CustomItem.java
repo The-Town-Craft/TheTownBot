@@ -53,7 +53,7 @@ public abstract class CustomItem {
         player.setCooldown(getBaseItem(), 20);
 
         if(!player.getWorld().getName().equals(requiredWorld)) {
-            player.sendMessage("You can only use this item in the " + requiredWorldName + "!");
+            player.sendMessage(ChatColor.RED + "You can only use this item in the " + requiredWorldName + "!");
             return;
         }
 
@@ -69,9 +69,10 @@ public abstract class CustomItem {
             return;
         }
 
-        item.setAmount(item.getAmount() - 1);
-        player.getInventory().setItemInMainHand(item);
-        boss.initBossFight(player);
+        if(boss.initBossFight(player)) {
+            item.setAmount(item.getAmount() - 1);
+            player.getInventory().setItemInMainHand(item);
+        }
     }
 
     public void procOnHit(Player player, int itemAmount, LivingEntity target, World world) {

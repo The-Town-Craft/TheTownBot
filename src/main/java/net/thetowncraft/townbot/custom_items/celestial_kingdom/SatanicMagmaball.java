@@ -16,34 +16,12 @@ public class SatanicMagmaball extends CustomItem {
 
     @Override
     public void onClick(PlayerInteractEvent event) {
+        Vector vector = AcidicSlimeball.getVectorFromClick(event, this, 1.8, 10, "Hellfire Ghast");
+        if(vector == null) return;
+
         Player player = event.getPlayer();
-        if(event.getAction() != Action.LEFT_CLICK_BLOCK) return;
-
-        Block block = event.getClickedBlock();
-        if(block == null) return;
-
-        if(!canUse(player)) {
-            event.getPlayer().sendMessage(ChatColor.RED + "You must defeat the Hellfire Ghast to use this item.");
-            return;
-        }
-
-        if(player.getCooldown(getBaseItem()) != 0) return;
-
-        int targetX = block.getX();
-        int targetZ = block.getZ();
-
-        double speed = 1.5;
-
-        int cooldown = 10;
-
-        player.setCooldown(getBaseItem(), cooldown);
-
-        double angle = Math.atan2(targetX - player.getLocation().getX(), targetZ - player.getLocation().getZ());
-        double vx = (speed) * Math.sin(angle);
-        double vz = (speed) * Math.cos(angle);
-
-        player.setVelocity(new Vector(-vx, speed, -vz));
-        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_MAGMA_CUBE_SQUISH, 0.5f, 0.3f);
+        player.setVelocity(vector);
+        player.getWorld().playSound(player.getLocation(), Sound.ENTITY_MAGMA_CUBE_SQUISH, 1f, 0.5f);
     }
 
     @Override

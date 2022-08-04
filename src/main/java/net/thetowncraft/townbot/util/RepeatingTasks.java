@@ -52,7 +52,7 @@ public class RepeatingTasks {
      * Counts and updates the player activity points for every player on the server
      */
     private static void countActivityPoints() {
-        for(Player offlinePlayer : Bukkit.getOnlinePlayers()) {
+        for(Player offlinePlayer : Utils.getEffectiveOnlinePlayers()) {
 
             Player player = offlinePlayer.getPlayer();
             if(player == null) continue;
@@ -84,7 +84,7 @@ public class RepeatingTasks {
 
     private static void countAFKTicks() {
 
-        for(Player player : Bukkit.getOnlinePlayers()) {
+        for(Player player : Utils.getEffectiveOnlinePlayers()) {
 
             int x = (int) player.getVelocity().getX();
             int y = (int) player.getVelocity().getY();

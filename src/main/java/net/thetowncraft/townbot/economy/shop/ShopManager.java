@@ -72,11 +72,11 @@ public class ShopManager {
         OfflinePlayer player = AccountManager.getInstance().getMinecraftPlayer(member);
 
         if(player == null) url = member.getUser().getEffectiveAvatarUrl();
-        else url = SkinRender.renderHead(player);
+        else url = SkinRender.renderFace(player);
 
         EmbedBuilder embed = new EmbedBuilder();
         embed.setColor(Color.GREEN);
-        embed.setAuthor(member.getEffectiveName() + "'s Purchases", url);
+        embed.setAuthor(member.getEffectiveName() + "'s Purchases", null, url);
         for(ShopItem item : getPurchases(member)) {
             if(item.isOff(member)) embed.appendDescription("\n*" + item.getName() + "* (Disabled)");
             else embed.appendDescription("\n**" + item.getName() + "**");
