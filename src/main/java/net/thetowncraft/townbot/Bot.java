@@ -3,8 +3,7 @@ package net.thetowncraft.townbot;
 import javax.security.auth.login.LoginException;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.thetowncraft.townbot.listeners.discord.commands.ModMail;
+import net.thetowncraft.townbot.modmail.ModMail;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.Registry;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -16,7 +15,6 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.thetowncraft.townbot.util.data.Config;
-import org.bukkit.Bukkit;
 
 public class Bot {
 

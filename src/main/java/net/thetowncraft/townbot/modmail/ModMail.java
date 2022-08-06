@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.listeners.discord.commands;
+package net.thetowncraft.townbot.modmail;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;

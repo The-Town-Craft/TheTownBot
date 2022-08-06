@@ -31,42 +31,23 @@ public class MinecraftChatListener implements Listener {
 
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
-
+		event.setCancelled(true);
 		String message = event.getMessage();
 		String name = event.getPlayer().getName();
 		Player player = event.getPlayer();
 
 		if(message.contains("@everyone") || message.contains("@here")) {
-			event.setCancelled(true);
 			return;
 		}
 		MuteManager mute = new MuteManager();
 		if(mute.isMuted(player)) {
-			event.setCancelled(true);
 			player.sendMessage(ChatColor.RED + "You are muted and cannot send messages!");
 			return;
 		}
 
-		Member member = AccountManager.getInstance().getDiscordMember(player);
-
-		if(member.getRoles().contains(Constants.MAYOR_ROLE)) {
-			Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:amethyst:861508476471345152> **<" + name + ">** " + message).queue();
-			Bukkit.getServer().broadcastMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "[MAYOR] <" + ChatColor.AQUA + player.getName() + ChatColor.DARK_PURPLE + "> " + ChatColor.RESET + message);
-			event.setCancelled(true);
-			return;
-		}
-		if(member.getRoles().contains(Constants.DONATOR_ROLE)) {
-			Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:amethyst:861508476471345152> **<" + name + ">** " + message).queue();
-			Bukkit.getServer().broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "[DONATOR] <" + ChatColor.LIGHT_PURPLE + player.getName() + ChatColor.RED + "" + ChatColor.BOLD + "> " + ChatColor.RESET + message);
-			event.setCancelled(true);
-			return;
-		}
-		if(member.getRoles().contains(Constants.ACTIVE_PLAYER_ROLE)) {
-			Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:minecraft_icon:790295561307684925> **<" + name + ">** " + message).queue();
-			Bukkit.getServer().broadcastMessage("<" + ChatColor.AQUA + player.getName() + ChatColor.RESET + "> " + message);
-			event.setCancelled(true);
-			return;
-		}
+		AccountManager manager = AccountManager.getInstance();
+		Member member = manager.getDiscordMember(player);
+		Bukkit.getServer().broadcastMessage("<" + manager.getMinecraftChatColor(member) + name + ChatColor.RESET + "> " + message);
 
 		Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:minecraft_icon:790295561307684925> **<" + name + ">** " + message).queue();
 	}
@@ -109,11 +90,8 @@ public class MinecraftChatListener implements Listener {
 	}
 
 	public static void sendPlayerJoinMessage(Player player) {
-		if(!AccountManager.getInstance().isLinked(player)) {
-			return;
-		}
 		EmbedBuilder embed = getJoinLeaveEmbed(player, "joined the game", Constants.GREEN);
-		if(embed != null) sendMcChatEmbed(embed);
+		sendMcChatEmbed(embed);
 	}
 
 	public static void sendPlayerKickMessage(Player player, String reason) {
@@ -122,24 +100,17 @@ public class MinecraftChatListener implements Listener {
 		}
 
 		EmbedBuilder embed = getJoinLeaveEmbed(player, "was kicked", Constants.RED);
-		if(embed == null) return;
 
 		embed.setDescription("Reason: " + reason);
 		sendMcChatEmbed(embed);
 	}
 
 	public static void sendPlayerLeaveMessage(Player player) {
-		if(!AccountManager.getInstance().isLinked(player)) {
-			return;
-		}
 		EmbedBuilder embed = getJoinLeaveEmbed(player, "left the game", Constants.RED);
-		if(embed != null) sendMcChatEmbed(embed);
+		sendMcChatEmbed(embed);
 	}
 
 	public static EmbedBuilder getJoinLeaveEmbed(Player player, String action, int color) {
-		if(!AccountManager.getInstance().isLinked(player)) {
-			return null;
-		}
 		String playerName = player.getName();
 		EmbedBuilder embed = new EmbedBuilder();
 		embed.setColor(color);

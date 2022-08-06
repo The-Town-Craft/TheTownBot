@@ -8,6 +8,7 @@ import net.thetowncraft.townbot.economy.EconomyManager;
 import net.thetowncraft.townbot.economy.shop.ShopItemListener;
 import net.thetowncraft.townbot.economy.shop.ShopManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.minecraft.commands.MaintenanceCommand;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
 import net.thetowncraft.townbot.util.Constants;
@@ -58,6 +59,7 @@ public class Plugin extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, PlayerCountStatus::update, 5000, RepeatingTasks.REPEATING_TICKS);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ShopItemListener::updateItems, 10, 10);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, MysticRealmListener::checkBiomeEffects, 60, 60);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, LinkAccount::checkLink, 20, 20);
         SPAWN_LOCATION = new Location(Bukkit.getWorld(OVERWORLD_NAME),-161, 64, 230);
     }
 

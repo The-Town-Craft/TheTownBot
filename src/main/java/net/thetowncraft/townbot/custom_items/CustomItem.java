@@ -98,7 +98,7 @@ public abstract class CustomItem {
 
     public boolean canUse(Player player) {
         Member member = AccountManager.getInstance().getDiscordMember(player);
-        if(member == null) return false;
+        if(member == null) return true;
 
         BossEventListener boss = this.getBoss();
         if(boss == null) return true;

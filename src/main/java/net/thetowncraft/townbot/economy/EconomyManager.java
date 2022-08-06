@@ -3,7 +3,7 @@ package net.thetowncraft.townbot.economy;
 import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
-import net.thetowncraft.townbot.listeners.discord.commands.ModMail;
+import net.thetowncraft.townbot.modmail.ModMail;
 import net.thetowncraft.townbot.util.data.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

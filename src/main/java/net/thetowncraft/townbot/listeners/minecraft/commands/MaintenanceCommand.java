@@ -1,5 +1,6 @@
 package net.thetowncraft.townbot.listeners.minecraft.commands;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
@@ -29,11 +30,11 @@ public class MaintenanceCommand extends MinecraftCommand {
         }
 
         for(Player player : Bukkit.getOnlinePlayers()) {
-            if(!AccountManager.getInstance().getDiscordMember(player).getRoles().contains(Constants.DEV_ROLE)) {
+            Member member = AccountManager.getInstance().getDiscordMember(player);
+            if(member == null || !member.getRoles().contains(Constants.DEV_ROLE)) {
                 player.kickPlayer(kickMessage);
             }
         }
-
     }
 
     public static void loadData() {

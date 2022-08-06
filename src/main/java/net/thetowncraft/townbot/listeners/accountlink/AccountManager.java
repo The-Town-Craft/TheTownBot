@@ -1,5 +1,6 @@
 package net.thetowncraft.townbot.listeners.accountlink;
 
+import jdk.internal.foreign.abi.Binding;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.thetowncraft.townbot.Bot;
@@ -10,6 +11,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.exceptions.HierarchyException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -23,6 +25,8 @@ import java.util.List;
  * Manages Discord & Minecraft Account linking!
  */
 public class AccountManager {
+
+    public static final Location UNLINKED_DIMENSION = new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_unlinked"), 0, 120, 0);
 
     private AccountManager() {}
 
@@ -40,6 +44,18 @@ public class AccountManager {
 
     public static Map<String, String> getPasswords() {
         return PASSWORDS;
+    }
+
+    public static String getPassword(OfflinePlayer player) {
+        for(String password : getPasswords().keySet()) {
+            String uuidString = getPasswords().get(password);
+            if(uuidString == null) continue;
+
+            if(player.getUniqueId().toString().equals(uuidString)) {
+                return password;
+            }
+        }
+        return getInstance().generatePassword(player);
     }
 
     public static void loadAccounts() {
@@ -91,9 +107,9 @@ public class AccountManager {
         if(discordRank == Constants.MAYOR_ROLE) return ChatColor.DARK_PURPLE;
         if(discordRank == Constants.VICE_MAYOR_ROLE) return ChatColor.GOLD;
         if(discordRank == Constants.LAWYER_ROLE) return ChatColor.YELLOW;
+        if(discordRank == Constants.DONATOR_ROLE) return ChatColor.RED;
         if(discordRank == Constants.PUBLIC_WORKS_ROLE) return ChatColor.DARK_AQUA;
         if(discordRank == Constants.ACTIVE_PLAYER_ROLE) return ChatColor.AQUA;
-        if(discordRank == Constants.DONATOR_ROLE) return ChatColor.RED;
         return ChatColor.GREEN;
 
     }
@@ -126,6 +142,9 @@ public class AccountManager {
         }
 
         member.getGuild().removeRoleFromMember(member, Constants.UNLINKED_ROLE).complete();
+        member.getGuild().removeRoleFromMember(member, Constants.INACTIVE_PLAYER_ROLE).queue();
+        member.getGuild().removeRoleFromMember(member, Constants.MEMBER_ROLE).queue();
+
         member.getGuild().addRoleToMember(member, Constants.TOWN_MEMBER_ROLE).complete();
 
         char color = getMinecraftChatColor(member).getChar();
@@ -134,6 +153,11 @@ public class AccountManager {
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),  "tab player " + player.getName() + " tagprefix &" + color);
+
+            if(member.getRoles().contains(Constants.UNLINKED_ROLE)) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &8 [unlinked]");
+                return;
+            }
 
             if(member.getRoles().contains(Constants.MAYOR_ROLE)) {
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &5 [mayor]");
@@ -147,6 +171,16 @@ public class AccountManager {
 
             if(member.getRoles().contains(Constants.LAWYER_ROLE)) {
                 Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &e [lawyer]");
+                return;
+            }
+
+            if(member.getRoles().contains(Constants.DONATOR_ROLE)) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &4 [donator]");
+                return;
+            }
+
+            if(member.getRoles().contains(Constants.ACTIVE_PLAYER_ROLE)) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "tab player " + player.getName() + " tabsuffix &b [active player]");
                 return;
             }
 

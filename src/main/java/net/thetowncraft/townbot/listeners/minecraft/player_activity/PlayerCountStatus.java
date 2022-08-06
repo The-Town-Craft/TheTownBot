@@ -1,8 +1,11 @@
 package net.thetowncraft.townbot.listeners.minecraft.player_activity;
 
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.managers.Presence;
 import net.thetowncraft.townbot.Bot;
+import net.thetowncraft.townbot.Plugin;
+import net.thetowncraft.townbot.listeners.minecraft.commands.MaintenanceCommand;
 import net.thetowncraft.townbot.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -20,6 +23,14 @@ public class PlayerCountStatus {
         Collection<? extends Player> onlinePlayers = Utils.getEffectiveOnlinePlayers();
         int players = onlinePlayers.size();
         Presence presence = Bot.jda.getPresence();
+
+        if(Plugin.serverUnderMaintenance) {
+            presence.setStatus(OnlineStatus.DO_NOT_DISTURB);
+            presence.setActivity(Activity.playing("Under Maintenance"));
+            return;
+        }
+
+        presence.setStatus(OnlineStatus.ONLINE);
 
         if(players == 0) {
             presence.setActivity(Activity.playing("The Town SMP"));

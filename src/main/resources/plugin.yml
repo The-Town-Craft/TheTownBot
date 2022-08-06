@@ -48,3 +48,6 @@ commands:
 
   toggle:
     description: Toggle purchases on and off.
+
+  link:
+    description: More info about account linking!

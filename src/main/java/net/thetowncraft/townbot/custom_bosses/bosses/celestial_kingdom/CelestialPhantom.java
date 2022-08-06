@@ -10,10 +10,25 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Phantom;
+import org.bukkit.entity.Player;
 
 import java.awt.*;
 
 public class CelestialPhantom extends BossEventListener {
+
+    @Override
+    public void spawnBoss() {
+        super.spawnBoss();
+        if(boss == null) {
+            System.out.println("boss == null " + getClass());
+            return;
+        }
+
+        Phantom phantom = (Phantom) this.boss;
+        phantom.setSize(20);
+    }
 
     @Override
     public String getBossName() {

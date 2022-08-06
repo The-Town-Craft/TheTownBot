@@ -1,5 +1,6 @@
-package net.thetowncraft.townbot.listeners.discord.commands;
+package net.thetowncraft.townbot.modmail;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -18,16 +19,18 @@ import java.util.Map;
 public class ModMailListener extends ListenerAdapter {
 
 	public static final Map<String, String> MESSAGES = new HashMap<>();
+	public static final Map<String, Long> LAST_MODMAIL = new HashMap<>();
 
 	public void onPrivateMessageReceived(PrivateMessageReceivedEvent event) {
 		if(!event.getAuthor().isBot()) {
 			String message = event.getMessage().getContentDisplay();
-			String member = event.getJDA().getGuildById(Constants.TOWN_DISCORD_ID).getMember(event.getAuthor()).getEffectiveName();
+			Member member = event.getJDA().getGuildById(Constants.TOWN_DISCORD_ID).getMember(event.getAuthor());
+			String memberName = member.getEffectiveName();
 			List<Message.Attachment> attachments = event.getMessage().getAttachments();
 
 			EmbedBuilder embed = new EmbedBuilder();
 			embed.setDescription(message);
-			embed.setAuthor("DM from " + member, null, event.getAuthor().getEffectiveAvatarUrl());
+			embed.setAuthor("DM from " + memberName, null, event.getAuthor().getEffectiveAvatarUrl());
 			embed.setFooter("User ID: " + event.getAuthor().getId(), Constants.THE_TOWN.getIconUrl());
 			embed.setColor(Constants.GREEN);
 
@@ -37,16 +40,31 @@ public class ModMailListener extends ListenerAdapter {
 			}
 
 			if(attachments.size() > 1) {
-				event.getChannel().sendMessage(member + " uploaded " + attachments.size() + " attachments").queue();
+				event.getChannel().sendMessage(memberName + " uploaded " + attachments.size() + " attachments").queue();
 				for(Message.Attachment attachment : attachments) {
 					String url = attachment.getUrl();
 					event.getChannel().sendMessage(url).queue();
 				}
 			}
-			
-			event.getJDA().getTextChannelById("781421376086999040").sendMessage("[" + Constants.STAFF_ROLE.getAsMention() + "]").embed(embed.build()).queue(msg -> {
-				MESSAGES.put(msg.getId(), event.getAuthor().getId());
-			});
+			TextChannel modMail = event.getJDA().getTextChannelById(Constants.MODMAIL);
+			Long lastModmail = LAST_MODMAIL.get(member.getId());
+			if(lastModmail == null) {
+				modMail.sendMessage("[" + Constants.STAFF_ROLE.getAsMention() + "]").embed(embed.build()).queue(msg -> {
+					MESSAGES.put(msg.getId(), event.getAuthor().getId());
+				});
+			}
+			else if(System.currentTimeMillis() < lastModmail + 20000) {
+				modMail.sendMessage(embed.build()).queue(msg -> {
+					MESSAGES.put(msg.getId(), event.getAuthor().getId());
+				});
+			}
+			else {
+				modMail.sendMessage("[" + Constants.STAFF_ROLE.getAsMention() + "]").embed(embed.build()).queue(msg -> {
+					MESSAGES.put(msg.getId(), event.getAuthor().getId());
+				});
+			}
+
+			LAST_MODMAIL.put(member.getId(), System.currentTimeMillis());
 		}
 	}
 

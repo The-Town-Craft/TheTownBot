@@ -18,6 +18,9 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 public class AcidicCreeperBoss extends BossEventListener {
@@ -28,12 +31,32 @@ public class AcidicCreeperBoss extends BossEventListener {
         addAttack(this::slime, 200, 400);
 
         addAttack(this::dodge, 50, 100);
+        addAttack(this::poison, 75, 100);
         addAttack(this::slam, 100, 200);
         addAttack(this::tnt, 150, 200);
     }
 
     public void tnt() {
         summonTNT(new Vector(0,0,0));
+    }
+
+    public void poison() {
+        world.playSound(boss.getLocation(), Sound.ENTITY_LINGERING_POTION_THROW, 5f,  0.7f);
+
+        Location pos = player.getLocation();
+        ThrownPotion potion = (ThrownPotion) world.spawnEntity(new Location(world, pos.getX(), pos.getY() + 10, pos.getZ()), EntityType.SPLASH_POTION);
+        ItemStack potionItem = new ItemStack(Material.LINGERING_POTION);
+        PotionMeta meta = ((PotionMeta) potionItem.getItemMeta());
+        if(meta == null) {
+            System.out.println("Meta is null! " + getClass());
+            return;
+        }
+
+        meta.setColor(Color.GREEN);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 100, 1), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 1), true);
+        potionItem.setItemMeta(meta);
+        potion.setItem(potionItem);
     }
 
     public void zombie() {
@@ -192,11 +215,11 @@ public class AcidicCreeperBoss extends BossEventListener {
 
     @Override
     public Location getBossSpawnLocation() {
-        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_slime"), 0, 100, 0, 0, 0);
+        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_slime"), 0, 100, 375, 180, 0);
     }
 
     @Override
     public Location getPlayerSpawnLocation() {
-        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_slime"), 0, 100, 50, 180, 0);
+        return new Location(Bukkit.getWorld(Plugin.OVERWORLD_NAME + "_thetown_slime"), 0, 100, 365, 0, 0);
     }
 }
