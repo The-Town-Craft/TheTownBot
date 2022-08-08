@@ -5,14 +5,14 @@ import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.discord.ExampleCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.custom_bosses.bosses.celestial_kingdom.AcidicCreeperBoss;
-import net.thetowncraft.townbot.custom_bosses.bosses.celestial_kingdom.CelestialPhantom;
+import net.thetowncraft.townbot.custom_bosses.bosses.celestial_kingdom.Caretaker;
 import net.thetowncraft.townbot.custom_bosses.bosses.celestial_kingdom.HellfireGhast;
 import net.thetowncraft.townbot.custom_bosses.bosses.mystic_realm.*;
 import net.thetowncraft.townbot.dimension.CelestialKingdomListener;
 import net.thetowncraft.townbot.dimension.MysticRealmListener;
-import net.thetowncraft.townbot.economy.commands.*;
-import net.thetowncraft.townbot.economy.shop.ShopItemListener;
-import net.thetowncraft.townbot.economy.shop.commands.*;
+import net.thetowncraft.townbot.factions.economy.commands.*;
+import net.thetowncraft.townbot.factions.economy.shop.ShopItemListener;
+import net.thetowncraft.townbot.factions.economy.shop.commands.*;
 import net.thetowncraft.townbot.hub.HubCommand;
 import net.thetowncraft.townbot.custom_items.mystic_realm.ItemDropListener;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
@@ -28,6 +28,7 @@ import net.thetowncraft.townbot.listeners.discord.DiscordChatListener;
 import net.thetowncraft.townbot.listeners.discord.MemberJoin;
 import net.thetowncraft.townbot.listeners.discord.ServerStart;
 import net.thetowncraft.townbot.listeners.discord.fun.Skin;
+import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.AFKListener;
 import net.dv8tion.jda.api.JDABuilder;
 import net.thetowncraft.townbot.listeners.patches.Vanish;
@@ -50,6 +51,7 @@ public class Registry {
                 new Help(),
                 new DiscordActiveCommand(),
                 new OnlinePlayers(),
+                new MaintenanceDiscord(),
                 new Skin(),
 
                 //Staff Commands
@@ -135,6 +137,7 @@ public class Registry {
                 new MaintenanceListener(),
                 new ShopItemListener(),
                 new Vanish(),
+                new PlayerCountStatus(),
 
                 new MysticRealmListener(),
                 new CelestialKingdomListener(),
@@ -142,7 +145,7 @@ public class Registry {
                 //Celestial Bosses
                 new AcidicCreeperBoss(),
                 new HellfireGhast(),
-                new CelestialPhantom(),
+                new Caretaker(),
 
                 //Mystic Bosses
                 new WickedHunterBoss(),

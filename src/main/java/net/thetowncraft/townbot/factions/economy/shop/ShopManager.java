@@ -1,16 +1,14 @@
-package net.thetowncraft.townbot.economy.shop;
+package net.thetowncraft.townbot.factions.economy.shop;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Bot;
-import net.thetowncraft.townbot.economy.shop.items.BlazingSpiritShopItem;
-import net.thetowncraft.townbot.economy.shop.items.MysticParticleShopItem;
+import net.thetowncraft.townbot.factions.economy.shop.items.BlazingSpiritShopItem;
+import net.thetowncraft.townbot.factions.economy.shop.items.MysticParticleShopItem;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
-import net.thetowncraft.townbot.listeners.discord.fun.Skin;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.SkinRender;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.awt.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.economy.commands;
+package net.thetowncraft.townbot.factions.economy.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.economy.EconomyManager;
+import net.thetowncraft.townbot.factions.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.util.SkinRender;

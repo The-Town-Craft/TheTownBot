@@ -1,12 +1,12 @@
-package net.thetowncraft.townbot.economy.shop.commands;
+package net.thetowncraft.townbot.factions.economy.shop.commands;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
-import net.thetowncraft.townbot.economy.shop.ShopItem;
-import net.thetowncraft.townbot.economy.shop.ShopManager;
+import net.thetowncraft.townbot.factions.economy.shop.ShopItem;
+import net.thetowncraft.townbot.factions.economy.shop.ShopManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import org.bukkit.OfflinePlayer;
 

@@ -1,8 +1,8 @@
-package net.thetowncraft.townbot.economy.commands;
+package net.thetowncraft.townbot.factions.economy.commands;
 
 import net.dv8tion.jda.api.Permission;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
-import net.thetowncraft.townbot.economy.EconomyManager;
+import net.thetowncraft.townbot.factions.economy.EconomyManager;
 import org.bukkit.OfflinePlayer;
 
 public class SetCoins extends UpdateCoinCommand {

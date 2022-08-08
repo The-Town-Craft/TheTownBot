@@ -52,13 +52,12 @@ public class Bot {
      * Stops & disconnects the bot. This method is invoked when the server stops.
      */
     public static void disable() {
-
         EmbedBuilder embed = new EmbedBuilder();
         embed.setAuthor("Server stopping!", null, Constants.THE_TOWN.getIconUrl());
         embed.setColor(Constants.RED);
         Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
         Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).complete();
-
+        Constants.PLAYER_COUNT_CHANNEL.getManager().setName("Server Offline").complete();
         Bot.jda.shutdownNow();
     }
 }

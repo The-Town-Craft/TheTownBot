@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.economy.shop.items;
+package net.thetowncraft.townbot.factions.economy.shop.items;
 
 import org.bukkit.Particle;
 

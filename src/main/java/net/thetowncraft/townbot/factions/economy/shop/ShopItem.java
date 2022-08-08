@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.economy.shop;
+package net.thetowncraft.townbot.factions.economy.shop;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.entities.Role;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
-import net.thetowncraft.townbot.util.data.Data;
 import org.bukkit.OfflinePlayer;
 
 import java.awt.*;

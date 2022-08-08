@@ -9,35 +9,58 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Phantom;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import java.awt.*;
 
-public class CelestialPhantom extends BossEventListener {
+public class Caretaker extends BossEventListener {
 
     @Override
-    public void spawnBoss() {
-        super.spawnBoss();
-        if(boss == null) {
-            System.out.println("boss == null " + getClass());
-            return;
-        }
+    public void initAttacks() {
+        addAttack(this::clearDarkness, 0, 5);
+        addAttack(this::lightning, 0, 200);
+        addAttack(this::scalingTnt, 100, 200);
+    }
 
-        Phantom phantom = (Phantom) this.boss;
-        phantom.setSize(20);
+
+    @Override
+    public void lightning() {
+        if(bossHalfHealth) super.lightning();
+    }
+
+    public void clearDarkness() {
+        if(player != null && !bossHalfHealth) player.removePotionEffect(PotionEffectType.DARKNESS);
+    }
+
+    @EventHandler
+    public void onDarkness(EntityPotionEffectEvent event) {
+        if(!event.getEntity().equals(player)) return;
+        if(!player.getWorld().getName().equals(world.getName())) return;
+
+        player.removePotionEffect(PotionEffectType.DARKNESS);
+    }
+
+    @Override
+    public boolean superLightning() {
+        return true;
+    }
+
+    @Override
+    public boolean superTNT() {
+        return true;
     }
 
     @Override
     public String getBossName() {
-        return "Celestial Phantom";
+        return "The Caretaker";
     }
 
     @Override
     public String getBossDescription() {
-        return "A chaotic beast unleashed.";
+        return "Warden of Darkness.";
     }
 
     @Override
@@ -47,7 +70,7 @@ public class CelestialPhantom extends BossEventListener {
 
     @Override
     public EntityType getBaseEntity() {
-        return EntityType.PHANTOM;
+        return EntityType.WARDEN;
     }
 
     @Override
@@ -82,12 +105,12 @@ public class CelestialPhantom extends BossEventListener {
 
     @Override
     public Sound getBossMusic() {
-        return Sound.MUSIC_DISC_PIGSTEP;
+        return Sound.MUSIC_DISC_13;
     }
 
     @Override
     public String getDeathMessage() {
-        return "was eaten by";
+        return "was slaughtered by";
     }
 
     @Override

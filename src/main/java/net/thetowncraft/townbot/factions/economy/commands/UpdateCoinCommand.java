@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.economy.commands;
+package net.thetowncraft.townbot.factions.economy.commands;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;

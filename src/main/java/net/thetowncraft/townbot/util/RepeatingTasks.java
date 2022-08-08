@@ -3,7 +3,7 @@ package net.thetowncraft.townbot.util;
 import net.dv8tion.jda.api.Permission;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
-import net.thetowncraft.townbot.economy.EconomyManager;
+import net.thetowncraft.townbot.factions.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.discord.commands.DiscordActiveCommand;
 import net.thetowncraft.townbot.modmail.ModMail;
@@ -84,6 +84,8 @@ public class RepeatingTasks {
 
         for(Player player : Utils.getEffectiveOnlinePlayers()) {
 
+            if(!AccountManager.getInstance().isLinked(player)) continue;
+
             int x = (int) player.getVelocity().getX();
             int y = (int) player.getVelocity().getY();
             int z = (int) player.getVelocity().getZ();
@@ -136,7 +138,7 @@ public class RepeatingTasks {
             int points = ActivityManager.getActivityPoints(player);
             if(points == 0) {
 
-                if(member.getRoles().contains(Constants.INACTIVE_PLAYER_ROLE)) {
+                if(member.getRoles().contains(Constants.INACTIVE_PLAYER_ROLE) && !member.getRoles().contains(Constants.BUSY_ROLE)) {
                     ModMail.sendModMail(member.getUser(), member.getGuild(), ModMail.randomInactiveMessage(), new ArrayList<>());
                 }
 

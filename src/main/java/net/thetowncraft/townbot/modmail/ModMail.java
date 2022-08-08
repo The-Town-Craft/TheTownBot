@@ -2,10 +2,9 @@ package net.thetowncraft.townbot.modmail;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.exceptions.ErrorHandler;
+import net.dv8tion.jda.api.requests.ErrorResponse;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
@@ -87,6 +86,10 @@ public class ModMail extends DiscordCommand {
         }
     }
 
+    public static void sendModMail(User user, String message) {
+        sendModMail(user, Constants.THE_TOWN, message, new ArrayList<>());
+    }
+
     public static void sendModMail(User user, Guild guild, String message, List<Message.Attachment> attachments) {
         user.openPrivateChannel().queue((channel -> {
 
@@ -95,15 +98,17 @@ public class ModMail extends DiscordCommand {
             embed.setDescription(message);
             embed.setColor(Constants.GREEN);
 
-            channel.sendMessage(embed.build()).queue();
+            channel.sendMessage(embed.build()).queue(message1 -> {
+                Bot.jda.getTextChannelById(Constants.MODMAIL).sendMessage(":white_check_mark: **Success**! ModMail was sent to " + user.getAsMention() + "! Message: \"" + message + "\" ").queue();
+            }, new ErrorHandler().handle(ErrorResponse.CANNOT_SEND_TO_USER,
+                                (ex) -> Bot.jda.getTextChannelById(Constants.MODMAIL).sendMessage(":x: **Error Messaging " + user.getAsMention() + "**! " + ex.getMessage()).queue()));
 
             for(Message.Attachment attachment : attachments) {
                 String url = attachment.getUrl();
                 channel.sendMessage(url).queue();
             }
-
         }));
-        Bot.jda.getTextChannelById(Constants.MODMAIL).sendMessage("**Success!** ModMail was sent to **" + user.getAsTag() + "**!\nMessage: \"*" + message + "*\"").queue();
+
         Member member = guild.getMember(user);
         if(member == null) return;
         OfflinePlayer offPlayer = AccountManager.getInstance().getMinecraftPlayer(member);

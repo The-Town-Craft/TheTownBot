@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.economy;
+package net.thetowncraft.townbot.factions.economy;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Plugin;

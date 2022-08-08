@@ -14,6 +14,7 @@ import net.thetowncraft.townbot.Bot;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -27,14 +28,18 @@ public class OnlinePlayers extends DiscordCommand {
 		int playerCount = players.size();
 
 		EmbedBuilder embed = new EmbedBuilder();
-
-		if(playerCount == 1) embed.setTitle("There is " + playerCount + " player online.");
-		else embed.setTitle("There are " + playerCount + " players online." );
 		embed.setColor(0x50bb5f);
+		embed.setAuthor("The Town SMP", null, Constants.THE_TOWN.getIconUrl());
+		embed.appendDescription("\n**Server IP**: play.thetowncraft.xyz");
+		embed.appendDescription("\n**Version**: Paper 1.19.1");
+		embed.appendDescription("\n**TPS**: " + 20);
+		embed.appendDescription("\n**Online Players**: " + playerCount);
+		embed.appendDescription("\n---------------------");
 		for(Player player : players) {
 			String name = player.getName();
-			if(AFKManager.isAFK(player)) embed.appendDescription("\n[AFK] " + name);
-			else embed.appendDescription("\n" + name);
+			if(!AccountManager.getInstance().isLinked(player)) embed.appendDescription("\n[UNLINKED] *" + name + "*");
+			else if(AFKManager.isAFK(player)) embed.appendDescription("\n[AFK] *" + name + "*");
+			else embed.appendDescription("\n**" + name + "**");
 		}
 		event.getChannel().sendMessage(embed.build()).queue();
 		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
@@ -42,7 +47,7 @@ public class OnlinePlayers extends DiscordCommand {
 
 	@Override
 	public String getName() {
-		return "onlineplayers";
+		return "server";
 	}
 
 	@Override
@@ -52,7 +57,7 @@ public class OnlinePlayers extends DiscordCommand {
 
 	@Override
 	public String[] getAliases() {
-		return new String[]{"online", "onl"};
+		return new String[]{"status", "tps", "version", "onlineplayers", "online", "onl"};
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,15 +21,18 @@ public class MaintenanceCommand extends MinecraftCommand {
     @Override
     public void execute(CommandEvent.Minecraft event) {
         Plugin.serverUnderMaintenance = !Plugin.serverUnderMaintenance;
-        System.out.println("serverUnderMaintenance is now " + Plugin.serverUnderMaintenance);
 
         if(Plugin.serverUnderMaintenance) {
             event.getPlayer().sendMessage(ChatColor.GREEN + "Server is now under maintenance. Only members with the developer role will be able to join.");
+            kickNonDevs();
         }
         else {
             event.getPlayer().sendMessage(ChatColor.GREEN + "Server has been re-opened. Members without the developer role will once again be able to join.");
         }
+        PlayerCountStatus.update();
+    }
 
+    public static void kickNonDevs() {
         for(Player player : Bukkit.getOnlinePlayers()) {
             Member member = AccountManager.getInstance().getDiscordMember(player);
             if(member == null || !member.getRoles().contains(Constants.DEV_ROLE)) {

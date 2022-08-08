@@ -12,6 +12,8 @@ public class Vanish implements Listener {
     @EventHandler
     public void onVanish(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
+        if(!player.isOp()) return;
+
         if(event.getMessage().equals("/vanish")) {
             if(isVanished(player)) MinecraftChatListener.sendPlayerJoinMessage(player);
             else MinecraftChatListener.sendPlayerLeaveMessage(player);

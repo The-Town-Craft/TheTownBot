@@ -1,10 +1,9 @@
-package net.thetowncraft.townbot.economy.shop;
+package net.thetowncraft.townbot.factions.economy.shop;
 
 import net.dv8tion.jda.api.entities.Member;
-import net.thetowncraft.townbot.economy.shop.items.ParticleShopItem;
+import net.thetowncraft.townbot.factions.economy.shop.items.ParticleShopItem;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 

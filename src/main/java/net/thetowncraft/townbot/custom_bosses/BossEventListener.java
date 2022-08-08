@@ -113,6 +113,18 @@ public abstract class BossEventListener implements Listener {
         boss.getWorld().playSound(boss.getLocation(), Sound.ENTITY_WITHER_BREAK_BLOCK, 5, 1);
     }
 
+    public void scalingTnt() {
+        if(bossHalfHealth) {
+            summonTNT(new Vector(1, 0, 0), 50);
+            summonTNT(new Vector(-1, 0, 0), 50);
+            summonTNT(new Vector(0, 0, 1), 50);
+            summonTNT(new Vector(0, 0, -1), 50);
+        }
+        else {
+            summonTNT(new Vector(0, 0, 0), 75);
+        }
+    }
+
     public void levitate(int damage) {
         if(boss == null) return;
         boss.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 30, 1, true, false, false));

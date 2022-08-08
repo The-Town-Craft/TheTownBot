@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.economy.commands;
+package net.thetowncraft.townbot.factions.economy.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -6,12 +6,11 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.economy.EconomyManager;
+import net.thetowncraft.townbot.factions.economy.EconomyManager;
 import net.thetowncraft.townbot.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

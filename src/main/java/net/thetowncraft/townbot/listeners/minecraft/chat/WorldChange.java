@@ -5,6 +5,7 @@ import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.dimension.CelestialKingdomListener;
 import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.patches.Vanish;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.Bukkit;
@@ -40,6 +41,7 @@ public class WorldChange implements Listener {
             Bukkit.getServer().broadcastMessage(name + " entered the end");
         }
         else if(world.getName().equals(Plugin.OVERWORLD_NAME)){
+            if(event.getFrom().getName().equals(AccountManager.UNLINKED_DIMENSION.getWorld().getName())) return;
             Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(">>> <:mc_cow:818243740569305118> **" + name + "** returned to the overworld").queue();
             Bukkit.getServer().broadcastMessage(name + " returned to the overworld");
         }

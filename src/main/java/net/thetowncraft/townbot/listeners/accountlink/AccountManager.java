@@ -143,6 +143,7 @@ public class AccountManager {
 
         member.getGuild().removeRoleFromMember(member, Constants.UNLINKED_ROLE).complete();
         member.getGuild().removeRoleFromMember(member, Constants.INACTIVE_PLAYER_ROLE).queue();
+        member.getGuild().removeRoleFromMember(member, Constants.BUSY_ROLE).queue();
         member.getGuild().removeRoleFromMember(member, Constants.MEMBER_ROLE).queue();
 
         member.getGuild().addRoleToMember(member, Constants.TOWN_MEMBER_ROLE).complete();

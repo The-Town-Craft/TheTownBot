@@ -48,8 +48,11 @@ public class LinkAccount extends ListenerAdapter {
             AccountManager.getPasswords().remove(message);
             AccountManager.getMinecraftAccounts().put(offlinePlayer.getUniqueId().toString(), event.getAuthor().getId());
             AccountManager.getInstance().syncAccountData(offlinePlayer, Constants.THE_TOWN.getMember(event.getAuthor()));
-            event.getJDA().getTextChannelById(Constants.MODMAIL).sendMessage(":white_check_mark: The Discord account **" + event.getAuthor().getAsTag() + "** was successfully linked to the Minecraft account **" + offlinePlayer.getName() + "**!").queue();
-            event.getChannel().sendMessage(":white_check_mark: **Success**! Your Discord account was linked to the Minecraft account **" + offlinePlayer.getName() + "**!").queue();
+            String confirmationMessage =
+                    ":white_check_mark: The Discord account **" + event.getAuthor().getAsTag() + "** was successfully linked to the Minecraft account **" + offlinePlayer.getName() + "**!";
+            event.getJDA().getTextChannelById(Constants.MC_CHAT).sendMessage(confirmationMessage).queue();
+            ModMail.sendModMail(event.getAuthor(), Constants.THE_TOWN,
+                    ":white_check_mark: **Success**! Your Discord account was linked to the Minecraft account **" + offlinePlayer.getName() + "**!", new ArrayList<>());
 
             Bukkit.getScheduler().scheduleSyncDelayedTask(Plugin.get(), () -> {
                 Player player = offlinePlayer.getPlayer();

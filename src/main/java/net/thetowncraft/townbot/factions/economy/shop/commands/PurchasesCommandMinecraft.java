@@ -1,9 +1,9 @@
-package net.thetowncraft.townbot.economy.shop.commands;
+package net.thetowncraft.townbot.factions.economy.shop.commands;
 
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.economy.shop.ShopItem;
-import net.thetowncraft.townbot.economy.shop.ShopManager;
+import net.thetowncraft.townbot.factions.economy.shop.ShopItem;
+import net.thetowncraft.townbot.factions.economy.shop.ShopManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

@@ -1,12 +1,12 @@
-package net.thetowncraft.townbot.economy.shop.commands;
+package net.thetowncraft.townbot.factions.economy.shop.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
-import net.thetowncraft.townbot.economy.EconomyManager;
-import net.thetowncraft.townbot.economy.shop.ShopItem;
-import net.thetowncraft.townbot.economy.shop.ShopManager;
+import net.thetowncraft.townbot.factions.economy.EconomyManager;
+import net.thetowncraft.townbot.factions.economy.shop.ShopItem;
+import net.thetowncraft.townbot.factions.economy.shop.ShopManager;
 import net.thetowncraft.townbot.util.Constants;
 
 import java.util.Arrays;
