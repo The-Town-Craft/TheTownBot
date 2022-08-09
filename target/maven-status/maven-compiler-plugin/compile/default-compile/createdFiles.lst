@@ -21,6 +21,7 @@ net\thetowncraft\townbot\custom_items\celestial_kingdom\SatanicMagmaball.class
 net\thetowncraft\townbot\listeners\discord\commands\BanList.class
 net\thetowncraft\townbot\custom_items\mystic_realm\ShapedGlass.class
 net\thetowncraft\townbot\listeners\discord\commands\RewardActive.class
+net\thetowncraft\townbot\factions\teams\commands\TeamCommandDiscord.class
 net\thetowncraft\townbot\listeners\minecraft\chat\Raid.class
 net\thetowncraft\townbot\factions\economy\commands\Bal$MC.class
 net\thetowncraft\townbot\listeners\discord\commands\Log.class
@@ -70,6 +71,7 @@ net\thetowncraft\townbot\custom_items\mystic_realm\IllusionerHeart.class
 net\thetowncraft\townbot\listeners\chatmute\MuteManager.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\afk\AFKManager.class
 net\thetowncraft\townbot\modmail\ModMail.class
+net\thetowncraft\townbot\factions\teams\commands\TeamCommands.class
 net\thetowncraft\townbot\custom_items\CustomItemListener.class
 net\thetowncraft\townbot\listeners\minecraft\player_activity\afk\AFKListener.class
 net\thetowncraft\townbot\api\command_handler\discord\ExampleCommand.class

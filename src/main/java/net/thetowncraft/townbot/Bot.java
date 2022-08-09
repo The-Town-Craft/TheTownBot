@@ -57,7 +57,7 @@ public class Bot {
         embed.setColor(Constants.RED);
         Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
         Bot.jda.getTextChannelById(Constants.MC_CHAT).sendMessage(embed.build()).complete();
-        Constants.PLAYER_COUNT_CHANNEL.getManager().setName("Server Offline").complete();
+        //Constants.PLAYER_COUNT_CHANNEL.getManager().setName("Server Offline").complete();
         Bot.jda.shutdownNow();
     }
 }

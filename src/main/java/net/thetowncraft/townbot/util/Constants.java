@@ -35,6 +35,7 @@ public class Constants {
 	public static final Role CHANGELOG_PING = Bot.jda.getRoleById("774074418942050324");
 	public static final TextChannel ACTIVE_PLAYER_CHAT = Bot.jda.getTextChannelById("817928132652433468");
 	public static final VoiceChannel PLAYER_COUNT_CHANNEL = Bot.jda.getVoiceChannelById("1005960975352070196");
+	public static final Category COMMUNITY_CATEGORY = Bot.jda.getCategoryById("767522736820977674");
 	public static final String THETOWN_CHAT = "755499624810283119";
 	public static final String MC_CHAT = "790082482363957278";
 	public static final String MC_LOGS = "789927053985972265";

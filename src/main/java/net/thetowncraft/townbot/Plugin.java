@@ -58,7 +58,7 @@ public class Plugin extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, GlacialArmor::bossDefeatCheck, 80, 80);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ShopItemListener::updateItems, 10, 10);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, MysticRealmListener::checkBiomeEffects, 60, 60);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, LinkAccount::checkLink, 20, 20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, LinkAccount::checkLink, 120, 120);
         SPAWN_LOCATION = new Location(Bukkit.getWorld(OVERWORLD_NAME),-161, 64, 230);
     }
 
