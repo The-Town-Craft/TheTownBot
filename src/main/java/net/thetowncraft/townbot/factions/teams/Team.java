@@ -1,10 +1,15 @@
 package net.thetowncraft.townbot.factions.teams;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.thetowncraft.townbot.Bot;
+import net.thetowncraft.townbot.Plugin;
+import net.thetowncraft.townbot.factions.economy.EconomyManager;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
+import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
+import net.thetowncraft.townbot.util.SkinRender;
 import net.thetowncraft.townbot.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -56,8 +61,60 @@ public class Team {
     }
 
     public void remove(Member member) {
-        member.getGuild().removeRoleFromMember(member, role).queue();
+        member.getGuild().removeRoleFromMember(member, role).complete();
         channel.sendMessage(":sob: " + member.getAsMention() + " left the team. Come back soon!").queue();
+        if(getMembers().size() == 0) Teams.delete(this);
+    }
+
+    public void transfer(OfflinePlayer to) {
+        setLeader(to);
+        Member member = AccountManager.getInstance().getDiscordMember(to);
+        channel.sendMessage(":gear: Leadership of **" + getName() + "** has been transferred to " + member.getAsMention() + "!").queue();
+    }
+
+    public EmbedBuilder getEmbed() {
+        EmbedBuilder embed = new EmbedBuilder();
+
+        embed.setAuthor(getName(), null, SkinRender.renderHead(getLeader()));
+        embed.setColor(role.getColor());
+
+        List<Member> members = getMembers();
+        int memberCount = members.size();
+
+        embed.setDescription(":crown: **Leader**: " + getLeader().getName());
+        embed.appendDescription("\n:sparkles: **Activity Points**: " + getActivityPoints());
+        embed.appendDescription("\n:coin: **Coins**: " + getCoins());
+        embed.appendDescription("\n:people_holding_hands: **Members**: " + memberCount);
+
+        if(memberCount != 0) embed.appendDescription("\n---------------------");
+
+        for(Member member : members) {
+            embed.appendDescription("\n**" + member.getEffectiveName() + "**");
+        }
+
+        if(memberCount != 0) embed.appendDescription("\n---------------------");
+        return embed;
+    }
+
+    public int getCoins() {
+        int coins = 0;
+        for(Member member : getMembers()) {
+            coins = coins + EconomyManager.getCoinBalance(member);
+        }
+        return coins;
+    }
+
+    public int getActivityPoints() {
+        int activity = 0;
+        for(Member member : getMembers()) {
+            OfflinePlayer player = AccountManager.getInstance().getMinecraftPlayer(member);
+            if(player == null) {
+                remove(member);
+                continue;
+            }
+            activity = activity + ActivityManager.getActivityPoints(player);
+        }
+        return activity;
     }
 
     public List<Member> getMembers() {

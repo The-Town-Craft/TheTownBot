@@ -34,13 +34,14 @@ public class OnlinePlayers extends DiscordCommand {
 		embed.appendDescription("\n**Version**: Paper 1.19.1");
 		embed.appendDescription("\n**TPS**: " + 20);
 		embed.appendDescription("\n**Online Players**: " + playerCount);
-		embed.appendDescription("\n---------------------");
+		if(playerCount != 0) embed.appendDescription("\n---------------------");
 		for(Player player : players) {
 			String name = player.getName();
 			if(!AccountManager.getInstance().isLinked(player)) embed.appendDescription("\n[UNLINKED] *" + name + "*");
 			else if(AFKManager.isAFK(player)) embed.appendDescription("\n[AFK] *" + name + "*");
 			else embed.appendDescription("\n**" + name + "**");
 		}
+		if(playerCount != 0) embed.appendDescription("\n---------------------");
 		event.getChannel().sendMessage(embed.build()).queue();
 		Bot.jda.getTextChannelById(Constants.MC_LOGS).sendMessage(embed.build()).queue();
 	}

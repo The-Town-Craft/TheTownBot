@@ -99,6 +99,26 @@ public class TeamCommands {
         return null;
     }
 
+    public static String transfer(String[] args, OfflinePlayer player, OfflinePlayer to) {
+        Team team = Teams.getTeam(player);
+        if(team == null) return "You are not currently in a team!";
+
+        if(args.length == 1) return "{usage}";
+
+        OfflinePlayer leader = team.getLeader();
+        if(!leader.getUniqueId().equals(player.getUniqueId())) {
+            return "You do not have permission to do this!";
+        }
+
+        if(player.getUniqueId().toString().equals(to.getUniqueId().toString())) return "You already own **" + team.getName() + "**!";
+
+        Team toTeam = Teams.getTeam(to);
+        if(!team.equals(toTeam)) return "**" + to.getName() + "** is not part of **" + team.getName() + "**";
+
+        team.transfer(to);
+        return null;
+    }
+
     public static String delete(String[] args, OfflinePlayer player) {
         Team team = Teams.getTeam(player);
         if(team == null) return "You are not currently part of any team!";

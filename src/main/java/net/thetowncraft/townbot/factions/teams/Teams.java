@@ -1,15 +1,18 @@
 package net.thetowncraft.townbot.factions.teams;
 
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.IPermissionHolder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.managers.RoleManager;
+import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.Utils;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +57,24 @@ public class Teams {
                 channel.sendMessage(":partying_face: " + member.getAsMention() + " has created **" + name + "**!").queue();
             });
         });
+    }
+
+    public static EmbedBuilder getViewEmbed() {
+        EmbedBuilder embed = new EmbedBuilder();
+
+        if(TEAMS.size() == 0) {
+            embed.setColor(Constants.RED);
+            embed.setDescription(":x: **Error**! There are currently no teams!");
+            return embed;
+        }
+
+        embed.setColor(Constants.GREEN);
+        embed.setAuthor("List of Teams", null, Constants.THE_TOWN.getIconUrl());
+        for(Team team : TEAMS) {
+            embed.appendDescription("\n**" + team.getName() + "**");
+        }
+        embed.appendDescription("\nType `" + Bot.prefix + "team` `view` `<team>` for more info!");
+        return embed;
     }
 
     public static void delete(Team team) {

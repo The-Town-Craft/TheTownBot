@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
+import net.thetowncraft.townbot.factions.teams.Team;
 import net.thetowncraft.townbot.factions.teams.Teams;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import org.bukkit.Bukkit;
@@ -14,6 +15,7 @@ import org.bukkit.OfflinePlayer;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TeamCommandDiscord extends DiscordCommand {
 
@@ -43,6 +45,30 @@ public class TeamCommandDiscord extends DiscordCommand {
                 else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
                 break;
             }
+            case "list": {
+                channel.sendMessage(Teams.getViewEmbed().build()).queue();
+                break;
+            }
+            case "view": {
+                if(args.length == 1) {
+                    Team team = Teams.getTeam(player);
+                    if(team == null) {
+                        channel.sendMessage(getUsage()).queue();
+                        return;
+                    }
+                    channel.sendMessage(team.getEmbed().build()).queue();
+                }
+                else {
+                    String teamName = Arrays.stream(args).skip(1).collect(Collectors.joining(" "));
+                    Team team = Teams.getByName(teamName);
+                    if(team == null) {
+                        channel.sendMessage(":x: **Error**! Could not find a team by the name of **" + teamName + "**").queue();
+                        return;
+                    }
+                    event.getChannel().sendMessage(team.getEmbed().build()).queue();
+                }
+                break;
+            }
             case "invite": {
                 OfflinePlayer invited = getReferencedPlayer(args, event);
                 if (invited == null) return;
@@ -69,13 +95,16 @@ public class TeamCommandDiscord extends DiscordCommand {
                 OfflinePlayer kicked = getReferencedPlayer(args, event);
                 if (kicked == null) return;
                 String output = TeamCommands.kick(args, kicked, player);
-                if (output == null)
-                    channel.sendMessage(":white_check_mark: **Success**! **" + kicked.getName() + "** was kicked!").queue();
+                if (output == null) channel.sendMessage(":white_check_mark: **Success**! **" + kicked.getName() + "** was kicked!").queue();
                 else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
                 break;
             }
             case "transfer": {
-
+                OfflinePlayer to = getReferencedPlayer(args, event);
+                if (to == null) return;
+                String output = TeamCommands.transfer(args, player, to);
+                if (output == null) channel.sendMessage(":white_check_mark: **Success**! Team was transferred to **" + to.getName() + "**!").queue();
+                else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
                 break;
             }
             case "delete": {
@@ -120,7 +149,7 @@ public class TeamCommandDiscord extends DiscordCommand {
                 "\n`" + Bot.prefix + "team` `view` `<team>`" +
                 "\n`" + Bot.prefix + "team` `invite` `<player>`" +
                 "\n`" + Bot.prefix + "team` `join` `<team>`"  +
-                "\n`" + Bot.prefix + "team` `leave` `<team>`"  +
+                "\n`" + Bot.prefix + "team` `leave`"  +
                 "\n`" + Bot.prefix + "team` `kick` `<player>`"  +
                 "\n`" + Bot.prefix + "team` `transfer` `<player>`"  +
                 "\n`" + Bot.prefix + "team` `delete`";
