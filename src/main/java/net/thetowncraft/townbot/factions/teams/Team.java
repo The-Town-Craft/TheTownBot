@@ -37,7 +37,9 @@ public class Team {
     public void add(Member member) {
         member.getGuild().addRoleToMember(member, role).queue();
         OfflinePlayer player = AccountManager.getInstance().getMinecraftPlayer(member);
-        if(player != null) invites.remove(player.getUniqueId().toString());
+        if(player != null) {
+            invites.remove(player.getUniqueId().toString());
+        }
         channel.sendMessage(":partying_face: " + member.getAsMention() + " joined the team!").queue();
     }
 

@@ -1,5 +1,6 @@
 package net.thetowncraft.townbot.factions.teams.commands;
 
+import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.factions.teams.Team;
 import net.thetowncraft.townbot.factions.teams.Teams;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
@@ -26,6 +27,9 @@ public class TeamCommands {
         Material material = Material.getMaterial(materialName.toUpperCase().replace(" ", "_"));
         if(material == null) return "Please chose the name of a block or an item.";
 
+        String name = Teams.getName(material);
+        if(Teams.getByName(name) != null) return "**" + name + "** already exists!";
+
         Teams.create(material, player);
         return null;
     }
@@ -36,7 +40,11 @@ public class TeamCommands {
         Team inviterTeam = Teams.getTeam(inviter);
         if(inviterTeam == null) return "You don't have a team to invite **" + player.getName() + "** to!";
 
+        if(inviterTeam.equals(Teams.getTeam(player))) return "**" + player.getName() + "** is already in **" + inviterTeam.getName() + "**!";
+
         if(!inviterTeam.getLeaderUUID().toString().equals(inviter.getUniqueId().toString())) return "You do not have permission to invite **" + player.getName() + "**!";
+
+        if(inviterTeam.getInvites().contains(player.getUniqueId().toString())) return "You have already invited **" + player.getName() + "**!";
 
         inviterTeam.createInvite(player);
         return null;
@@ -55,6 +63,39 @@ public class TeamCommands {
         if(!team.getInvites().contains(player.getUniqueId().toString())) return "Please ask **" + team.getLeader().getName() + "** for an invite!";
 
         team.add(player);
+        return null;
+    }
+
+    public static String leave(String[] args, OfflinePlayer player) {
+        Team team = Teams.getTeam(player);
+        if(team == null) return "You are not currently in a team!";
+
+        OfflinePlayer leader = team.getLeader();
+        if(leader.getUniqueId().equals(player.getUniqueId())) {
+            return "As the leader of **" + team.getName() + "**, you must transfer it's ownership before leaving.";
+        }
+
+        team.remove(player);
+        return null;
+    }
+
+    public static String kick(String[] args, OfflinePlayer player, OfflinePlayer kicker) {
+        Team team = Teams.getTeam(kicker);
+        if(team == null) return "You are not currently in a team!";
+
+        if(args.length == 1) return "{usage}";
+
+        OfflinePlayer leader = team.getLeader();
+        if(!leader.getUniqueId().equals(kicker.getUniqueId())) {
+            return "You do not have permission to do this!";
+        }
+
+        if(player.getUniqueId().toString().equals(kicker.getUniqueId().toString())) return "You cannot kick yourself from your own team!";
+
+        Team playerTeam = Teams.getTeam(player);
+        if(!team.equals(playerTeam)) return "**" + player.getName() + "** is not part of **" + team.getName() + "**";
+
+        team.remove(player);
         return null;
     }
 

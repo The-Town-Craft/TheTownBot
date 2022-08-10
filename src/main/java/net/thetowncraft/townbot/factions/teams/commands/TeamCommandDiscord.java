@@ -3,6 +3,7 @@ package net.thetowncraft.townbot.factions.teams.commands;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
@@ -35,56 +36,93 @@ public class TeamCommandDiscord extends DiscordCommand {
             return;
         }
 
-        if(args[0].equals("create")) {
-            String output = TeamCommands.create(args, player);
-            if(output == null) channel.sendMessage(":white_check_mark: **Success**! Team was created!").queue();
-            else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
-        }
-        else if(args[0].equals("invite")) {
-            if(args.length == 1) {
-                channel.sendMessage(getUsage()).queue();
-                return;
+        switch (args[0]) {
+            case "create": {
+                String output = TeamCommands.create(args, player);
+                if (output == null) channel.sendMessage(":white_check_mark: **Success**! Team was created!").queue();
+                else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
+                break;
             }
-            OfflinePlayer invited;
-            List<Member> members = event.getMessage().getMentionedMembers();
-            if(members.size() == 0) {
-                invited = Bukkit.getServer().getOfflinePlayer(args[1]);
-                if(!AccountManager.getInstance().isLinked(invited)) {
-                    channel.sendMessage(":x: **Error**! **" + args[1] + "**'s account is not linked!").queue();
-                    return;
-                }
+            case "invite": {
+                OfflinePlayer invited = getReferencedPlayer(args, event);
+                if (invited == null) return;
+                String output = TeamCommands.invite(args, invited, player);
+                if (output == null)
+                    channel.sendMessage(":white_check_mark: **Success**! **" + invited.getName() + "** was invited!").queue();
+                else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
+                break;
             }
-            else {
-                Member invitedMember = members.get(0);
-                invited = AccountManager.getInstance().getMinecraftPlayer(invitedMember);
-                if(invited == null) {
-                    channel.sendMessage(":x: **Error**! **" + invitedMember.getEffectiveName() + "**'s account is not linked!").queue();
-                    return;
-                }
+            case "join": {
+                String output = TeamCommands.join(args, player);
+                if (output == null)
+                    channel.sendMessage(":white_check_mark: **Success**! You have been added the team!").queue();
+                else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
+                break;
             }
-            String output = TeamCommands.invite(args, invited, player);
-            if(output == null) channel.sendMessage(":white_check_mark: **Success**! **" + invited.getName() + "** was invited!").queue();
-            else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
+            case "leave": {
+                String output = TeamCommands.leave(args, player);
+                if (output == null) channel.sendMessage(":sob: **Success**! You have left the team!").queue();
+                else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
+                break;
+            }
+            case "kick": {
+                OfflinePlayer kicked = getReferencedPlayer(args, event);
+                if (kicked == null) return;
+                String output = TeamCommands.kick(args, kicked, player);
+                if (output == null)
+                    channel.sendMessage(":white_check_mark: **Success**! **" + kicked.getName() + "** was kicked!").queue();
+                else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
+                break;
+            }
+            case "transfer": {
+
+                break;
+            }
+            case "delete": {
+                String output = TeamCommands.delete(args, player);
+                if (output == null) channel.sendMessage(":white_check_mark: **Success**! Team was deleted!").queue();
+                else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
+                break;
+            }
         }
-        else if(args[0].equals("join")) {
-            String output = TeamCommands.join(args, player);
-            if(output == null) channel.sendMessage(":white_check_mark: **Success**! You have been added the team!").queue();
-            else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
+    }
+
+    public OfflinePlayer getReferencedPlayer(String[] args, CommandEvent.Discord event) {
+        TextChannel channel = event.getChannel();
+        if(args.length == 1) {
+            channel.sendMessage(getUsage()).queue();
+            return null;
         }
-        else if(args[0].equals("delete")) {
-            String output = TeamCommands.delete(args, player);
-            if(output == null) channel.sendMessage(":white_check_mark: **Success**! Team was deleted!").queue();
-            else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
+        OfflinePlayer player;
+        List<Member> members = event.getMessage().getMentionedMembers();
+        if(members.size() == 0) {
+            player = Bukkit.getServer().getOfflinePlayer(args[1]);
+            if(!AccountManager.getInstance().isLinked(player)) {
+                channel.sendMessage(":x: **Error**! **" + args[1] + "**'s account is not linked!").queue();
+                return null;
+            }
         }
+        else {
+            Member invitedMember = members.get(0);
+            player = AccountManager.getInstance().getMinecraftPlayer(invitedMember);
+            if(player == null) {
+                channel.sendMessage(":x: **Error**! **" + invitedMember.getEffectiveName() + "**'s account is not linked!").queue();
+                return null;
+            }
+        }
+        return player;
     }
 
     public String getUsage() {
         return "**Usage**:" +
                 "\n`" + Bot.prefix + "team` `create` `<material name>`" +
+                "\n`" + Bot.prefix + "team` `list`" +
+                "\n`" + Bot.prefix + "team` `view` `<team>`" +
                 "\n`" + Bot.prefix + "team` `invite` `<player>`" +
                 "\n`" + Bot.prefix + "team` `join` `<team>`"  +
                 "\n`" + Bot.prefix + "team` `leave` `<team>`"  +
                 "\n`" + Bot.prefix + "team` `kick` `<player>`"  +
+                "\n`" + Bot.prefix + "team` `transfer` `<player>`"  +
                 "\n`" + Bot.prefix + "team` `delete`";
     }
 

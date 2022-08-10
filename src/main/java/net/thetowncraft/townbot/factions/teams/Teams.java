@@ -20,7 +20,7 @@ public class Teams {
 
     public static Team getByName(String name) {
         for(Team team : TEAMS) {
-            if(team.getName().equals(name)) return team;
+            if(team.getName().equalsIgnoreCase(name)) return team;
         }
         return null;
     }
