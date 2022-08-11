@@ -1,6 +1,11 @@
 package net.thetowncraft.townbot.custom_items;
 
 import net.thetowncraft.townbot.custom_items.celestial_kingdom.*;
+import net.thetowncraft.townbot.custom_items.drugs.CrystalMeth;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.NetherCandy;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.Sleeper;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.Spice;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.SweetDust;
 import net.thetowncraft.townbot.custom_items.mystic_realm.glacial_items.*;
 import net.thetowncraft.townbot.custom_items.mystic_realm.*;
 import org.bukkit.entity.Item;
@@ -17,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CustomItems {
+public class CustomItems{
 
     private static final Map<String, CustomItem> ITEMS = new HashMap<>();
 
@@ -44,7 +49,11 @@ public class CustomItems {
     public static final CustomItem SATANIC_MAGMABALL = registerItem("satanic_magmaball", new SatanicMagmaball());
     public static final CustomItem CELESTIAL_MEMBRANE = registerItem("celestial_membrane", new CelestialMembrane());
     public static final CustomItem CELESTINE_ELYTRA = registerItem("celestine_elytra", new CelestineElytra());
-
+    public static final CustomItem NETHER_CANDY = registerItem("nether_candy", new NetherCandy());
+    public static final CustomItem SLEEPER = registerItem("sleeper", new Sleeper());
+    public static final CustomItem SPICE = registerItem("spice", new Spice());
+    public static final CustomItem SWEET_DUST = registerItem("sweet_dust", new SweetDust());
+    public static final CustomItem CRYSTAL_METH = registerItem("crystal_meth", new CrystalMeth());
     static CustomItem registerItem(String id, CustomItem item) {
         ITEMS.put(id, item);
         return item;
