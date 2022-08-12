@@ -2,17 +2,18 @@ package net.thetowncraft.townbot.custom_items.drugs.ingredients;
 
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.util.Rarity;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 public class Spice extends CustomItem {
     @Override
     public String getName() {
-        return "Spice";
+        return ChatColor.valueOf("ff8c00") + "Spice";
     }
 
     @Override
     public String getDescription() {
-        return "Like adrenaline, but more!";
+        return ChatColor.GOLD + "Like adrenaline, but more!";
     }
 
     @Override

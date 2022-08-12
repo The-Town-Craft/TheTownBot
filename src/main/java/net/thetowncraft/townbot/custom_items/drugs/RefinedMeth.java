@@ -5,16 +5,16 @@ import net.thetowncraft.townbot.util.Rarity;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
-public class CrystalMeth extends CustomItem {
+public class RefinedMeth extends CustomItem {
 
     @Override
     public String getName(){
-        return ChatColor.GRAY + "Crystal Meth";
+        return ChatColor.DARK_BLUE + "Refined Meth";
     }
 
     @Override
     public String getDescription(){
-        return ChatColor.WHITE + "\"Jesse! We're in Minecraft now! JESSE!\"";
+        return ChatColor.ITALIC + "" + ChatColor.BLUE + "\"The special love I have for you, My baby blue.\"";
     }
 
     @Override
@@ -24,7 +24,7 @@ public class CrystalMeth extends CustomItem {
 
     @Override
     public Material getBaseItem(){
-        return Material.AMETHYST_SHARD;
+        return Material.SUGAR;
     }
 
     @Override

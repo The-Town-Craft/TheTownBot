@@ -2,12 +2,13 @@ package net.thetowncraft.townbot.custom_items.drugs.ingredients;
 
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.util.Rarity;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 public class Sleeper extends CustomItem {
     @Override
     public String getName() {
-        return "Sleeper";
+        return ChatColor.GRAY + "Sleeper";
     }
 
     @Override

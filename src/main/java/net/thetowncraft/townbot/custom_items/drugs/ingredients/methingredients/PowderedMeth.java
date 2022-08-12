@@ -1,39 +1,37 @@
-package net.thetowncraft.townbot.custom_items.drugs;
+package net.thetowncraft.townbot.custom_items.drugs.ingredients.methingredients;
 
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.util.Rarity;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
-public class CrystalMeth extends CustomItem {
-
+public class PowderedMeth extends CustomItem {
     @Override
     public String getName(){
-        return ChatColor.GRAY + "Crystal Meth";
+        return "Powdered Meth";
     }
 
     @Override
     public String getDescription(){
-        return ChatColor.WHITE + "\"Jesse! We're in Minecraft now! JESSE!\"";
+        return "Needs to be crystialier";
     }
 
     @Override
     public int getCustomModelData(){
-        return 1;
+        return 0;
     }
 
     @Override
     public Material getBaseItem(){
-        return Material.AMETHYST_SHARD;
+        return Material.BONE_MEAL;
     }
 
     @Override
     public Rarity getRarity(){
-        return Rarity.EPIC;
+        return Rarity.RARE;
     }
 
     @Override
     public boolean shines(){
-        return true;
+        return false;
     }
 }

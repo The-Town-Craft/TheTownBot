@@ -2,12 +2,13 @@ package net.thetowncraft.townbot.custom_items.drugs.ingredients;
 
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.util.Rarity;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 public class NetherCandy extends CustomItem {
     @Override
     public String getName(){
-        return "Nether Candy";
+        return ChatColor.valueOf("660000") + "Nether Candy";
     }
 
     @Override

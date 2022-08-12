@@ -2,18 +2,19 @@ package net.thetowncraft.townbot.custom_items.drugs.ingredients;
 
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.util.Rarity;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 public class SweetDust extends CustomItem {
 
     @Override
     public String getName() {
-        return "Sweet Dust";
+        return ChatColor.valueOf("FFC0CB") + "Sweet Dust";
     }
 
     @Override
     public String getDescription() {
-        return "It's not just sugar, trust me";
+        return ChatColor.WHITE + "It's not just sugar, trust me";
     }
 
     @Override
