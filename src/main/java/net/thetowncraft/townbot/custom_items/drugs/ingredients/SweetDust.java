@@ -9,7 +9,7 @@ public class SweetDust extends CustomItem {
 
     @Override
     public String getName() {
-        return ChatColor.valueOf("FFC0CB") + "Sweet Dust";
+        return ChatColor.WHITE + "Sweet Dust";
     }
 
     @Override

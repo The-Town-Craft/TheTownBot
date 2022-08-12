@@ -8,7 +8,7 @@ import org.bukkit.Material;
 public class Spice extends CustomItem {
     @Override
     public String getName() {
-        return ChatColor.valueOf("ff8c00") + "Spice";
+        return ChatColor.GOLD + "Spice";
     }
 
     @Override
