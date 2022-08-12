@@ -1,6 +1,16 @@
 package net.thetowncraft.townbot.custom_items;
 
 import net.thetowncraft.townbot.custom_items.celestial_kingdom.*;
+import net.thetowncraft.townbot.custom_items.drugs.CrystalMeth;
+import net.thetowncraft.townbot.custom_items.drugs.RefinedMeth;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.NetherCandy;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.Sleeper;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.Spice;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.SweetDust;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.methingredients.CookedPowerMix;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.methingredients.Hypersugar;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.methingredients.PowderedMeth;
+import net.thetowncraft.townbot.custom_items.drugs.ingredients.methingredients.PowerMix;
 import net.thetowncraft.townbot.custom_items.mystic_realm.glacial_items.*;
 import net.thetowncraft.townbot.custom_items.mystic_realm.*;
 import org.bukkit.entity.Item;
@@ -17,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CustomItems {
+public class CustomItems{
 
     private static final Map<String, CustomItem> ITEMS = new HashMap<>();
 
@@ -44,7 +54,16 @@ public class CustomItems {
     public static final CustomItem SATANIC_MAGMABALL = registerItem("satanic_magmaball", new SatanicMagmaball());
     public static final CustomItem CELESTIAL_MEMBRANE = registerItem("celestial_membrane", new CelestialMembrane());
     public static final CustomItem CELESTINE_ELYTRA = registerItem("celestine_elytra", new CelestineElytra());
-
+    public static final CustomItem NETHER_CANDY = registerItem("nether_candy", new NetherCandy());
+    public static final CustomItem SLEEPER = registerItem("sleeper", new Sleeper());
+    public static final CustomItem SPICE = registerItem("spice", new Spice());
+    public static final CustomItem SWEET_DUST = registerItem("sweet_dust", new SweetDust());
+    public static final CustomItem POWER_MIX = registerItem("power_mix", new PowerMix());
+    public static final CustomItem HYPERSUGAR = registerItem("hypersugar", new Hypersugar());
+    public static final CustomItem COOKED_POWER_MIX = registerItem("cooked_power_mix", new CookedPowerMix());
+    public static final CustomItem POWDERED_METH = registerItem("powdered_meth", new PowderedMeth());
+    public static final CustomItem CRYSTAL_METH = registerItem("crystal_meth", new CrystalMeth());
+    public static final CustomItem REFINED_METH = registerItem("refined_meth", new RefinedMeth());
     static CustomItem registerItem(String id, CustomItem item) {
         ITEMS.put(id, item);
         return item;
