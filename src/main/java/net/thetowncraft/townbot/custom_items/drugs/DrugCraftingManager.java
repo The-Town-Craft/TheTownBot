@@ -9,7 +9,7 @@ import org.bukkit.inventory.*;
 
 public class DrugCraftingManager {
 
-    public void onEnable(){
+    public static void init(){
 
         //Basic Ingredient Recipes
 

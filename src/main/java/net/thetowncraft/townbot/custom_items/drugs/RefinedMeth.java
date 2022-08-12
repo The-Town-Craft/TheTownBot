@@ -14,7 +14,7 @@ public class RefinedMeth extends CustomItem {
 
     @Override
     public String getDescription(){
-        return ChatColor.ITALIC + "" + ChatColor.BLUE + "\"The special love I have for you, My baby blue.\"";
+        return ChatColor.ITALIC + "" + ChatColor.BLUE + "\"The special love I have for you, My Baby Blue.\"";
     }
 
     @Override
