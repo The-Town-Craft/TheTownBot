@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.custom_items.drugs;
+package net.thetowncraft.townbot.custom_items;
 
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_items.CustomItems;
@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.*;
 
-public class DrugCraftingManager {
+public class CustomCraftingManager {
 
     public static ShapedRecipe NETHER_CANDY_RECIPE;
     public static SmithingRecipe SLEEPER_RECIPE;
