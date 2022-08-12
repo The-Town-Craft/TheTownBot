@@ -64,6 +64,7 @@ public class CustomItems{
     public static final CustomItem POWDERED_METH = registerItem("powdered_meth", new PowderedMeth());
     public static final CustomItem CRYSTAL_METH = registerItem("crystal_meth", new CrystalMeth());
     public static final CustomItem REFINED_METH = registerItem("refined_meth", new RefinedMeth());
+
     static CustomItem registerItem(String id, CustomItem item) {
         ITEMS.put(id, item);
         return item;
