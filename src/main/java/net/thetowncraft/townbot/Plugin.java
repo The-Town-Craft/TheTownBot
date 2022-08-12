@@ -7,6 +7,7 @@ import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.factions.economy.EconomyManager;
 import net.thetowncraft.townbot.factions.economy.shop.ShopItemListener;
 import net.thetowncraft.townbot.factions.economy.shop.ShopManager;
+import net.thetowncraft.townbot.factions.teams.Teams;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.minecraft.commands.MaintenanceCommand;
@@ -95,6 +96,7 @@ public class Plugin extends JavaPlugin {
     @Override
     public void onDisable() {
         EconomyManager.saveEconomy();
+        Teams.save();
         Bot.disable();
         MaintenanceCommand.saveData();
     }

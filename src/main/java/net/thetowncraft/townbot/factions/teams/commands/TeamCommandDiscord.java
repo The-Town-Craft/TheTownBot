@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
+import net.thetowncraft.townbot.factions.economy.shop.ShopManager;
 import net.thetowncraft.townbot.factions.teams.Team;
 import net.thetowncraft.townbot.factions.teams.Teams;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
@@ -40,8 +41,17 @@ public class TeamCommandDiscord extends DiscordCommand {
 
         switch (args[0]) {
             case "create": {
+
+                if(!ShopManager.getPurchases(member).contains(ShopManager.TEAMS)) {
+                    event.getChannel().sendMessage(ShopManager.TEAMS.getEmbed().build()).queue();
+                    return;
+                }
+
                 String output = TeamCommands.create(args, player);
-                if (output == null) channel.sendMessage(":white_check_mark: **Success**! Team was created!").queue();
+                if (output == null) {
+                    channel.sendMessage(":white_check_mark: **Success**! Team was created!").queue();
+                    member.getGuild().removeRoleFromMember(member, ShopManager.TEAMS.getRole()).queue();
+                }
                 else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
                 break;
             }
@@ -99,6 +109,12 @@ public class TeamCommandDiscord extends DiscordCommand {
                 else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
                 break;
             }
+            case "color": {
+                String output = TeamCommands.color(args, player);
+                if (output == null) channel.sendMessage(":white_check_mark: **Success**! The team color was changed!").queue();
+                else channel.sendMessage(":x: **Error**! " + output.replace("{usage}", getUsage())).queue();
+                break;
+            }
             case "transfer": {
                 OfflinePlayer to = getReferencedPlayer(args, event);
                 if (to == null) return;
@@ -151,6 +167,7 @@ public class TeamCommandDiscord extends DiscordCommand {
                 "\n`" + Bot.prefix + "team` `join` `<team>`"  +
                 "\n`" + Bot.prefix + "team` `leave`"  +
                 "\n`" + Bot.prefix + "team` `kick` `<player>`"  +
+                "\n`" + Bot.prefix + "team` `color` `<hex>`"  +
                 "\n`" + Bot.prefix + "team` `transfer` `<player>`"  +
                 "\n`" + Bot.prefix + "team` `delete`";
     }
@@ -167,6 +184,6 @@ public class TeamCommandDiscord extends DiscordCommand {
 
     @Override
     public Permission getRequiredPermission() {
-        return Permission.BAN_MEMBERS;
+        return null;
     }
 }

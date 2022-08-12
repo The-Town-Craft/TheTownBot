@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.factions.economy.shop.items.BlazingSpiritShopItem;
 import net.thetowncraft.townbot.factions.economy.shop.items.MysticParticleShopItem;
+import net.thetowncraft.townbot.factions.economy.shop.items.TeamShopItem;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.SkinRender;
@@ -18,10 +19,12 @@ public class ShopManager {
 
     public static ShopItem BLAZING_SPIRIT;
     public static ShopItem MYSTIC_PARTICLES;
+    public static ShopItem TEAMS;
 
     private static final List<ShopItem> ITEMS = new ArrayList<>();
 
     public static void initShop() {
+        TEAMS = registerItem(new TeamShopItem());
         BLAZING_SPIRIT = registerItem(new BlazingSpiritShopItem());
         MYSTIC_PARTICLES = registerItem(new MysticParticleShopItem());
     }

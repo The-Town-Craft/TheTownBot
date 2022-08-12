@@ -9,6 +9,7 @@ import org.bukkit.OfflinePlayer;
 
 import java.lang.reflect.Member;
 import java.util.Arrays;
+import java.util.HexFormat;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -62,6 +63,10 @@ public class TeamCommands {
 
         if(!team.getInvites().contains(player.getUniqueId().toString())) return "Please ask **" + team.getLeader().getName() + "** for an invite!";
 
+        if(team.getMembers().size() <= 5) {
+            return "**" + team.getName() + "** is already full!";
+        }
+
         team.add(player);
         return null;
     }
@@ -96,6 +101,30 @@ public class TeamCommands {
         if(!team.equals(playerTeam)) return "**" + player.getName() + "** is not part of **" + team.getName() + "**";
 
         team.remove(player);
+        return null;
+    }
+
+    public static String color(String[] args, OfflinePlayer player) {
+        Team team = Teams.getTeam(player);
+        if(team == null) return "You are not currently in a team!";
+
+        if(args.length == 1) return "{usage}";
+
+        OfflinePlayer leader = team.getLeader();
+        if(!leader.getUniqueId().equals(player.getUniqueId())) {
+            return "You do not have permission to do this!";
+        }
+
+        int color;
+
+        try {
+            color = HexFormat.fromHexDigits(args[1]);
+        }
+        catch (Exception ex) {
+            return "Please enter a valid hex code!";
+        }
+
+        team.getRole().getManager().setColor(color).queue();
         return null;
     }
 

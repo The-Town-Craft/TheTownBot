@@ -11,12 +11,18 @@ import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.util.SkinRender;
 import net.thetowncraft.townbot.util.Utils;
+import net.thetowncraft.townbot.util.data.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class Team {
@@ -84,6 +90,8 @@ public class Team {
         embed.setDescription(":crown: **Leader**: " + getLeader().getName());
         embed.appendDescription("\n:sparkles: **Activity Points**: " + getActivityPoints());
         embed.appendDescription("\n:coin: **Coins**: " + getCoins());
+        embed.appendDescription("\n:speech_balloon: **Channel**: " + channel.getAsMention());
+        embed.appendDescription("\n:book: **Role**: " + role.getAsMention());
         embed.appendDescription("\n:people_holding_hands: **Members**: " + memberCount);
 
         if(memberCount != 0) embed.appendDescription("\n---------------------");

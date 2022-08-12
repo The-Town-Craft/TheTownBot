@@ -130,6 +130,7 @@ net\thetowncraft\townbot\listeners\discord\ServerStart.class
 net\thetowncraft\townbot\factions\economy\shop\items\ParticleShopItem.class
 net\thetowncraft\townbot\factions\economy\commands\Pay$Discord.class
 net\thetowncraft\townbot\custom_items\celestial_kingdom\AcidicSlimeball.class
+net\thetowncraft\townbot\factions\economy\shop\items\TeamShopItem.class
 net\thetowncraft\townbot\custom_items\CustomItem.class
 net\thetowncraft\townbot\dimension\CelestialKingdomListener.class
 net\thetowncraft\townbot\custom_items\mystic_realm\NoxiousFeather.class
