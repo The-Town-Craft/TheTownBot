@@ -8,7 +8,7 @@ import org.bukkit.Material;
 public class NetherCandy extends CustomItem {
     @Override
     public String getName(){
-        return ChatColor.valueOf("660000") + "Nether Candy";
+        return ChatColor.DARK_RED + "Nether Candy";
     }
 
     @Override
