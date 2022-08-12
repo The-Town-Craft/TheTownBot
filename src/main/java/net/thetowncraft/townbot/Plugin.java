@@ -2,7 +2,7 @@ package net.thetowncraft.townbot;
 
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
-import net.thetowncraft.townbot.custom_items.drugs.DrugCraftingManager;
+import net.thetowncraft.townbot.custom_items.CustomCraftingManager;
 import net.thetowncraft.townbot.custom_items.mystic_realm.glacial_items.GlacialArmor;
 import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.factions.economy.EconomyManager;
@@ -49,7 +49,7 @@ public class Plugin extends JavaPlugin {
 
         AccountManager.loadAccounts();
         EconomyManager.loadEconomy();
-        DrugCraftingManager.init();
+        CustomCraftingManager.init();
 
         ShopManager.initShop();
 
