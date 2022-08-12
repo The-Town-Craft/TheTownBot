@@ -14,7 +14,7 @@ import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
 import net.thetowncraft.townbot.listeners.minecraft.commands.MaintenanceCommand;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.RepeatingTasks;
-import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.active.ActivityManager;
+import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.thetowncraft.townbot.util.Registry;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

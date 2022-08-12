@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class CustomItems{
 
-    private static final Map<String, CustomItem> ITEMS = new HashMap<>();
+    public static final Map<String, CustomItem> ITEMS = new HashMap<>();
 
     //Mystic Realm
     public static final CustomItem SHAPED_GLASS = registerItem("shaped_glass", new ShapedGlass());

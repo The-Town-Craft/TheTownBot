@@ -3,7 +3,7 @@ package net.thetowncraft.townbot.listeners.discord.commands;
 import net.dv8tion.jda.api.Permission;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
-import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.active.ActivityManager;
+import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.Bukkit;
