@@ -23,7 +23,7 @@ public class Spice extends CustomItem {
 
     @Override
     public Material getBaseItem() {
-        return Material.GLOWSTONE;
+        return Material.GLOWSTONE_DUST;
     }
 
     @Override
