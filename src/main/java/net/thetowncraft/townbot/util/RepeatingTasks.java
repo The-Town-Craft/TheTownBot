@@ -8,7 +8,7 @@ import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.discord.commands.DiscordActiveCommand;
 import net.thetowncraft.townbot.modmail.ModMail;
 import net.thetowncraft.townbot.listeners.minecraft.commands.DonateCommand;
-import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
+import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.active.ActivityManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.AFKManager;
 import net.dv8tion.jda.api.entities.Member;
 import org.bukkit.Bukkit;

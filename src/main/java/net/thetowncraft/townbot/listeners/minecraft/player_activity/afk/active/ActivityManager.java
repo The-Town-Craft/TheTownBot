@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.listeners.minecraft.player_activity.active;
+package net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.active;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Plugin;

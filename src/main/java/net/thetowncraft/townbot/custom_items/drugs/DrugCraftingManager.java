@@ -44,7 +44,7 @@ public class DrugCraftingManager {
                 CustomItems.SWEET_DUST.createItemStack(1));
         SWEET_DUST_RECIPE.shape("SSS","NNN","SSS");
         SWEET_DUST_RECIPE.setIngredient('S', Material.SUGAR);
-        SWEET_DUST_RECIPE.setIngredient('N', new RecipeChoice.ExactChoice(CustomItems.SWEET_DUST.createItemStack(1)));
+        SWEET_DUST_RECIPE.setIngredient('N', new RecipeChoice.ExactChoice(CustomItems.NETHER_CANDY.createItemStack(1)));
 
         //Meth Ingredients Recipes
 

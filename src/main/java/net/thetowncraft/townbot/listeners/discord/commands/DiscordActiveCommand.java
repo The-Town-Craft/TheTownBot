@@ -1,17 +1,12 @@
 package net.thetowncraft.townbot.listeners.discord.commands;
 
 import net.dv8tion.jda.api.Permission;
-import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.api.command_handler.CommandEvent;
 import net.thetowncraft.townbot.api.command_handler.discord.DiscordCommand;
-import net.thetowncraft.townbot.listeners.minecraft.commands.ActiveCommand;
-import net.thetowncraft.townbot.listeners.minecraft.player_activity.active.ActivityManager;
+import net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.active.ActivityManager;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.thetowncraft.townbot.util.Constants;
 import org.bukkit.Bukkit;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.UUID;
