@@ -62,7 +62,6 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\fa
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\api\command_handler\CommandHandler.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_bosses\bosses\mystic_realm\BlazingWitherBoss.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\Whitelist.java
-C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\drugs\DrugCraftingManager.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\celestial_kingdom\CelestialMembrane.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\mystic_realm\MysticArtifact.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\util\data\Config.java
@@ -110,6 +109,7 @@ C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\cu
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\celestial_kingdom\AcidicArtifact.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\factions\economy\shop\commands\PurchasesCommandDiscord.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\util\data\Data.java
+C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\CustomCraftingManager.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\custom_items\mystic_realm\glacial_items\GlacialLeggings.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\DiscordMute.java
 C:\Users\caden\IdeaProjects\TheTownBot\src\main\java\net\thetowncraft\townbot\listeners\discord\commands\LogSearch.java

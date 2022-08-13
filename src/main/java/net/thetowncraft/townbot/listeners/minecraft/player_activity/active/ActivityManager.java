@@ -1,9 +1,8 @@
-package net.thetowncraft.townbot.listeners.minecraft.player_activity.afk.active;
+package net.thetowncraft.townbot.listeners.minecraft.player_activity.active;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
-import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

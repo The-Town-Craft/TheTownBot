@@ -111,7 +111,6 @@ net\thetowncraft\townbot\custom_items\celestial_kingdom\GhastBlood.class
 net\thetowncraft\townbot\api\command_handler\minecraft\MinecraftCommand.class
 net\thetowncraft\townbot\listeners\accountlink\LinkAccount.class
 net\thetowncraft\townbot\listeners\discord\commands\RunMCCommand.class
-net\thetowncraft\townbot\custom_items\drugs\DrugCraftingManager.class
 net\thetowncraft\townbot\api\command_handler\CommandEvent$Minecraft.class
 net\thetowncraft\townbot\custom_items\mystic_realm\glacial_items\GlacialAmuletItem.class
 net\thetowncraft\townbot\listeners\discord\commands\TodoCommand.class
@@ -130,6 +129,7 @@ net\thetowncraft\townbot\custom_items\mystic_realm\HunterSkull.class
 net\thetowncraft\townbot\listeners\discord\DiscordChatListener.class
 net\thetowncraft\townbot\custom_items\drugs\ingredients\methingredients\PowerMix.class
 net\thetowncraft\townbot\custom_items\drugs\ingredients\NetherCandy.class
+net\thetowncraft\townbot\custom_items\CustomCraftingManager.class
 net\thetowncraft\townbot\custom_bosses\BossEventListener.class
 net\thetowncraft\townbot\custom_items\celestial_kingdom\AcidicArtifact.class
 net\thetowncraft\townbot\custom_items\drugs\ingredients\Spice.class

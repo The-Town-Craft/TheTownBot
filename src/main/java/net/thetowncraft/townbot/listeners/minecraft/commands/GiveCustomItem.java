@@ -5,7 +5,14 @@ import net.thetowncraft.townbot.api.command_handler.minecraft.MinecraftCommand;
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GiveCustomItem extends MinecraftCommand {
 
@@ -53,5 +60,14 @@ public class GiveCustomItem extends MinecraftCommand {
     @Override
     public String getName() {
         return "gci";
+    }
+
+    @Nullable
+    @Override
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if(args.length == 1 && sender.isOp()) {
+            return new ArrayList<>(CustomItems.ITEMS.keySet());
+        }
+        return null;
     }
 }
