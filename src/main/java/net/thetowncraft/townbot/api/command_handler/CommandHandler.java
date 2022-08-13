@@ -19,6 +19,7 @@ import java.util.Arrays;
 public class CommandHandler {
 
     public static class Discord extends ListenerAdapter {
+
         @Override
         public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
             try {
