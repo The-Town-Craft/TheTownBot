@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.thetowncraft.townbot.Bot;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_items.CustomItem;
+import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.listeners.minecraft.chat.Advancements;
 import net.thetowncraft.townbot.util.Constants;
@@ -93,6 +94,12 @@ public abstract class BossEventListener implements Listener {
         dodge(5);
     }
 
+    public void spawn4MysticCreepers() {
+        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(1, 0.3, 0));
+        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(-1, 0.3, 0));
+        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(0, 0.3, 1));
+        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(0, 0.3, -1));
+    }
 
     public void dodge(int speed) {
         Random random = new Random();

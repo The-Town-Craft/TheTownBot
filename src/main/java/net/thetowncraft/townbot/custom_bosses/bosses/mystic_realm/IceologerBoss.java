@@ -171,10 +171,7 @@ public class IceologerBoss extends BossDungeonEventListener {
     @Override
     public void onSlam(EntityDamageEvent event, Entity boss) {
         super.onSlam(event, boss);
-        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(1, 0.3, 0));
-        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(-1, 0.3, 0));
-        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(0, 0.3, 1));
-        MysticRealmListener.spawnMysticCreeper(boss.getLocation()).setVelocity(new Vector(0, 0.3, -1));
+        spawn4MysticCreepers();
     }
 
     public void levitate() {

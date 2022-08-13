@@ -4,6 +4,7 @@ import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.custom_bosses.BossEventListener;
 import net.thetowncraft.townbot.custom_items.CustomItem;
 import net.thetowncraft.townbot.custom_items.CustomItems;
+import net.thetowncraft.townbot.dimension.MysticRealmListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -11,8 +12,10 @@ import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.awt.*;
 
@@ -22,9 +25,24 @@ public class Caretaker extends BossEventListener {
     public void initAttacks() {
         addAttack(this::clearDarkness, 0, 5);
         addAttack(this::lightning, 0, 200);
+        addAttack(this::levitate, 50, 200);
         addAttack(this::scalingTnt, 100, 200);
+        addAttack(this::slam, 150, 200);
     }
 
+    public void levitate() {
+        levitate(50);
+    }
+
+    public void slam() {
+        if(bossHalfHealth) slam(50);
+    }
+
+    @Override
+    public void onSlam(EntityDamageEvent event, Entity boss) {
+        super.onSlam(event, boss);
+        spawn4MysticCreepers();
+    }
 
     @Override
     public void lightning() {
