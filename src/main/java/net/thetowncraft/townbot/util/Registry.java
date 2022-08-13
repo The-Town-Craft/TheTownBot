@@ -68,6 +68,7 @@ public class Registry {
                 new Whitelist(),
                 new RunMCCommand(),
                 new ChangelogCommand(),
+                new UploadJar(),
 
                 //Activity Points
                 new AddActivityPointsCommand(),

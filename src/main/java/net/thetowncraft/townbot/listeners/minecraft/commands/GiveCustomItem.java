@@ -65,9 +65,17 @@ public class GiveCustomItem extends MinecraftCommand {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(args.length == 1 && sender.isOp()) {
-            return new ArrayList<>(CustomItems.ITEMS.keySet());
+        List<String> items = new ArrayList<>();
+        if(sender.isOp()) {
+            if(args.length == 2) {
+                for(String item : CustomItems.ITEMS.keySet()) {
+                    if(args[1].toUpperCase().contains(item.toUpperCase())) items.add(item);
+                }
+            }
+            else if(args.length == 1) {
+                items.addAll(CustomItems.ITEMS.keySet());
+            }
         }
-        return null;
+        return items;
     }
 }

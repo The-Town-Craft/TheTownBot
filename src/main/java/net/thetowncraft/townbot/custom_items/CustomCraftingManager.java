@@ -71,7 +71,7 @@ public class CustomCraftingManager {
 
         POWDERED_METH_RECIPE = new ShapedRecipe(new NamespacedKey(Plugin.get(), "powdered_meth_recipe"),
                 CustomItems.POWDERED_METH.createItemStack(1));
-        POWDERED_METH_RECIPE.shape("   "," CH","    ");
+        POWDERED_METH_RECIPE.shape("   "," CH","   ");
         POWDERED_METH_RECIPE.setIngredient('C', new RecipeChoice.ExactChoice(CustomItems.COOKED_POWER_MIX.createItemStack(1)));
         POWDERED_METH_RECIPE.setIngredient('H', new RecipeChoice.ExactChoice(CustomItems.HYPERSUGAR.createItemStack(1)));
 
