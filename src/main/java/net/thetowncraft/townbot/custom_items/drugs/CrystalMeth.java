@@ -24,7 +24,7 @@ public class CrystalMeth extends CustomItem {
 
     @Override
     public String getDescription(){
-        return ChatColor.AQUA + "\"Jesse! We're in Minecraft now! JESSE!\"";
+        return ChatColor.AQUA + "\"Yeah! Science!\"";
     }
 
     @Override

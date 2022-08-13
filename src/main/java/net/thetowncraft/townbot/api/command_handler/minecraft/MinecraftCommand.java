@@ -35,7 +35,7 @@ public abstract class MinecraftCommand implements TabExecutor {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        return null;
+        return new ArrayList<>();
     }
 
     /**

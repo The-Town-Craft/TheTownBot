@@ -100,6 +100,7 @@ net\thetowncraft\townbot\custom_items\drugs\ingredients\SweetDust.class
 net\thetowncraft\townbot\listeners\minecraft\commands\MaintenanceCommand.class
 net\thetowncraft\townbot\factions\economy\commands\SubtractCoins.class
 net\thetowncraft\townbot\factions\economy\commands\UpdateCoinCommand.class
+net\thetowncraft\townbot\listeners\discord\commands\UploadJar.class
 net\thetowncraft\townbot\util\Utils.class
 net\thetowncraft\townbot\listeners\discord\commands\AddActivityPointsCommand.class
 net\thetowncraft\townbot\custom_items\mystic_realm\glacial_items\GlacialLeggings.class
