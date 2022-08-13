@@ -9,7 +9,7 @@ public class RefinedMeth extends CustomItem {
 
     @Override
     public String getName(){
-        return ChatColor.DARK_BLUE + "Refined Meth";
+        return ChatColor.BLUE + "Refined Meth";
     }
 
     @Override

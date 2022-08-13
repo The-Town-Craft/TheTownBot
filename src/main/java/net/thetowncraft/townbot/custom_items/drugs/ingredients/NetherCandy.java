@@ -13,7 +13,7 @@ public class NetherCandy extends CustomItem {
 
     @Override
     public String getDescription(){
-        return "Not actually candy";
+        return ChatColor.DARK_RED + "Not actually candy";
     }
 
     @Override
@@ -33,6 +33,6 @@ public class NetherCandy extends CustomItem {
 
     @Override
     public boolean shines(){
-        return false;
+        return true;
     }
 }

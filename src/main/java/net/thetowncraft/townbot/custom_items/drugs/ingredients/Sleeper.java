@@ -8,12 +8,12 @@ import org.bukkit.Material;
 public class Sleeper extends CustomItem {
     @Override
     public String getName() {
-        return ChatColor.GRAY + "Sleeper";
+        return ChatColor.LIGHT_PURPLE + "Sleeper";
     }
 
     @Override
     public String getDescription() {
-        return "Slowwwws your thoughts down";
+        return ChatColor.LIGHT_PURPLE + "Slowwwws your thoughts down";
     }
 
     @Override
@@ -33,6 +33,6 @@ public class Sleeper extends CustomItem {
 
     @Override
     public boolean shines() {
-        return false;
+        return true;
     }
 }

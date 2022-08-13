@@ -32,6 +32,6 @@ public class PowerMix extends CustomItem {
 
     @Override
     public boolean shines(){
-        return false;
+        return true;
     }
 }

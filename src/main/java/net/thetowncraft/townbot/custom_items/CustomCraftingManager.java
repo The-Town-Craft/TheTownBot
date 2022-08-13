@@ -10,28 +10,30 @@ import org.bukkit.inventory.*;
 public class CustomCraftingManager {
 
     public static ShapedRecipe NETHER_CANDY_RECIPE;
-    public static SmithingRecipe SLEEPER_RECIPE;
+    public static ShapedRecipe SLEEPER_RECIPE;
     public static ShapedRecipe SPICE_RECIPE;
     public static ShapedRecipe SWEET_DUST_RECIPE;
     public static ShapedRecipe POWER_MIX_RECIPE;
     public static FurnaceRecipe COOKED_POWER_MIX_RECIPE;
     public static ShapedRecipe HYPER_SUGAR_RECIPE;
-    public static SmithingRecipe POWDERED_METH_RECIPE;
+    public static ShapedRecipe POWDERED_METH_RECIPE;
     public static FurnaceRecipe CRYSTAL_METH_RECIPE;
     public static BlastingRecipe REFINED_METH_RECIPE;
 
     public static void init() {
 
-        //Basic Ingredient Recipes
+        //Basic Drug Ingredient Recipes
 
         NETHER_CANDY_RECIPE = new ShapedRecipe(new NamespacedKey(Plugin.get(), "nether_candy_recipe"), CustomItems.NETHER_CANDY.createItemStack(1));
         NETHER_CANDY_RECIPE.shape("SNS","SNS","SNS");
         NETHER_CANDY_RECIPE.setIngredient('S', Material.SUGAR);
         NETHER_CANDY_RECIPE.setIngredient('N', Material.NETHER_WART);
 
-        SLEEPER_RECIPE = new SmithingRecipe(new NamespacedKey(Plugin.get(), "sleeper_recipe"),
-                CustomItems.SLEEPER.createItemStack(1), new RecipeChoice.MaterialChoice(Material.FERMENTED_SPIDER_EYE),
-                new RecipeChoice.ExactChoice(CustomItems.NETHER_CANDY.createItemStack(1)));
+        SLEEPER_RECIPE = new ShapedRecipe(new NamespacedKey(Plugin.get(), "sleeper_recipe"),
+                CustomItems.SLEEPER.createItemStack(1));
+        SLEEPER_RECIPE.shape("   "," FN","   ");
+        SLEEPER_RECIPE.setIngredient('F', Material.FERMENTED_SPIDER_EYE);
+        SLEEPER_RECIPE.setIngredient('N', new RecipeChoice.ExactChoice(CustomItems.NETHER_CANDY.createItemStack(1)));
 
         SPICE_RECIPE = new ShapedRecipe(new NamespacedKey(Plugin.get(), "spice_recipe"),
                 CustomItems.SPICE.createItemStack(1));
@@ -67,9 +69,11 @@ public class CustomCraftingManager {
 
         //Powdered Meth, Crystal Meth and Refined Meth Recipes
 
-        POWDERED_METH_RECIPE = new SmithingRecipe(new NamespacedKey(Plugin.get(), "powdered_meth_recipe"),
-                CustomItems.POWDERED_METH.createItemStack(1), new RecipeChoice.ExactChoice(CustomItems.COOKED_POWER_MIX.createItemStack(1)),
-                new RecipeChoice.ExactChoice(CustomItems.HYPERSUGAR.createItemStack(1)));
+        POWDERED_METH_RECIPE = new ShapedRecipe(new NamespacedKey(Plugin.get(), "powdered_meth_recipe"),
+                CustomItems.POWDERED_METH.createItemStack(1));
+        POWDERED_METH_RECIPE.shape("   "," CH","  ");
+        POWDERED_METH_RECIPE.setIngredient('C', new RecipeChoice.ExactChoice(CustomItems.COOKED_POWER_MIX.createItemStack(1)));
+        POWDERED_METH_RECIPE.setIngredient('H', new RecipeChoice.ExactChoice(CustomItems.HYPERSUGAR.createItemStack(1)));
 
         CRYSTAL_METH_RECIPE = new FurnaceRecipe(new NamespacedKey(Plugin.get(), "crystal_meth_recipe"),
                 CustomItems.CRYSTAL_METH.createItemStack(1), new RecipeChoice.ExactChoice(CustomItems.POWDERED_METH.createItemStack(1)), 1.5f, 800);
