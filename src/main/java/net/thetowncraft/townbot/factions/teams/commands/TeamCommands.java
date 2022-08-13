@@ -63,7 +63,7 @@ public class TeamCommands {
 
         if(!team.getInvites().contains(player.getUniqueId().toString())) return "Please ask **" + team.getLeader().getName() + "** for an invite!";
 
-        if(team.getMembers().size() <= 5) {
+        if(team.getMembers().size() >= 5) {
             return "**" + team.getName() + "** is already full!";
         }
 
