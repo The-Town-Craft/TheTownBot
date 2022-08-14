@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class BountyManager {
 
