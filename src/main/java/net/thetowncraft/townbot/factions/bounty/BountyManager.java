@@ -1,4 +1,4 @@
-package net.thetowncraft.townbot.factions.teams.bounty;
+package net.thetowncraft.townbot.factions.bounty;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
