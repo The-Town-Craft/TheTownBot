@@ -55,7 +55,6 @@ public class Plugin extends JavaPlugin {
         ShopManager.initShop();
 
         MaintenanceCommand.loadData();
-        BountyManager.load();
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::updatePlayerActivity, 0, RepeatingTasks.REPEATING_TICKS);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, RepeatingTasks::doDailyTasks, RepeatingTasks.TICKS_IN_A_DAY, RepeatingTasks.TICKS_IN_A_DAY);
@@ -100,6 +99,7 @@ public class Plugin extends JavaPlugin {
     public void onDisable() {
         EconomyManager.saveEconomy();
         Teams.save();
+        BountyManager.save();
         Bot.disable();
         MaintenanceCommand.saveData();
     }
