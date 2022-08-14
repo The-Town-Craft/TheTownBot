@@ -51,3 +51,6 @@ commands:
 
   link:
     description: More info about account linking!
+
+  team:
+    description: Create and manage player made teams!

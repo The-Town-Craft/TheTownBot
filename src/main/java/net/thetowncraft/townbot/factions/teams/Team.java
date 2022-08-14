@@ -13,6 +13,7 @@ import net.thetowncraft.townbot.util.SkinRender;
 import net.thetowncraft.townbot.util.Utils;
 import net.thetowncraft.townbot.util.data.Data;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.json.JSONObject;
@@ -102,6 +103,21 @@ public class Team {
 
         if(memberCount != 0) embed.appendDescription("\n---------------------");
         return embed;
+    }
+
+    public String getMcChatDisplay() {
+        StringBuilder display = new StringBuilder(ChatColor.AQUA + "----" + ChatColor.BOLD + getName().toUpperCase() + ChatColor.RESET + "" + ChatColor.AQUA + "----" +
+                "\nLeader: " + getLeader().getName() +
+                "\nActivity Points: " + getActivityPoints() +
+                "\nCoins: " + getCoins() +
+                "\nMembers: " + getMembers().size() +
+                "\n------------");
+
+        for(Member member : getMembers()) {
+            display.append("\n").append(member.getEffectiveName());
+        }
+        display.append("\n------------");
+        return display.toString();
     }
 
     public int getCoins() {

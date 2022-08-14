@@ -10,6 +10,7 @@ import net.thetowncraft.townbot.listeners.accountlink.AccountManager;
 import net.thetowncraft.townbot.util.Constants;
 import net.thetowncraft.townbot.util.Utils;
 import net.thetowncraft.townbot.util.data.Data;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.json.JSONArray;
@@ -135,6 +136,16 @@ public class Teams {
         }
         embed.appendDescription("\nType `" + Bot.prefix + "team` `view` `<team>` for more info!");
         return embed;
+    }
+
+    public static String getMcChatView() {
+        if(TEAMS.size() == 0) return ChatColor.RED + "There are currently no teams!";
+
+        StringBuilder view = new StringBuilder(ChatColor.AQUA + "" + ChatColor.BOLD + "-----PLAYER TEAMS-----");
+        for(Team team : TEAMS) {
+            view.append("\n").append(ChatColor.AQUA).append(team.getName());
+        }
+        return view.toString();
     }
 
     public static void delete(Team team) {

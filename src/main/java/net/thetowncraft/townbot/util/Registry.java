@@ -14,6 +14,7 @@ import net.thetowncraft.townbot.factions.economy.commands.*;
 import net.thetowncraft.townbot.factions.economy.shop.ShopItemListener;
 import net.thetowncraft.townbot.factions.economy.shop.commands.*;
 import net.thetowncraft.townbot.factions.teams.commands.TeamCommandDiscord;
+import net.thetowncraft.townbot.factions.teams.commands.TeamCommandMinecraft;
 import net.thetowncraft.townbot.hub.HubCommand;
 import net.thetowncraft.townbot.custom_items.mystic_realm.ItemDropListener;
 import net.thetowncraft.townbot.listeners.accountlink.LinkAccount;
@@ -104,7 +105,8 @@ public class Registry {
                 new HubCommand(),
                 new DonateCommand(),
                 new ToggleItemMinecraft(),
-                new PurchasesCommandMinecraft()
+                new PurchasesCommandMinecraft(),
+                new TeamCommandMinecraft()
         );
     }
 
