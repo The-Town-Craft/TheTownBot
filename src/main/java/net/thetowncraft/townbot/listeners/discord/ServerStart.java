@@ -3,6 +3,7 @@ package net.thetowncraft.townbot.listeners.discord;
 import net.dv8tion.jda.api.entities.Member;
 import net.thetowncraft.townbot.Plugin;
 import net.thetowncraft.townbot.factions.teams.Teams;
+import net.thetowncraft.townbot.factions.teams.bounty.BountyManager;
 import net.thetowncraft.townbot.listeners.minecraft.player_activity.PlayerCountStatus;
 import net.thetowncraft.townbot.util.Constants;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -24,6 +25,7 @@ public class ServerStart extends ListenerAdapter {
         Registry.registerCosmetics();
         PlayerCountStatus.update();
         Teams.load();
+        BountyManager.load();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Plugin.get(), PlayerCountStatus::update, 500, 250);
     }
 }

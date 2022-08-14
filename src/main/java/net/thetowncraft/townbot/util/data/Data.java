@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +46,16 @@ public class Data {
 
         while(scan.hasNextLine()) strings.add(scan.nextLine());
         return strings;
+    }
+
+    public static void writeToFile(File file, String string) {
+        try {
+            FileWriter write = new FileWriter(file);
+            write.write(string);
+            write.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static JSONObject getJSONObjectFromFile(File file) {
