@@ -40,6 +40,9 @@ public class CrystalMeth extends CustomItem {
                     if(System.currentTimeMillis() - WITHDRAWAL_TIMER.get(player.getUniqueId().toString()) > randomTime){
                         AWAITING_SYMPTOMS.replace(player.getUniqueId().toString(), false);
                         doWithdrawalSymptoms(player);
+                        AWAITING_SYMPTOMS.remove(player.getUniqueId().toString());
+                        WITHDRAWAL_TIMER.remove(player.getUniqueId().toString());
+                        break;
                     }
                 }
             }
